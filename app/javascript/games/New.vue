@@ -1,5 +1,5 @@
 <template>
-  <div id='game'>
+  <div id='new-game'>
     <div class='row'>
       <div class='small-12 medium-6 medium-centered columns'>
         <div class='row'>
@@ -43,10 +43,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-div {
-  background: black;
-  height: 100%;
-  height: 100px;
-  width: 100px;
+#new-game {
+  background: #ccf;
 }
 </style>

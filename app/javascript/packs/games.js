@@ -3,7 +3,7 @@ import NewGame from '../games/new';
 
 // Basic vue instance
 new Vue({
-  el: '#game',
+  el: '#games',
   template: '<NewGame/>',
   components: { NewGame }
 });

@@ -1,13 +1,13 @@
 <template>
-  <div id='new-game'>
-    <div class='row'>
-      <div class='small-12 medium-6 medium-centered columns'>
-        <div class='row'>
-          <Card v-for='card in cards' :card='card'/>
-        </div>
+<div id='new-game' class='full-height'>
+  <div class='row full-height collapse'>
+    <div class='small-12 medium-6 medium-centered columns full-height'>
+      <div class='row full-height collapse'>
+        <Card v-for='card in cards' :card='card'/>
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -22,19 +22,35 @@ export default {
       cards: [
 				{
 					id: nextCardId++,
-					name: 'Dog'
+					name: 'Dog',
+          image_url: '/categories/animals/dog.jpg',
+          category: {
+            name: 'Animal'
+          }
 				},
 				{
           id: nextCardId++,
-					name: 'Cat'
+					name: 'Cat',
+          image_url: '/categories/animals/cat.jpg',
+          category: {
+            name: 'Animal'
+          }
 				},
 				{
           id: nextCardId++,
-					name: 'Mouse'
+					name: 'Mouse',
+          image_url: '/categories/animals/mouse.jpg',
+          category: {
+            name: 'Animal'
+          }
 				},
         {
           id: nextCardId++,
-					name: 'Pig'
+					name: 'Pig',
+          image_url: '/categories/animals/pig.jpg',
+          category: {
+            name: 'Animal'
+          }
 				}
       ]
     }
@@ -44,6 +60,7 @@ export default {
 
 <style lang='scss' scoped>
 #new-game {
-  background: #ccf;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 </style>

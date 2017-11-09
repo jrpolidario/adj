@@ -33,7 +33,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'live_record', '~> 0.2.3'
+gem 'live_record', '~> 0.2.4'
+
+gem 'redis'
 
 gem 'webpacker', '~> 3.0'
 gem 'jquery-rails'

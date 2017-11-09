@@ -15,7 +15,6 @@
 //= require foundation
 //= require turbolinks
 //= require live_record
-//= require live_record/plugins/live_dom
 //= require js-routes
 //= require_tree .
 

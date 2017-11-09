@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
-  resources :games
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  constraints format: 'html' do
+    match '*path', to: 'games#index', via: :all
+  end
+
+  constraints format: 'json' do
+    resources :games
+  end
 
   root 'games#index'
 end

@@ -1,5 +1,5 @@
 <template>
-<div id='new-game' class='full-height'>
+<section id='show-game' class='full-height'>
   <div class='row full-height collapse'>
     <div class='small-12 medium-6 medium-centered columns full-height'>
       <div class='row full-height collapse'>
@@ -7,7 +7,7 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 </template>
 
 <script>
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-#new-game {
+#show-game {
   padding-top: 10%;
   padding-bottom: 10%;
 }

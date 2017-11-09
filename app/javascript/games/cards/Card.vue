@@ -50,6 +50,11 @@ export default {
     background-position: center center;
     background-size: cover;
     box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
 
     .name {
       font-size: 2em;

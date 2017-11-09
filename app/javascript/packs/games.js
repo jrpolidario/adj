@@ -6,11 +6,35 @@
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
 import Vue from 'vue'
-import NewGame from '../games/new';
+import VueRouter from 'vue-router'
+import Games from './Games.vue'
+import ShowGame from '../games/Show'
+import AllGames from '../games/Index'
+import NotFound from '../errors/NotFound'
+
+Vue.use(VueRouter)
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.appendChild(document.createElement('NewGame'))
-  const newGame = new Vue(NewGame).$mount('NewGame')
+  document.body.appendChild(document.createElement('games'))
+
+  function routeWithoutFormat(route) {
+    return route.toString().replace('(.:format)', '')
+  }
+
+  const router = new VueRouter({
+    mode: 'history',
+    base: __dirname,
+    routes: [
+      { path: routeWithoutFormat(Routes.root_path), component: AllGames },
+      { path: routeWithoutFormat(Routes.game_path), component: ShowGame },
+      { path: "*", component: NotFound }
+    ]
+  })
+
+  const VueApp = new Vue({
+    router,
+    render: h => h(Games)
+  }).$mount('games')
 })
 
 

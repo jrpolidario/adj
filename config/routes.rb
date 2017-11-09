@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :players
   constraints format: 'html' do
     match '*path', to: 'games#index', via: :all
   end

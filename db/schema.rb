@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102162516) do
+ActiveRecord::Schema.define(version: 20171109015538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,4 +28,14 @@ ActiveRecord::Schema.define(version: 20171102162516) do
     t.index ["recordable_type", "recordable_id"], name: "index_live_record_updates_on_recordable_type_and_recordable_id"
   end
 
+  create_table "players", force: :cascade do |t|
+    t.integer "score"
+    t.string "name"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_players_on_game_id"
+  end
+
+  add_foreign_key "players", "games"
 end

@@ -1,18 +1,26 @@
 <template>
-<section id='all-games' class='full-height'>
-  <div class='row collapse'>
-    <div class='medium-6 medium-centered columns'>
+<section id='all-games' class='row collapse full-height full-width'>
+  <div class='large-3 medium-4 columns full-height'>
+    <NewGame/>
+  </div>
+  <div class='large-6 medium-4 columns full-height'>
+    <div class='full-height'>
       <ShowGame v-for='(game, id) in games' :game='game'/>
     </div>
+  </div>
+  <div class='large-3 medium-4 columns full-height'>
+    <AllComments/>
   </div>
 </section>
 </template>
 
 <script>
+import NewGame from './index/NewGame'
 import ShowGame from './index/ShowGame'
+import AllComments from './index/AllComments'
 
 export default {
-	components: { ShowGame },
+	components: { NewGame, ShowGame, AllComments },
   data () {
     return {
       games: LiveRecord.Model.all.Game.all
@@ -26,12 +34,12 @@ export default {
     // load all Game records, and subscribe and auto-fetch new Games
     this.gamesSubscription = LiveRecord.Model.all.Game.subscribe({reload: true})
 
-    // set `data` values whenever a Game is created
+    // set `games` values whenever a Game is created
     this.createGameCallback = LiveRecord.Model.all.Game.addCallback('before:create', function() {
       self.$set(self.games, this.id(), this)
     })
 
-    // delete `data` values whenever a Game is removed
+    // delete `games` values whenever a Game is removed
     this.destroyGameCallback = LiveRecord.Model.all.Game.addCallback('before:destroy', function() {
       self.$delete(self.games, this.id())
     })
@@ -48,5 +56,10 @@ export default {
 #all-games {
   background-color: #7CBB91;
   color: white;
+
+  // >>> means it affects children components
+  > div.columns >>> > * {
+    padding: 2rem;
+  }
 }
 </style>

@@ -1,10 +1,10 @@
 class Player < ApplicationRecord
-  belongs_to :game
+  belongs_to :game, required: false
 
   include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, length: { maximum: 15 }
 
   def self.live_record_whitelisted_attributes(player, current_user)
     # Add attributes to this array that you would like current_user to have access to.

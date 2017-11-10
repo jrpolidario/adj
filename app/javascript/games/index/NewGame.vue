@@ -1,21 +1,23 @@
 <template>
   <div id='new-game' class='full-height'>
     <Logo/>
+    <CurrentPlayer/>
   </div>
 </template>
 
 <script>
-import Logo from './new_game/Logo'
+  import Logo from './new_game/Logo'
+  import CurrentPlayer from './new_game/CurrentPlayer'
 
-export default {
-  components: { Logo }
-}
+  export default {
+    components: { Logo, CurrentPlayer }
+  }
 </script>
 
 <style lang='scss' scoped>
-@import '../../packs/games';
+  @import 'app/javascript/packs/games';
 
-#new-game {
-  background: darken(#7CBB91, 10);
-}
+  #new-game {
+    background-color: darken($page-base-background-color, 10);
+  }
 </style>

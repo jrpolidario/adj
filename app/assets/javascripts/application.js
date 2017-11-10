@@ -19,3 +19,9 @@
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+// Routes.configure({
+//   default_url_options: {
+//     format: 'json'
+//   }
+// });

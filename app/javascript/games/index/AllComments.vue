@@ -4,7 +4,9 @@
 </template>
 
 <style lang='scss' scoped>
-#all-comments {
-  background: lighten(#7CBB91, 10)
-}
+  @import 'app/javascript/packs/games';
+
+  #all-comments {
+    background-color: lighten($page-base-background-color, 10)
+  }
 </style>

@@ -7,12 +7,14 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueSession from 'vue-session'
 import Games from './Games.vue'
 import ShowGame from '../games/Show'
 import AllGames from '../games/Index'
 import NotFound from '../errors/NotFound'
 
 Vue.use(VueRouter)
+Vue.use(VueSession)
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(document.createElement('games'))

@@ -38,6 +38,15 @@
         const attributes = data
         const createdPlayer = new LiveRecord.Model.all.Player(attributes)
         createdPlayer.create()
+
+        this.$session.set('currentPlayerAttributes', attributes)
+
+        const $form = $(event.currentTarget)
+        const $attributeInput = $form.find(':input.error')
+
+        $attributeInput.removeClass('error')
+        $attributeInput.foundation('_destroy')
+        this.$set(this.newPlayer, 'name', '')
       },
       onSubmitError(event) {
         const data = event.detail[0]
@@ -50,11 +59,17 @@
         for (let attribute in errors) {
           let $attributeInput = $form.find(':input, [name="' + attribute + '"]')
 
-          for (let errorMessage of errors[attribute]) {
-            // attribute errorMessage
-            // TODO: handle form errors
-            var elem = new Foundation.Tooltip($attributeInput, {'tip-text': errorMessage});
-          }
+          let errorMessagesString = errors[attribute].join('\n')
+
+          const element = new Foundation.Tooltip($attributeInput, {
+            tipText: errorMessagesString,
+            position: 'bottom',
+            alignment: 'left',
+            fadeOutDuration: 200
+          });
+
+          $attributeInput.addClass('error')
+          $attributeInput.foundation('show')
         }
       }
     }
@@ -62,12 +77,20 @@
 </script>
 
 <style lang='scss' scoped>
+  @import './shared';
+
   #new-player {
-    margin-top: 4rem;
+    @extend %current-player-container;
 
     h2 {
       color: white;
       font-size: 1.5em;
+    }
+  }
+
+  form {
+    .error {
+      border-bottom: 4px solid red;
     }
   }
 </style>

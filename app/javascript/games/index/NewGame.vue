@@ -15,7 +15,7 @@
 </script>
 
 <style lang='scss' scoped>
-  @import 'app/javascript/packs/games';
+  @import 'app/assets/stylesheets/imports/variables';
 
   #new-game {
     background-color: darken($page-base-background-color, 10);

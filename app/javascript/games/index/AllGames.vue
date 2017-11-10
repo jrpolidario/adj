@@ -41,7 +41,7 @@
 </script>
 
 <style lang='scss' scoped>
-  @import 'app/javascript/packs/games';
+  @import 'app/assets/stylesheets/imports/variables';
 
   #all-games {
     background-color: $page-base-background-color;

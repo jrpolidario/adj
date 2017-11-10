@@ -1,11 +1,11 @@
 <template>
   <div id='new-player'>
-    <h2>{{ currentPlayer.name }}</h2>
+    <h2>{{ currentPlayer.name() }}</h2>
   </div>
 </template>
 
 <script>
-  import currentPlayer from 'globals.js'
+  import { currentPlayer } from 'globals.js'
 
   export default {
     computed: {
@@ -15,4 +15,9 @@
 </script>
 
 <style lang='scss' scoped>
+  @import './shared';
+
+  #new-player {
+    @extend %current-player-container;
+  }
 </style>

@@ -8,6 +8,7 @@
 <script>
   import ShowCurrentPlayer from './current_player/Show'
   import NewPlayer from './current_player/New'
+  import { currentPlayer } from 'globals.js'
 
   export default {
     components: { ShowCurrentPlayer, NewPlayer },
@@ -17,9 +18,7 @@
         this.$session.start()
     },
     computed: {
-      currentPlayer() {
-        return this.$session.get('currentPlayer')
-      }
+      currentPlayer
     }
   }
 </script>

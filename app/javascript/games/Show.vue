@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import Card from './cards/Card'
+  import Card from './show/cards/Card'
 
   let nextCardId = 1
 

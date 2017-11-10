@@ -39,13 +39,16 @@
         const createdPlayer = new LiveRecord.Model.all.Player(attributes)
         createdPlayer.create()
 
-        this.$session.set('currentPlayerAttributes', attributes)
+        this.$store.commit('setCurrentPlayer', createdPlayer)
 
         const $form = $(event.currentTarget)
         const $attributeInput = $form.find(':input.error')
 
-        $attributeInput.removeClass('error')
-        $attributeInput.foundation('_destroy')
+        if ($attributeInput.length > 0) {
+          $attributeInput.removeClass('error')
+          $attributeInput.foundation('_destroy')
+        }
+        
         this.$set(this.newPlayer, 'name', '')
       },
       onSubmitError(event) {
@@ -77,7 +80,7 @@
 </script>
 
 <style lang='scss' scoped>
-  @import './shared';
+  @import './shared/placeholders';
 
   #new-player {
     @extend %current-player-container;

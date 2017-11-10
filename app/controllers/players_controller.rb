@@ -28,6 +28,8 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save
+        session[:player_id] = @player.id
+
         format.html { redirect_to @player, notice: 'Player was successfully created.' }
         format.json { render :show, status: :created, location: @player }
       else

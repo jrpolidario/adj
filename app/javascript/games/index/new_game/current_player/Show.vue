@@ -1,21 +1,34 @@
 <template>
   <div id='new-player'>
-    <h2>{{ currentPlayer.name() }}</h2>
+    <form v-if='isEditingName'>
+    </form>
+    <h2 v-else v-on:click='nameOnClick'>{{ currentPlayer.attributes.name }}</h2>
   </div>
 </template>
 
 <script>
-  import { currentPlayer } from 'globals.js'
+  import { mapGetters } from 'vuex'
+  // import { currentPlayer } from 'globals.js'
 
   export default {
-    computed: {
-      currentPlayer
+    data() {
+      return {
+        isEditingName: false
+      }
+    },
+    computed: mapGetters([
+      'currentPlayer'
+    ]),
+    methods: {
+      nameOnClick: {
+
+      }
     }
   }
 </script>
 
 <style lang='scss' scoped>
-  @import './shared';
+  @import './shared/placeholders';
 
   #new-player {
     @extend %current-player-container;

@@ -6,20 +6,16 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import ShowCurrentPlayer from './current_player/Show'
   import NewPlayer from './current_player/New'
-  import { currentPlayer } from 'globals.js'
+  // import { currentPlayer } from 'globals.js'
 
   export default {
     components: { ShowCurrentPlayer, NewPlayer },
-    beforeCreate() {
-      // initialize a sesssion if not yet initialized
-      if (!this.$session.exists())
-        this.$session.start()
-    },
-    computed: {
-      currentPlayer
-    }
+    computed: mapGetters([
+      'currentPlayer'
+    ]),
   }
 </script>
 

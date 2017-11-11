@@ -11,4 +11,8 @@ class Player < ApplicationRecord
     # Defaults to empty array, thereby blocking everything by default, only unless explicitly stated here so.
     [:name, :game_id, :created_at, :updated_at]
   end
+
+  def self.live_record_queryable_attributes(current_user)
+    [:name, :game_id, :created_at, :updated_at]
+  end
 end

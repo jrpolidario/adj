@@ -1,29 +1,41 @@
 <template>
   <div id='new-player'>
-    <form v-if='isEditingName'>
-    </form>
-    <h2 v-else v-on:click='nameOnClick'>{{ currentPlayer.attributes.name }}</h2>
+    <PlayerForm
+      v-if='isEditingName'
+      :player='currentPlayer'
+      :formAction='editPlayerSubmitPath'
+      :formMethod='"put"'
+      :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
+    />
+    <h2 v-else v-on:click='isEditingName = true'>{{ currentPlayer.attributes.name }}</h2>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  // import { currentPlayer } from 'globals.js'
+  import PlayerForm from './shared/Form'
 
   export default {
+    components: { PlayerForm },
     data() {
       return {
-        isEditingName: false
+        isEditingName: false,
+        onSubmitSuccessCallback(data, status, xhr) {
+          // wont need to manually update player attributes, because it's LiveRecord already does that for us
+          this.isEditingName = false
+        }
       }
     },
-    computed: mapGetters([
-      'currentPlayer'
-    ]),
-    methods: {
-      nameOnClick: {
-
-      }
-    }
+    computed: Object.assign(
+      {
+        editPlayerSubmitPath() {
+          return Routes.player_path(this.currentPlayer.attributes.id)
+        }
+      },
+      mapGetters([
+        'currentPlayer'
+      ])
+    )
   }
 </script>
 

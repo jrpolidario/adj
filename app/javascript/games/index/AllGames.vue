@@ -17,8 +17,6 @@
     created () {
       let self = this
 
-      window.vw = self
-
       // load all Game records, and subscribe and auto-fetch new Games
       this.gamesSubscription = LiveRecord.Model.all.Game.subscribe({reload: true})
 

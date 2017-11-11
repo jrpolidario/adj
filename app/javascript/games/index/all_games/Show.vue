@@ -1,7 +1,7 @@
 <template>
   <div class='show-game'>
     <span v-for='(player, index) in game.players()'>
-      {{ player.name() }} {{ index != game.players().length - 1 ? '-' : '' }}
+      {{ player.attributes.name }} {{ index != game.players().length - 1 ? '-' : '' }}
     </span>
   </div>
 </template>

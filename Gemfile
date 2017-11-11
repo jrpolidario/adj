@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'live_record', '~> 0.2.6'
+gem 'live_record', '~> 0.2.7'
 
 gem 'redis'
 

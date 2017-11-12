@@ -1,13 +1,14 @@
 <template>
-  <div id='new-player'>
+  <div id='show-player'>
     <PlayerForm
       v-if='isEditingName'
       :player='currentPlayer'
       :formAction='editPlayerSubmitPath'
       :formMethod='"put"'
       :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
+      :onFormBlurCallback='onFormBlurCallback.bind(this)'
     />
-    <h2 v-else v-on:click='isEditingName = true'>{{ currentPlayer.attributes.name }}</h2>
+    <h2 class='editable' v-else v-on:click='isEditingName = true'>{{ currentPlayer.attributes.name }}</h2>
   </div>
 </template>
 
@@ -21,7 +22,10 @@
       return {
         isEditingName: false,
         onSubmitSuccessCallback(data, status, xhr) {
-          // wont need to manually update player attributes, because it's LiveRecord already does that for us
+          // wont need to manually update player attributes, because LiveRecord already does that for us
+          this.isEditingName = false
+        },
+        onFormBlurCallback() {
           this.isEditingName = false
         }
       }
@@ -42,7 +46,12 @@
 <style lang='scss' scoped>
   @import './shared/placeholders';
 
-  #new-player {
+  #show-player {
     @extend %current-player-container;
+
+    .editable {
+      @extend %form-styles;
+      cursor: pointer;
+    }
   }
 </style>

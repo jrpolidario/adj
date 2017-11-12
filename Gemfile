@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'live_record', '~> 0.2.7'
+gem 'live_record', '~> 0.3.1'
 
 gem 'redis'
 
@@ -41,6 +41,8 @@ gem 'webpacker', '~> 3.0'
 gem 'jquery-rails'
 gem 'foundation-rails'
 gem 'js-routes'
+gem 'cancancan', '~> 2.0'
+gem 'baby_squeel'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

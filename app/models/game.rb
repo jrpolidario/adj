@@ -5,11 +5,18 @@ class Game < ApplicationRecord
   has_many :players, dependent: :destroy
   accepts_nested_attributes_for :players
 
+  scope :ongoing, -> { where.has{ (updated_at > 1.minute.ago) & (is_finished == false) } }
+
   def self.live_record_whitelisted_attributes(game, current_user)
-    [:name, :created_at, :updated_at]
+    # only allow fetching of ongoing records
+    if ongoing.exists?(id: game.id)
+      [:id, :is_finished, :name, :created_at, :updated_at]
+    else
+      []
+    end
   end
 
   def self.live_record_queryable_attributes(current_user)
-    [:name, :created_at, :updated_at]
+    [:is_finished, :updated_at]
   end
 end

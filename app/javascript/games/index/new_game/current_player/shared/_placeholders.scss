@@ -1,3 +1,21 @@
+@import 'app/assets/stylesheets/imports/variables';
+
 %current-player-container {
   margin-top: 4rem;
+  *, >>> * {
+    font-size: 2rem;
+  }
+}
+
+%form-styles {
+  font-size: 2rem;
+  font-family: $default-font-header-sans;
+  padding: 0.5rem;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  line-height: 3rem;
+  border-radius: 0;
+  height: auto;
+  box-shadow: none;
 }

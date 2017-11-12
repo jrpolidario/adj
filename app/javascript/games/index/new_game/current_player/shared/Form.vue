@@ -11,8 +11,11 @@
     <input
       type='text'
       name='player[name]'
-      placeholder='Enter your player name :)'
-      v-model='player.attributes.name'
+      ref='name'
+      placeholder='Enter name :)'
+      v-on:blur='onFormBlurCallback'
+      v-on:keyup.esc='onFormBlurCallback'
+      v-model='formValues.name'
     ></input>
   </form>
 </template>
@@ -32,8 +35,18 @@
         type: String,
         required: true
       },
+      onFormBlurCallback: {
+        type: Function,
+        default: () => {}
+      },
       onSubmitSuccessCallback: {
-        type: Function
+        type: Function,
+        default: () => {}
+      }
+    },
+    data() {
+      return {
+        formValues: jQuery.extend({}, this.player.attributes) // clone
       }
     },
     methods: {
@@ -78,14 +91,29 @@
           $attributeInput.foundation('show')
         }
       }
+    },
+    mounted() {
+      // focus the "name" input field
+      this.$refs.name.focus()
     }
   }
 </script>
 
 <style lang='scss' scoped>
+  @import './placeholders';
+
   form {
     .error {
       border-bottom: 4px solid red;
+    }
+
+    input, input:focus {
+      $input-border-size: 1px;
+      @extend %form-styles;
+      border: $input-border-size solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255, 0.1);
+      color: white;
+      margin: -($input-border-size);
     }
   }
 </style>

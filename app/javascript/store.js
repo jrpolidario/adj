@@ -29,7 +29,7 @@ const getters = {
         if (!currentPlayer) {
           currentPlayer = new LiveRecord.Model.all.Player(currentPlayerAttributes)
           currentPlayer.create({reload: true})
-          currentPlayer.addCallback('before:update', function() {
+          currentPlayer.addCallback('after:update', function() {
             // if changed, re-set currentPlayer
             if (Object.keys(this.changes).length > 0) {
               state.currentPlayer = this

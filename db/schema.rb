@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109015538) do
+ActiveRecord::Schema.define(version: 20171112150415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,10 @@ ActiveRecord::Schema.define(version: 20171109015538) do
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_finished", default: false, null: false
+    t.index ["created_at"], name: "index_games_on_created_at"
+    t.index ["is_finished"], name: "index_games_on_is_finished"
+    t.index ["updated_at"], name: "index_games_on_updated_at"
   end
 
   create_table "live_record_updates", id: :serial, force: :cascade do |t|
@@ -34,7 +38,9 @@ ActiveRecord::Schema.define(version: 20171109015538) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_players_on_created_at"
     t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["updated_at"], name: "index_players_on_updated_at"
   end
 
   add_foreign_key "players", "games"

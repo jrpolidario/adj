@@ -2,6 +2,7 @@ Game
 has_many :players
 has_many :deck_cards
 has_many :selectable_cards
+is_finished
 
 Player
 belongs_to :game

@@ -14,13 +14,12 @@
   h1 {
     color: white;
     font-size: 3em;
-    // text-shadow: 0 0.02em 0.02em rgba(0,0,0,0.6);
+    text-shadow: 0 0 0.05em rgba(0,0,0,0.4);
 
     .title-outer-container {
-      $title-background-color: #105D2A;
+      $title-background-color: #007A4B; // #105D2A;
       background: $title-background-color;
-      // border: 0.1em solid rgba(lighten($title-background-color, 16), 0.6);
-      box-shadow: 0 0 0.1em rgba(darken($title-background-color, 16), 0.6);
+      border: 0.1em groove rgba(lighten($title-background-color, 8), 0.15);
       border-radius: 50%;
       width: 2.1em;
       left: 50%;

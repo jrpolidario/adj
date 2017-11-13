@@ -1,6 +1,5 @@
 class Player < ApplicationRecord
-  belongs_to :game, required: false, touch: true
-
+  
   include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 

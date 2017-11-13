@@ -2,7 +2,7 @@ class Game < ApplicationRecord
 
   include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
-  has_many :players, dependent: :destroy
+  has_many :games_players, dependent: :destroy
   accepts_nested_attributes_for :players
 
   scope :ongoing, -> { where.has{ (updated_at > 1.minute.ago) & (is_finished == false) } }

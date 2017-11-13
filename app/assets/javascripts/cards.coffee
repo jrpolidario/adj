@@ -1,7 +1,6 @@
-<% module_namespacing do -%>
 LiveRecord.Model.create(
   {
-    modelName: '<%= singular_table_name.camelcase %>',
+    modelName: 'Card',
     plugins: {
       # remove this line if you're not using LiveDOM
       LiveDOM: true
@@ -12,7 +11,7 @@ LiveRecord.Model.create(
     #   user: { foreignKey: 'user_id', modelName: 'User' }
     # },
     # hasMany: {
-    #   books: { foreignKey: '<%= singular_table_name %>_id', modelName: 'Book' }
+    #   books: { foreignKey: 'card_id', modelName: 'Book' }
     # },
     # callbacks: {
     #   'on:disconnect': [],
@@ -20,4 +19,3 @@ LiveRecord.Model.create(
     # }
   }
 )
-<% end -%>

@@ -1,0 +1,14 @@
+<script>
+  LiveRecord.helpers.loadRecords({modelName: 'Category'})
+</script>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <span data-live-record-update-from='Category-<%= @category.id %>-name'>
+  	<%= @category.name %>
+  </span>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>

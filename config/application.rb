@@ -17,6 +17,7 @@ module Adj
 
     config.generators do |g|
       g.stylesheets false
+      g.test_framework nil
     end
   end
 end

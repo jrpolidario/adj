@@ -1,0 +1,28 @@
+<script>
+  LiveRecord.helpers.loadRecords({modelName: 'Card'})
+</script>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-category'>
+  	<%= @card.category %>
+  </span>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-name'>
+  	<%= @card.name %>
+  </span>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-image'>
+  	<%= @card.image %>
+  </span>
+</p>
+
+<%= link_to 'Edit', edit_card_path(@card) %> |
+<%= link_to 'Back', cards_path %>

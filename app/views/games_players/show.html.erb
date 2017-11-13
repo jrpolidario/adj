@@ -1,0 +1,28 @@
+<script>
+  LiveRecord.helpers.loadRecords({modelName: 'GamesPlayer'})
+</script>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Game:</strong>
+  <span data-live-record-update-from='GamesPlayer-<%= @games_player.id %>-game'>
+  	<%= @games_player.game %>
+  </span>
+</p>
+
+<p>
+  <strong>Player:</strong>
+  <span data-live-record-update-from='GamesPlayer-<%= @games_player.id %>-player'>
+  	<%= @games_player.player %>
+  </span>
+</p>
+
+<p>
+  <strong>Selected card:</strong>
+  <span data-live-record-update-from='GamesPlayer-<%= @games_player.id %>-selected_card_id'>
+  	<%= @games_player.selected_card_id %>
+  </span>
+</p>
+
+<%= link_to 'Edit', edit_games_player_path(@games_player) %> |
+<%= link_to 'Back', games_players_path %>

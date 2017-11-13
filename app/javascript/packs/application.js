@@ -9,9 +9,10 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Application from './Application.vue'
-import ShowGame from '../games/Show'
-import AllGames from '../games/Index'
-import NotFound from '../errors/NotFound'
+import Dashboard from 'dashboard/Index'
+import Game from 'game/Index'
+import NewGame from 'dashboard/index/games/New'
+import NotFound from 'errors/NotFound'
 import store from 'store'
 
 Vue.use(VueRouter)
@@ -26,8 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     mode: 'history',
     base: __dirname,
     routes: [
-      { path: routeWithoutFormat(Routes.root_path), component: AllGames },
-      { path: routeWithoutFormat(Routes.game_path), component: ShowGame },
+      { path: '', component: Dashboard, name: 'rootPath' },
+      {
+        path: 'games',
+        children: [
+          { path: 'new', component: NewGame, name: 'newGamePath' },
+          { path: ':id', component: Game, name: 'gamePath' }
+        ]
+      },
       { path: "*", component: NotFound }
     ]
   })

@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require live_record
 //= require js-routes
+//= require live_record/plugins/live_dom
 //= require_tree .
 
 $(function(){ $(document).foundation(); });

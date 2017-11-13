@@ -1,8 +1,8 @@
 LiveRecord.Model.create(
   {
     modelName: 'Player',
-    belongsTo: {
-      game: { foreignKey: 'game_id', modelName: 'Game' }
+    hasMany: {
+      gamesPlayers: { foreignKey: 'player_id', modelName: 'GamesPlayer' }
     }
   }
 )

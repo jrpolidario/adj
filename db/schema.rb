@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113140349) do
+ActiveRecord::Schema.define(version: 20171113151146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cards", force: :cascade do |t|
+    t.bigint "category_id"
+    t.string "name"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_cards_on_category_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "games", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -22,6 +37,18 @@ ActiveRecord::Schema.define(version: 20171113140349) do
     t.index ["created_at"], name: "index_games_on_created_at"
     t.index ["is_finished"], name: "index_games_on_is_finished"
     t.index ["updated_at"], name: "index_games_on_updated_at"
+  end
+
+  create_table "games_players", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "player_id"
+    t.integer "selected_card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "score"
+    t.index ["game_id"], name: "index_games_players_on_game_id"
+    t.index ["player_id"], name: "index_games_players_on_player_id"
+    t.index ["selected_card_id"], name: "index_games_players_on_selected_card_id"
   end
 
   create_table "live_record_updates", id: :serial, force: :cascade do |t|
@@ -41,4 +68,7 @@ ActiveRecord::Schema.define(version: 20171113140349) do
     t.index ["updated_at"], name: "index_players_on_updated_at"
   end
 
+  add_foreign_key "cards", "categories"
+  add_foreign_key "games_players", "games"
+  add_foreign_key "games_players", "players"
 end

@@ -9,7 +9,6 @@
   import { mapGetters } from 'vuex'
   import ShowCurrentPlayer from './current_player/Show'
   import NewPlayer from './current_player/New'
-  // import { currentPlayer } from 'globals.js'
 
   export default {
     components: { ShowCurrentPlayer, NewPlayer },

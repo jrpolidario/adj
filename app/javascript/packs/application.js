@@ -37,7 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const VueApp = new Vue({
     router,
     store,
-    render: h => h(Application)
+    render: h => h(Application),
+    methods: {
+      configureWithLiveRecordStore() {
+        // now we make our LiveRecord records-store reactive & compatible with our vuex store.js
+        const self = this
+
+        window.vw = self
+
+        Object.keys(LiveRecord.Model.all).forEach((key,index) => {
+          const model = LiveRecord.Model.all[key]
+
+          self.$set(self.$store.state.records, key, model.all)
+
+          model.addCallback('before:create', function() {
+            const record = this
+            // Vue.util.defineReactive(LiveRecord.Model.all[key].all, record.id(), record)
+            // Vue.util.defineReactive(LiveRecord.Model.all[key].all[record.id()], 'attributes', record.attributes)
+            self.$store.commit('setRecord', {[key]: record})
+          })
+
+          model.addCallback('before:destroy', function() {
+            const record = this
+            self.$store.commit('unsetRecord', {[key]: record})
+          })
+        })
+      }
+    },
+    created() {
+      this.configureWithLiveRecordStore()
+    }
   }).$mount('Application')
 })
 

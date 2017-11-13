@@ -4,13 +4,28 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  currentPlayer: null
+  currentPlayer: null,
+  records: {
+    // this is programatically set, see created() inside application.js
+  }
 }
 
 const mutations = {
   setCurrentPlayer: (state, player) => {
     state.currentPlayer = player
-    localStorage.setItem('currentPlayerAttributes', JSON.stringify(player.attributes))
+    localStorage.setItem('adj:currentPlayerAttributes', JSON.stringify(player.attributes))
+  },
+  setRecord: (state, payload) => {
+    Object.keys(payload).forEach((key, index) => {
+      let record = payload[key]
+      Vue.set(state.records[key], record.id(), record)
+    })
+  },
+  unsetRecord: (state, payload) => {
+    Object.keys(payload).forEach((key, index) => {
+      let record = payload[key]
+      Vue.delete(state.records[key], record.id())
+    })
   }
 }
 
@@ -20,7 +35,7 @@ const actions = {
 const getters = {
   currentPlayer: (state) => {
     if (!state.currentPlayer) {
-      const currentPlayerAttributes = JSON.parse(localStorage.getItem('currentPlayerAttributes'))
+      const currentPlayerAttributes = JSON.parse(localStorage.getItem('adj:currentPlayerAttributes'))
 
       if (currentPlayerAttributes) {
         let currentPlayer = LiveRecord.Model.all.Player.all[currentPlayerAttributes.id]
@@ -33,7 +48,7 @@ const getters = {
             // if changed, re-set currentPlayer
             if (Object.keys(this.changes).length > 0) {
               state.currentPlayer = this
-              localStorage.setItem('currentPlayerAttributes', JSON.stringify(state.currentPlayer.attributes))
+              localStorage.setItem('adj:currentPlayerAttributes', JSON.stringify(state.currentPlayer.attributes))
             }
           })
         }

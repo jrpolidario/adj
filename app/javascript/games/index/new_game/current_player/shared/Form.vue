@@ -46,7 +46,7 @@
     },
     data() {
       return {
-        formValues: jQuery.extend({}, this.player.attributes) // clone
+        formValues: $.extend({}, this.player.attributes) // clone
       }
     },
     methods: {

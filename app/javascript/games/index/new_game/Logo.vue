@@ -14,14 +14,15 @@
   h1 {
     color: white;
     font-size: 3em;
-    text-shadow: 0 0.02em 0.02em rgba(0,0,0,0.6);
+    // text-shadow: 0 0.02em 0.02em rgba(0,0,0,0.6);
 
     .title-outer-container {
       $title-background-color: #105D2A;
       background: $title-background-color;
-      border: 0.2em solid darken($title-background-color, 2);
+      // border: 0.1em solid rgba(lighten($title-background-color, 16), 0.6);
+      box-shadow: 0 0 0.1em rgba(darken($title-background-color, 16), 0.6);
       border-radius: 50%;
-      width: 2em;
+      width: 2.1em;
       left: 50%;
       transform: translateX(-50%);
 

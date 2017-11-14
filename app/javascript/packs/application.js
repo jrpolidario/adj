@@ -73,6 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
             self.$store.commit('setRecord', {[key]: record})
           })
 
+          model.addCallback('before:update', function() {
+            const record = this
+            // Vue.util.defineReactive(LiveRecord.Model.all[key].all, record.id(), record)
+            // Vue.util.defineReactive(LiveRecord.Model.all[key].all[record.id()], 'attributes', record.attributes)
+            // self.$store.commit('setRecordAttributes', {[key]: record})
+
+            if (record.changes) {
+              Object.keys(record.changes).forEach((key, index) => {
+                const change = record.changes[key]
+                self.$set(self.$store.state.records[record.modelName()][record.id()].attributes, key, change[1])
+              })
+            }
+          })
+
           model.addCallback('before:destroy', function() {
             const record = this
             self.$store.commit('unsetRecord', {[key]: record})

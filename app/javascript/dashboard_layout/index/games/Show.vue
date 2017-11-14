@@ -3,7 +3,7 @@
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
-        {{ getRecord('Player', gamesPlayer.player_id()).attributes.name }}
+        {{ gamesPlayer.player().attributes.name }}
         {{ index != game.gamesPlayers().length - 1 ? '-' : '' }}
       </span>
     </td>
@@ -24,6 +24,7 @@
     data() {
       return {
         callbacksToBeDestroyed: [],
+        subscriptionsToBeDestroyed: [],
         gameTimestamp: moment(this.game.created_at()).fromNow()
       }
     },
@@ -31,7 +32,10 @@
     created() {
       const self = this
 
-      this.gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
+      // if (this.game.id() == 24)
+      //   window.yy = self
+
+      const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
         reload: true,
         where: { game_id_eq: this.game.id() },
         callbacks: {
@@ -42,27 +46,38 @@
             const callbackToBeDestroyed = createdGamesPlayer.addCallback('after:destroy', function() {
               self.$forceUpdate()
             })
+            self.callbacksToBeDestroyed.push([createdGamesPlayer, callbackToBeDestroyed])
 
             let player = LiveRecord.Model.all.Player.all[createdGamesPlayer.player_id()]
-
             // if the player associated to the gamesPlayer is not yet in the store, we also retrieve it
             if (!player) {
               player = new LiveRecord.Model.all.Player({id: createdGamesPlayer.player_id()})
-              player.subscribe({reload: true})
-              player.addCallback('after:update', function() {
-                self.$store.state.records.Player[this.id()] = this
-                self.$forceUpdate()
-              })
-              self.$store.commit('setRecord', { Player: player })
+              player.create({reload: true})
             }
 
-            self.callbacksToBeDestroyed.push([createdGamesPlayer, callbackToBeDestroyed])
+            const playerUpdateCallback = player.addCallback('after:update', function() {
+              self.$store.commit('setRecord', { Player: player })
+              self.$forceUpdate()
+            })
+
+            const playerDestroyCallback = player.addCallback('after:update', function() {
+              self.$store.commit('setRecord', { Player: player })
+              self.$forceUpdate()
+            })
+
+            self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
+            self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
           }
         }
       })
+      this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, gamesPlayersSubscription])
     },
     destroyed() {
-      LiveRecord.Model.all.GamesPlayer.unsubscribe(this.gamesPlayersSubscription)
+      for (let subscriptionToBeDestroyed of this.subscriptionsToBeDestroyed) {
+        const model = subscriptionToBeDestroyed[0]
+        const subscription = subscriptionToBeDestroyed[1]
+        model.unsubscribe(subscription)
+      }
 
       for (let callbackToBeDestroyed of this.callbacksToBeDestroyed) {
         const record = callbackToBeDestroyed[0]

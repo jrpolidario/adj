@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113151146) do
+ActiveRecord::Schema.define(version: 20171113202702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20171113151146) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_finished", default: false, null: false
+    t.string "password_digest"
     t.index ["created_at"], name: "index_games_on_created_at"
     t.index ["is_finished"], name: "index_games_on_is_finished"
     t.index ["updated_at"], name: "index_games_on_updated_at"

@@ -1,5 +1,6 @@
 <template>
   <form
+    id='join-form'
     v-bind:action='formAction'
     v-bind:method='["patch", "put", "delete"].includes(formMethod) ? "post" : formMethod'
     data-remote='true'
@@ -9,21 +10,22 @@
   >
     <input v-if='["patch", "put", "delete"].includes(formMethod)' name='_method' type='hidden' v-bind:value='formMethod'/>
     <input
-      type='text'
-      name='player[name]'
-      ref='name'
-      placeholder='Enter name :)'
-      v-on:blur='onFormBlurCallback'
-      v-on:keyup.esc='onFormBlurCallback'
-      v-model='formValues.name'
+      type='password'
+      name='games_player[game_password]'
+      ref='game_password'
+      placeholder='Enter the game password'
+      v-model='formValues.game_password'
     ></input>
+    <input type='submit' class='button'></input>
   </form>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     props: {
-      player: {
+      gamesPlayer: {
         type: Object,
         required: true
       },
@@ -35,20 +37,25 @@
         type: String,
         required: true
       },
-      onFormBlurCallback: {
-        type: Function,
-        default: () => {}
-      },
       onSubmitSuccessCallback: {
         type: Function,
         default: () => {}
       }
     },
-    data() {
-      return {
-        formValues: $.extend({}, this.player.attributes) // clone
-      }
-    },
+    computed: Object.assign(
+      {
+        formValues() {
+          const self = this
+          return $.extend( // clone
+            {},
+            this.gamesPlayer.attributes
+          )
+        }
+      },
+      mapGetters([
+        'getState'
+      ])
+    ),
     methods: {
       onSubmitSuccess(event) {
         const data = event.detail[0]
@@ -63,7 +70,7 @@
           $attributeInput.foundation('_destroy')
         }
 
-        this.$set(this.player, 'name', '')
+        this.$set(this.formValues, 'game_password', '')
 
         this.onSubmitSuccessCallback(data, status, xhr)
       },
@@ -76,13 +83,13 @@
         const $form = $(event.currentTarget)
 
         for (let attribute in errors) {
-          let $attributeInput = $form.find(':input').filter('[name="player[' + attribute + ']"]')
+          let $attributeInput = $form.find(':input').filter('[name="games_player[' + attribute + ']"]')
 
           let errorMessagesString = errors[attribute].join('\n')
 
           const element = new Foundation.Tooltip($attributeInput, {
             tipText: errorMessagesString,
-            position: 'bottom',
+            position: 'top',
             alignment: 'left',
             fadeOutDuration: 200
           });
@@ -93,27 +100,36 @@
       }
     },
     mounted() {
-      // focus the "name" input field
-      this.$refs.name.focus()
+      // focus the "game password" input field
+      this.$refs.game_password.focus()
     }
   }
 </script>
 
 <style lang='scss' scoped>
-  @import './placeholders';
-
-  form {
+  form#join-form {
     .error {
-      border-bottom: 4px solid red;
+      border-bottom: 1px solid rgba(#E63946, 1);
     }
 
     input, input:focus {
-      $input-border-size: 1px;
-      @extend %form-styles;
-      border: $input-border-size solid rgba(255,255,255,0.3);
-      background: rgba(255,255,255, 0.1);
+      // $input-border-size: 1px;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: none;
+      border-radius: 0.15rem;
+      background: rgba(255,255,255, 0.2);
       color: white;
-      margin: -($input-border-size);
+      // margin: -($input-border-size);
+      // margin-top: 1rem;
+
+      &.button {
+        background: rgba(0,0,0,0.15);
+        border: 1px solid rgba(0,0,0,0.04);
+
+        &:hover {
+          background: rgba(0,0,0,0.4);
+        }
+      }
     }
   }
 </style>

@@ -16,14 +16,14 @@
     components: { PlayerForm },
     data () {
       return {
-        newPlayer: new LiveRecord.Model.all.Player({}),
+        newPlayer: new LiveRecord.Model.all.Player(),
         newPlayerSubmitPath: Routes.players_path(),
         onSubmitSuccessCallback(data, status, xhr) {
           const attributes = data
           const createdPlayer = new LiveRecord.Model.all.Player(attributes)
           createdPlayer.create()
 
-          this.$store.commit('setCurrentPlayer', createdPlayer)
+          this.$store.commit('setState', { currentPlayer: createdPlayer })
         }
       }
     }

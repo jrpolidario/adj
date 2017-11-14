@@ -1,19 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import store2 from 'store2'
 
 Vue.use(Vuex)
 
 const state = {
   currentPlayer: null,
+  currentGame: null,
   records: {
     // this is programatically set, see created() inside application.js
   }
 }
 
 const mutations = {
-  setCurrentPlayer: (state, player) => {
-    state.currentPlayer = player
-    localStorage.setItem('adj:currentPlayerAttributes', JSON.stringify(player.attributes))
+  setState: (state, payload) => {
+    Object.keys(payload).forEach((key, index) => {
+      const value = payload[key]
+      state[key] = value
+
+      // if this particular "state" is a LiveRecord object, we need to only pass the `attributes`
+      // because JSON.stringify won't work for this type of object
+      let storageValue
+      if (value.constructor.name == 'Model' && value.modelName() != undefined) {
+        storageValue = value.attributes
+        storageValue._isLiveRecordObject = true
+        storageValue._modelName = value.modelName()
+      }
+      else
+        storageValue = value
+      store2.namespace('state').set(key, storageValue)
+    })
   },
   setRecord: (state, payload) => {
     Object.keys(payload).forEach((key, index) => {
@@ -33,31 +49,12 @@ const actions = {
 }
 
 const getters = {
-  currentPlayer: (state) => {
-    if (!state.currentPlayer) {
-      const currentPlayerAttributes = JSON.parse(localStorage.getItem('adj:currentPlayerAttributes'))
-
-      if (currentPlayerAttributes) {
-        let currentPlayer = LiveRecord.Model.all.Player.all[currentPlayerAttributes.id]
-
-        // if player not yet in LiveRecord store, create it, and resync it from backend
-        if (!currentPlayer) {
-          currentPlayer = new LiveRecord.Model.all.Player(currentPlayerAttributes)
-          currentPlayer.create({reload: true})
-          currentPlayer.addCallback('after:update', function() {
-            // if changed, re-set currentPlayer
-            if (Object.keys(this.changes).length > 0) {
-              state.currentPlayer = this
-              localStorage.setItem('adj:currentPlayerAttributes', JSON.stringify(state.currentPlayer.attributes))
-            }
-          })
-        }
-
-        state.currentPlayer = currentPlayer
-      }
-    }
-
-    return state.currentPlayer
+  getState: (state) => (key) => {
+    if (state[key])
+      return state[key]
+  },
+  getRecord: (state) => (modelName, recordId) => {
+    return state.records[modelName][recordId]
   }
 }
 

@@ -2,15 +2,17 @@
   <div id='player' class='full-height'>
     <Logo/>
     <CurrentPlayer/>
+    <CurrentGame/>
   </div>
 </template>
 
 <script>
   import Logo from './player/Logo'
   import CurrentPlayer from './player/CurrentPlayer'
+  import CurrentGame from './player/CurrentGame'
 
   export default {
-    components: { Logo, CurrentPlayer }
+    components: { Logo, CurrentPlayer, CurrentGame }
   }
 </script>
 

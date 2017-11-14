@@ -4,7 +4,7 @@
       <Player/>
     </div>
     <div class='large-6 medium-4 columns full-height'>
-      <Games/>
+      <router-view></router-view>
     </div>
     <div class='large-3 medium-4 columns full-height'>
       <Comments/>
@@ -14,21 +14,24 @@
 
 <script>
   import Player from './index/Player'
-  import Games from './index/Games'
   import Comments from './index/Comments'
 
   export default {
-  	components: { Player, Games, Comments }
+  	components: { Player, Comments }
   }
 </script>
 
-<style lang='scss' scoped>
+<!-- GLOBAL STYLES FOR DASHBOARD LAYOUT -->
+<style lang='scss'>
   #games {
     color: white;
 
-    // >>> means it affects children components
-    > div.columns >>> > * {
+    > div.columns > * {
       padding: 2rem;
     }
+  }
+  .button {
+    border: 1px solid rgba(white, 0.25);
+    background: transparent;
   }
 </style>

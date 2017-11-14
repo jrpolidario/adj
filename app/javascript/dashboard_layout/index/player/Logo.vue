@@ -1,13 +1,15 @@
 <template>
-  <h1>
-    <div class='title-outer-container width-proportional-to-height-container'>
-      <div class='width-proportional-to-height-content'>
-        <div class='title-inner-container'>
-          <span class='title-a'>A</span><span class='title-d'>D</span><span class='title-j'>J</span>
+  <router-link :to='{ name: "rootPath" }'>
+    <h1>
+      <div class='title-outer-container width-proportional-to-height-container'>
+        <div class='width-proportional-to-height-content'>
+          <div class='title-inner-container'>
+            <span class='title-a'>A</span><span class='title-d'>D</span><span class='title-j'>J</span>
+          </div>
         </div>
       </div>
-    </div>
-  </h1>
+    </h1>
+  </router-link>
 </template>
 
 <style lang='scss' scoped>

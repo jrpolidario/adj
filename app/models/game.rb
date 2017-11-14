@@ -5,7 +5,11 @@ class Game < ApplicationRecord
   has_many :games_players, dependent: :destroy
   has_many :players, through: :games_players
 
+  accepts_nested_attributes_for :games_players, reject_if: :all_blank
+
   scope :ongoing, -> { where.has{ (updated_at > 1.minute.ago) & (is_finished == false) } }
+
+  has_secure_password
 
   def self.live_record_whitelisted_attributes(game, current_user)
     # only allow fetching of ongoing records

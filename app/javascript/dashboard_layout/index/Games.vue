@@ -1,8 +1,12 @@
 <template>
   <div id='games' class='full-height'>
     <h2>Ongoing Games</h2>
-    <a v-bind:href='newGamePath'>New Game</a>
-    <ShowGame v-for='(game, id) in games' :game='game'/>
+    <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath" }' class='button'>
+      <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
+    </router-link>
+    <table>
+      <ShowGame v-for='(game, id) in games' :game='game'/>
+    </table>
   </div>
 </template>
 
@@ -23,10 +27,12 @@
       mapState({
         games: (state) => { return state.records.Game }
       }),
-      mapGetters(['currentPlayer'])
+      mapGetters(['getState'])
     ),
     created () {
       let self = this
+
+      window.rr = self
 
       // load all Game records, and subscribe and auto-fetch new/updated Games
       this.gamesSubscription = LiveRecord.Model.all.Game.autoload({
@@ -69,5 +75,10 @@
 
   #games {
     background-color: $page-base-background-color;
+
+    table {
+      table-layout: auto;
+      border-collapse: collapse;
+    }
   }
 </style>

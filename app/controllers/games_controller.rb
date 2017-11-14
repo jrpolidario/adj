@@ -54,13 +54,13 @@ class GamesController < ApplicationController
 
   # DELETE /games/1
   # DELETE /games/1.json
-  def destroy
-    @game.destroy
-    respond_to do |format|
-      format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @game.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to games_url, notice: 'Game was successfully destroyed.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -70,6 +70,6 @@ class GamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def game_params
-      params.fetch(:game, {})
+      params.fetch(:game, {}).permit(:password, :password_confirmation, games_players_attributes: [:player_id])
     end
 end

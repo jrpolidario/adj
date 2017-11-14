@@ -2,13 +2,13 @@
   <div id='show-player'>
     <PlayerForm
       v-if='isEditingName'
-      :player='currentPlayer'
+      :player='getState("currentPlayer")'
       :formAction='editPlayerSubmitPath'
       :formMethod='"put"'
       :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
       :onFormBlurCallback='onFormBlurCallback.bind(this)'
     />
-    <h2 class='editable' v-else v-on:click='isEditingName = true'>{{ currentPlayer.attributes.name }}</h2>
+    <h2 class='editable' v-else v-on:click='isEditingName = true'>{{ getState('currentPlayer').attributes.name }}</h2>
   </div>
 </template>
 
@@ -33,11 +33,11 @@
     computed: Object.assign(
       {
         editPlayerSubmitPath() {
-          return Routes.player_path(this.currentPlayer.attributes.id)
+          return Routes.player_path(this.getState('currentPlayer').attributes.id)
         }
       },
       mapGetters([
-        'currentPlayer'
+        'getState'
       ])
     )
   }

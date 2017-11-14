@@ -9,11 +9,19 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Application from './Application.vue'
-import Dashboard from 'dashboard/Index'
-import Game from 'game/Index'
-import NewGame from 'dashboard/index/games/New'
+
+import DashboardLayout from 'dashboard_layout/Index'
+import GameLayout from 'game_layout/Index'
+
+import Games from 'dashboard_layout/index/Games'
+import NewGame from 'dashboard_layout/index/NewGame'
+import JoinGame from 'dashboard_layout/index/JoinGame'
+
 import NotFound from 'errors/NotFound'
-import store from 'store'
+import Forbidden from 'errors/Forbidden'
+
+import store from 'store' // this is store.js
+import store2 from 'store2' // this is a session/localstorage package
 
 Vue.use(VueRouter)
 
@@ -27,15 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
     mode: 'history',
     base: __dirname,
     routes: [
-      { path: '', component: Dashboard, name: 'rootPath' },
-      {
-        path: 'games',
+      { path: '/', component: DashboardLayout,
         children: [
-          { path: 'new', component: NewGame, name: 'newGamePath' },
-          { path: ':id', component: Game, name: 'gamePath' }
+          { path: '', component: Games, name: 'rootPath' },
+          { path: 'games/new', component: NewGame, name: 'newGamePath' },
+          { path: 'games/:game_id/games_players/new', component: JoinGame, name: 'joinGamePath' },
         ]
       },
-      { path: "*", component: NotFound }
+      { path: '/games/:id', component: GameLayout, name: 'gamePath' },
+      { path: "*", component: NotFound },
+      { path: "/forbidden", component: Forbidden, name: 'forbiddenPath' }
     ]
   })
 
@@ -69,10 +78,61 @@ document.addEventListener('DOMContentLoaded', () => {
             self.$store.commit('unsetRecord', {[key]: record})
           })
         })
+      },
+      loadSessionFromStorage() {
+        const self = this
+        // iterate over each "state", and retrieve from storage if exists
+        Object.keys(this.$store.state).forEach((key,index) => {
+          const storageValue = store2.namespace('state').get(key)
+
+          if (!storageValue)
+            return
+
+          if (!storageValue._isLiveRecordObject) {
+            this.$store.state[key] = storageValue
+            return
+          }
+          else {
+            // resync the record from backend
+            const modelName = storageValue._modelName
+            // copy attributes (which is the storageValue) only except some injected properties
+            const attributes = storageValue
+            delete(storageValue._modelName)
+            delete(storageValue._isLiveRecordObject)
+
+            let record = LiveRecord.Model.all[modelName][attributes.id]
+
+            // if not yet in store
+            if (!record) {
+              record = new LiveRecord.Model.all[modelName](attributes)
+
+              record.addCallback('after:update', function() {
+                // if changed, update storage value
+                if (this.changes && Object.keys(this.changes).length > 0) {
+                  // state[key] = this
+                  const newAttributes = this.attributes
+                  newAttributes._isLiveRecordObject = true
+                  newAttributes._modelName = this.modelName()
+                  store2.namespace('state').set(key, newAttributes)
+                }
+              })
+
+              record.addCallback('after:destroy', function() {
+                self.$store.state[key] = null
+                store2.namespace('state').remove(key)
+              })
+
+              record.create({reload: true})
+            }
+
+            this.$store.state[key] = record
+          }
+        })
       }
     },
     created() {
       this.configureWithLiveRecordStore()
+      this.loadSessionFromStorage()
     }
   }).$mount('Application')
 })

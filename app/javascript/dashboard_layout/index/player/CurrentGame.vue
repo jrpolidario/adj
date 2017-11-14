@@ -1,19 +1,16 @@
 <template>
-  <div id='current-player'>
-    <ShowCurrentPlayer v-if='currentPlayer'/>
-    <NewPlayer v-else/>
+  <div id='current-game'>
+    <h2 v-if='getState("currentGame")'>{{ getState("currentGame").id() }}</h2>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import ShowCurrentPlayer from './current_player/Show'
-  import NewPlayer from './current_player/New'
 
   export default {
-    components: { ShowCurrentPlayer, NewPlayer },
     computed: mapGetters([
-      'currentPlayer'
+      'getState'
     ]),
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <router-link tag='tr' :to='{ name: "joinGamePath", params: { game_id: game.id() } }' class='show-game'>
+  <router-link tag='tr' :to='gameClickPath' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
@@ -25,16 +25,29 @@
       return {
         callbacksToBeDestroyed: [],
         subscriptionsToBeDestroyed: [],
-        gameTimestamp: moment(this.game.created_at()).fromNow()
+        gameTimestamp: moment(this.game.created_at()).fromNow(),
       }
     },
-    computed: mapGetters(['getRecord']),
+    computed: $.extend(
+      {
+        gameClickPath() {
+          const currentPlayer = this.getState('currentPlayer')
+          const gamePlayers = this.game.gamesPlayers().map((gamesPlayer) => {
+            return gamesPlayer.player()
+          })
+          const hasCurrentPlayerJoinedTheGame = gamePlayers.indexOf(currentPlayer) != -1
+
+          if (currentPlayer && hasCurrentPlayerJoinedTheGame)
+            return { name: "gamePath", params: { id: this.game.id() } }
+          else
+            return { name: "joinGamePath", params: { game_id: this.game.id() } }
+        }
+      },
+      mapGetters(['getRecord', 'getState'])
+    ),
     created() {
       const self = this
-
-      // if (this.game.id() == 24)
-      //   window.yy = self
-
+      
       const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
         reload: true,
         where: { game_id_eq: this.game.id() },
@@ -49,6 +62,7 @@
             self.callbacksToBeDestroyed.push([createdGamesPlayer, callbackToBeDestroyed])
 
             let player = LiveRecord.Model.all.Player.all[createdGamesPlayer.player_id()]
+
             // if the player associated to the gamesPlayer is not yet in the store, we also retrieve it
             if (!player) {
               player = new LiveRecord.Model.all.Player({id: createdGamesPlayer.player_id()})
@@ -60,8 +74,8 @@
               self.$forceUpdate()
             })
 
-            const playerDestroyCallback = player.addCallback('after:update', function() {
-              self.$store.commit('setRecord', { Player: player })
+            const playerDestroyCallback = player.addCallback('after:destroy', function() {
+              self.$store.commit('unsetRecord', { Player: player })
               self.$forceUpdate()
             })
 

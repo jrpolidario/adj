@@ -1,5 +1,5 @@
 <template>
-  <router-link tag='tr' :to='gameClickPath' class='show-game'>
+  <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
@@ -26,6 +26,10 @@
         callbacksToBeDestroyed: [],
         subscriptionsToBeDestroyed: [],
         gameTimestamp: moment(this.game.created_at()).fromNow(),
+        onGameClick() {
+          if (!this.getState('currentPlayer'))
+            $('#new-player-name').focus()
+        }
       }
     },
     computed: $.extend(
@@ -37,17 +41,19 @@
           })
           const hasCurrentPlayerJoinedTheGame = gamePlayers.indexOf(currentPlayer) != -1
 
-          if (currentPlayer && hasCurrentPlayerJoinedTheGame)
-            return { name: "gamePath", params: { id: this.game.id() } }
+          if (!currentPlayer)
+            return '#'
+          else if (currentPlayer && hasCurrentPlayerJoinedTheGame)
+            return { name: 'gamePath', params: { id: this.game.id() } }
           else
-            return { name: "joinGamePath", params: { game_id: this.game.id() } }
+            return { name: 'joinGamePath', params: { game_id: this.game.id() } }
         }
       },
       mapGetters(['getRecord', 'getState'])
     ),
     created() {
       const self = this
-      
+
       const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
         reload: true,
         where: { game_id_eq: this.game.id() },
@@ -69,18 +75,18 @@
               player.create({reload: true})
             }
 
-            const playerUpdateCallback = player.addCallback('after:update', function() {
-              self.$store.commit('setRecord', { Player: player })
-              self.$forceUpdate()
-            })
+            // const playerUpdateCallback = player.addCallback('after:update', function() {
+            //   self.$store.commit('setRecord', { Player: player })
+            //   self.$forceUpdate()
+            // })
+            //
+            // const playerDestroyCallback = player.addCallback('after:destroy', function() {
+            //   self.$store.commit('unsetRecord', { Player: player })
+            //   self.$forceUpdate()
+            // })
 
-            const playerDestroyCallback = player.addCallback('after:destroy', function() {
-              self.$store.commit('unsetRecord', { Player: player })
-              self.$forceUpdate()
-            })
-
-            self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
-            self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
+            // self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
+            // self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
           }
         }
       })

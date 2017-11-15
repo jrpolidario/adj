@@ -10,6 +10,7 @@
   >
     <input v-if='["patch", "put", "delete"].includes(formMethod)' name='_method' type='hidden' v-bind:value='formMethod'/>
     <input
+      id='new-player-name'
       type='text'
       name='player[name]'
       ref='name'
@@ -78,18 +79,21 @@
 
         for (let attribute in errors) {
           let $attributeInput = $form.find(':input').filter('[name="player[' + attribute + ']"]')
-
           let errorMessagesString = errors[attribute].join('\n')
 
-          const element = new Foundation.Tooltip($attributeInput, {
-            tipText: errorMessagesString,
-            position: 'top',
-            alignment: 'left',
-            fadeOutDuration: 200
-          });
+          if ($attributeInput.length > 0) {
+            const element = new Foundation.Tooltip($attributeInput, {
+              tipText: errorMessagesString,
+              position: 'top',
+              alignment: 'left',
+              fadeOutDuration: 200
+            });
 
-          $attributeInput.addClass('error')
-          $attributeInput.foundation('show')
+            $attributeInput.addClass('error')
+            $attributeInput.foundation('show')
+          }
+          else
+            flash(attribute + ': ' + errorMessagesString, 'error')
         }
       }
     },
@@ -116,6 +120,17 @@
       background: rgba(255,255,255, 0.1);
       color: white;
       margin: -($input-border-size);
+    }
+
+    #new-player-name {
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      -o-transition: all 0.30s ease-in-out;
+
+      &:focus {
+        box-shadow: 0 0 1.5em rgba(#e8ffc6, 0.6);
+      }
     }
   }
 </style>

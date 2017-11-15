@@ -8,6 +8,7 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Promise from 'promise-polyfill';
 import Application from './Application.vue'
 
 import DashboardLayout from 'dashboard_layout/Index'
@@ -54,6 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
     router,
     store,
     render: h => h(Application),
+    created() {
+      this.configureWithLiveRecordStore()
+      this.loadSession()
+      this.loadStorage()
+    },
     methods: {
       configureWithLiveRecordStore() {
         // now we make our LiveRecord records-store reactive & compatible with our vuex store.js
@@ -70,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const record = this
             // Vue.util.defineReactive(LiveRecord.Model.all[key].all, record.id(), record)
             // Vue.util.defineReactive(LiveRecord.Model.all[key].all[record.id()], 'attributes', record.attributes)
+            console.log(record.modelName(), record.attributes)
             self.$store.commit('setRecord', {[key]: record})
           })
 
@@ -80,9 +87,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // self.$store.commit('setRecordAttributes', {[key]: record})
 
             if (record.changes) {
+              const newAttributes = []
+
               Object.keys(record.changes).forEach((key, index) => {
-                const change = record.changes[key]
-                self.$set(self.$store.state.records[record.modelName()][record.id()].attributes, key, change[1])
+                const attribute = key
+                const change = record.changes[attribute]
+                const oldValue = change[0]
+                const newValue = change[1]
+
+                newAttributes[attribute] = newValue
+              })
+
+              self.$store.commit('setRecordAttributes', {
+                record: record,
+                attributes: newAttributes
               })
             }
           })
@@ -93,10 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
           })
         })
       },
-      loadSessionFromStorage() {
+      loadStorage() {
         const self = this
         // iterate over each "state", and retrieve from storage if exists
-        Object.keys(this.$store.state).forEach((key,index) => {
+        Object.keys(this.$store.state).forEach((key, index) => {
           const storageValue = store2.namespace('state').get(key)
 
           if (!storageValue)
@@ -142,11 +160,45 @@ document.addEventListener('DOMContentLoaded', () => {
             this.$store.state[key] = record
           }
         })
+      },
+      loadSession() {
+        $.ajax({
+          url: Routes.me_sessions_path(),
+          method: 'get',
+          dataType: 'json',
+          tryCount: 0,
+          maxRetries: 5,
+        })
+        .done((data) => {
+          const session = $.extend(
+            { csrf_token: $('meta[name="csrf-token"').attr('content') },
+            data
+          )
+
+          let currentPlayer
+
+          // we set currentPlayer from the backend session, to make sure they're in-sync
+          if (session.player_id) {
+            currentPlayer = LiveRecord.Model.all.Player[session.player_id]
+
+            // if not yet existing in LiveRecord store, we create
+            if (!currentPlayer) {
+              currentPlayer = new LiveRecord.Model.all.Player({id: session.player_id})
+              currentPlayer.create({reload: true})
+            }
+          }
+          else
+            currentPlayer = null
+
+          this.$store.commit('setState', { currentPlayer: currentPlayer })
+        })
+        .fail((xhr, status) => {
+          if (this.tryCount < maxRetries) {
+            this.tryCount++
+            $.ajax(this)
+          }
+        })
       }
-    },
-    created() {
-      this.configureWithLiveRecordStore()
-      this.loadSessionFromStorage()
     }
   }).$mount('Application')
 })

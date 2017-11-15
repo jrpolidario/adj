@@ -33,6 +33,12 @@ GEM
       activemodel (= 5.1.4)
       activesupport (= 5.1.4)
       arel (~> 8.0)
+    activerecord-session_store (1.1.0)
+      actionpack (>= 4.0, < 5.2)
+      activerecord (>= 4.0, < 5.2)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0, < 5.2)
     activesupport (5.1.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -98,7 +104,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    live_record (0.3.2)
+    live_record (0.3.3)
       rails (>= 5.0.0, < 5.2)
     loofah (2.1.1)
       crass (~> 1.0.2)
@@ -208,6 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-session_store
   baby_squeel
   bcrypt (~> 3.1.7)
   byebug
@@ -220,7 +227,7 @@ DEPENDENCIES
   jquery-rails
   js-routes
   listen (>= 3.0.5, < 3.2)
-  live_record (~> 0.3.2)
+  live_record (~> 0.3.3)
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)

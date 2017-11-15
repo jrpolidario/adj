@@ -96,18 +96,21 @@
 
         for (let attribute in errors) {
           let $attributeInput = $form.find(':input').filter('[name="game[' + attribute + ']"]')
-
           let errorMessagesString = errors[attribute].join('\n')
 
-          const element = new Foundation.Tooltip($attributeInput, {
-            tipText: errorMessagesString,
-            position: 'top',
-            alignment: 'left',
-            fadeOutDuration: 200
-          });
+          if ($attributeInput.length > 0) {
+            const element = new Foundation.Tooltip($attributeInput, {
+              tipText: errorMessagesString,
+              position: 'top',
+              alignment: 'left',
+              fadeOutDuration: 200
+            });
 
-          $attributeInput.addClass('error')
-          $attributeInput.foundation('show')
+            $attributeInput.addClass('error')
+            $attributeInput.foundation('show')
+          }
+          else
+            flash(attribute + ': ' + errorMessagesString, 'error')
         }
       }
     },

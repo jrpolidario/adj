@@ -5,7 +5,7 @@ class GamesPlayer < ApplicationRecord
   belongs_to :player
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
-  validates :game, uniqueness: :player
+  validates :game, uniqueness: { scope: :player }
 
   attr_accessor :game_password
 

@@ -33,14 +33,25 @@ const mutations = {
   },
   setRecord: (state, payload) => {
     Object.keys(payload).forEach((key, index) => {
-      let record = payload[key]
+      const record = payload[key]
       Vue.set(state.records[key], record.id(), record)
     })
   },
   unsetRecord: (state, payload) => {
     Object.keys(payload).forEach((key, index) => {
-      let record = payload[key]
+      const record = payload[key]
       Vue.delete(state.records[key], record.id())
+    })
+  },
+  setRecordAttributes: (state, payload) => {
+    const record = payload.record
+    const attributes = payload.attributes
+
+    Object.keys(attributes).forEach((key, index) => {
+      const attributeName = key
+      const attributeValue = attributes[attributeName]
+
+      Vue.set(state.records[record.modelName()][record.id()].attributes, attributeName, attributeValue)
     })
   }
 }

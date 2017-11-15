@@ -30,6 +30,8 @@ class GamesPlayersController < ApplicationController
     @games_player = (@game || @player).games_players.new(games_player_params)
     @games_player.player = current_user
 
+    puts @games_player.attributes
+
     respond_to do |format|
       if @games_player.save
         format.html { redirect_to @games_player, notice: 'Games player was successfully created.' }

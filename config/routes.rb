@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   scope constraints: -> (request) { request.format == :json } do
+    resources :sessions, only: [] do
+      get :me, on: :collection
+    end
+
     resources :games do
       resources :games_players, shallow: true
     end

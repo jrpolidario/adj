@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const record = this
             // Vue.util.defineReactive(LiveRecord.Model.all[key].all, record.id(), record)
             // Vue.util.defineReactive(LiveRecord.Model.all[key].all[record.id()], 'attributes', record.attributes)
-            console.log(record.modelName(), record.attributes)
             self.$store.commit('setRecord', {[key]: record})
           })
 

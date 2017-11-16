@@ -2,6 +2,7 @@
   <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
+      <i v-if='getState("currentPlayer").hasGame(game)' class='fa fa-gamepad' aria-hidden='true'></i>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
         {{ gamesPlayer.player().attributes.name }}
         {{ index != game.gamesPlayers().length - 1 ? '-' : '' }}
@@ -36,14 +37,10 @@
       {
         gameClickPath() {
           const currentPlayer = this.getState('currentPlayer')
-          const gamePlayers = this.game.gamesPlayers().map((gamesPlayer) => {
-            return gamesPlayer.player()
-          })
-          const hasCurrentPlayerJoinedTheGame = gamePlayers.indexOf(currentPlayer) != -1
 
           if (!currentPlayer)
             return '#'
-          else if (currentPlayer && hasCurrentPlayerJoinedTheGame)
+          else if (currentPlayer && currentPlayer.hasGame(this.game))
             return { name: 'gamePath', params: { id: this.game.id() } }
           else
             return { name: 'joinGamePath', params: { game_id: this.game.id() } }
@@ -51,59 +48,77 @@
       },
       mapGetters(['getRecord', 'getState'])
     ),
-    created() {
-      const self = this
+    watch: {
+      // reload if prop changed
+    	game: function(newVal, oldVal) {
+        this.loadRecordsAndSubscribe()
+      }
+    },
+    methods: {
+      cleanup() {
+        const self = this
 
-      const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
-        reload: true,
-        where: { game_id_eq: this.game.id() },
-        callbacks: {
-          'after:createOrUpdate': function(data) {
-            self.$forceUpdate()
-
-            const createdGamesPlayer = LiveRecord.Model.all.GamesPlayer.all[data.attributes.id]
-            const callbackToBeDestroyed = createdGamesPlayer.addCallback('after:destroy', function() {
-              self.$forceUpdate()
-            })
-            self.callbacksToBeDestroyed.push([createdGamesPlayer, callbackToBeDestroyed])
-
-            let player = LiveRecord.Model.all.Player.all[createdGamesPlayer.player_id()]
-
-            // if the player associated to the gamesPlayer is not yet in the store, we also retrieve it
-            if (!player) {
-              player = new LiveRecord.Model.all.Player({id: createdGamesPlayer.player_id()})
-              player.create({reload: true})
-            }
-
-            // const playerUpdateCallback = player.addCallback('after:update', function() {
-            //   self.$store.commit('setRecord', { Player: player })
-            //   self.$forceUpdate()
-            // })
-            //
-            // const playerDestroyCallback = player.addCallback('after:destroy', function() {
-            //   self.$store.commit('unsetRecord', { Player: player })
-            //   self.$forceUpdate()
-            // })
-
-            // self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
-            // self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
-          }
+        for (let subscriptionToBeDestroyed of this.subscriptionsToBeDestroyed) {
+          const model = subscriptionToBeDestroyed[0]
+          const subscription = subscriptionToBeDestroyed[1]
+          model.unsubscribe(subscription)
         }
-      })
-      this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, gamesPlayersSubscription])
+        this.subscriptionsToBeDestroyed = []
+
+        for (let callbackToBeDestroyed of this.callbacksToBeDestroyed) {
+          const record = callbackToBeDestroyed[0]
+          const callback = callbackToBeDestroyed[1]
+          record.removeCallback('after:destroy', callback)
+        }
+        this.callbacksToBeDestroyed = []
+      },
+      loadRecordsAndSubscribe() {
+        const self = this
+
+        const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
+          reload: true,
+          where: { game_id_eq: this.game.id() },
+          callbacks: {
+            'after:createOrUpdate': function(data) {
+              self.$forceUpdate()
+
+              const createdGamesPlayer = LiveRecord.Model.all.GamesPlayer.all[data.attributes.id]
+              const callbackToBeDestroyed = createdGamesPlayer.addCallback('after:destroy', function() {
+                self.$forceUpdate()
+              })
+              self.callbacksToBeDestroyed.push([createdGamesPlayer, callbackToBeDestroyed])
+
+              let player = LiveRecord.Model.all.Player.all[createdGamesPlayer.player_id()]
+
+              // if the player associated to the gamesPlayer is not yet in the store, we also retrieve it
+              if (!player) {
+                player = new LiveRecord.Model.all.Player({id: createdGamesPlayer.player_id()})
+                player.create({reload: true})
+              }
+
+              const playerUpdateCallback = player.addCallback('after:update', function() {
+                self.$store.commit('setRecord', { Player: player })
+                self.$forceUpdate()
+              })
+
+              const playerDestroyCallback = player.addCallback('after:destroy', function() {
+                self.$store.commit('unsetRecord', { Player: player })
+                self.$forceUpdate()
+              })
+
+              self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
+              self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
+            }
+          }
+        })
+        this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, gamesPlayersSubscription])
+      }
+    },
+    created() {
+      this.loadRecordsAndSubscribe()
     },
     destroyed() {
-      for (let subscriptionToBeDestroyed of this.subscriptionsToBeDestroyed) {
-        const model = subscriptionToBeDestroyed[0]
-        const subscription = subscriptionToBeDestroyed[1]
-        model.unsubscribe(subscription)
-      }
-
-      for (let callbackToBeDestroyed of this.callbacksToBeDestroyed) {
-        const record = callbackToBeDestroyed[0]
-        const callback = callbackToBeDestroyed[1]
-        record.removeCallback('after:destroy', callback)
-      }
+      this.cleanup()
     }
   }
 </script>
@@ -114,6 +129,13 @@
     border-top: 1px solid rgba(white, 0.1);
     white-space: nowrap;
     cursor: pointer;
+
+    .fa {
+      margin-right: 0.5em;
+      color: #ffbaba;
+      padding: 0.2em;
+      border-radius: 50%;
+    }
 
     &:hover {
       background: rgba(white,0.1);

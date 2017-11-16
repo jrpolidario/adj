@@ -8,9 +8,13 @@ LiveRecord.Model.create(
       games: () ->
         games = []
         this.gamesPlayers().map((gamePlayer) ->
+          gamePlayer.game()
           games.push(gamePlayer.game())
         )
         return games
+
+      hasGame: (game) ->
+        return this.games().indexOf(game) != -1
     }
   }
 )

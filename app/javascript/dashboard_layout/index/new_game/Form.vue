@@ -138,11 +138,11 @@
       // margin-top: 1rem;
 
       &.button {
-        background: rgba(0,0,0,0.15);
+        background: rgba(0,0,0,0.1);
         border: 1px solid rgba(0,0,0,0.04);
 
         &:hover {
-          background: rgba(0,0,0,0.4);
+          background: rgba(0,0,0,0.2);
         }
       }
     }

@@ -1,11 +1,11 @@
 <template>
-  <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath' class='show-game'>
+  <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath()' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
       <i v-if='getState("currentPlayer").hasGame(game)' class='fa fa-gamepad' aria-hidden='true'></i>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
         {{ gamesPlayer.player().attributes.name }}
-        {{ index != game.gamesPlayers().length - 1 ? '-' : '' }}
+        <span v-if='index != game.gamesPlayers().length - 1' class='playerNameDivider'>+</span>
       </span>
     </td>
   </router-link>
@@ -26,24 +26,14 @@
       return {
         callbacksToBeDestroyed: [],
         subscriptionsToBeDestroyed: [],
-        gameTimestamp: moment(this.game.created_at()).fromNow(),
-        onGameClick() {
-          if (!this.getState('currentPlayer'))
-            $('#new-player-name').focus()
-        }
+        gameTimestamp: moment(this.game.created_at()).fromNow()
       }
     },
     computed: $.extend(
       {
-        gameClickPath() {
-          const currentPlayer = this.getState('currentPlayer')
-
-          if (!currentPlayer)
-            return '#'
-          else if (currentPlayer && currentPlayer.hasGame(this.game))
-            return { name: 'gamePath', params: { id: this.game.id() } }
-          else
-            return { name: 'joinGamePath', params: { game_id: this.game.id() } }
+        onGameClick() {
+          if (!this.getState('currentPlayer'))
+            $('#new-player-name').focus()
         }
       },
       mapGetters(['getRecord', 'getState'])
@@ -55,6 +45,19 @@
       }
     },
     methods: {
+      gameClickPath() {
+        const currentPlayer = this.getState('currentPlayer')
+        let path
+
+        if (!currentPlayer)
+          path = '#'
+        else if (currentPlayer && currentPlayer.hasGame(this.game))
+          path = { name: 'gamePath', params: { id: this.game.id() } }
+        else
+          path = { name: 'joinGamePath', params: { game_id: this.game.id() } }
+
+        return path
+      },
       cleanup() {
         const self = this
 
@@ -79,10 +82,8 @@
           reload: true,
           where: { game_id_eq: this.game.id() },
           callbacks: {
-            'after:createOrUpdate': function(data) {
-              self.$forceUpdate()
-
-              const createdGamesPlayer = LiveRecord.Model.all.GamesPlayer.all[data.attributes.id]
+            'after:createOrUpdate': function(record) {
+              const createdGamesPlayer = LiveRecord.Model.all.GamesPlayer.all[record.attributes.id]
               const callbackToBeDestroyed = createdGamesPlayer.addCallback('after:destroy', function() {
                 self.$forceUpdate()
               })
@@ -108,6 +109,11 @@
 
               self.callbacksToBeDestroyed.push([player, playerUpdateCallback])
               self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
+
+              self.$forceUpdate()
+            },
+            'after:reload': function(recordIds) {
+              self.$forceUpdate()
             }
           }
         })
@@ -150,6 +156,12 @@
 
     td.game-players {
       vertical-align: middle;
+
+      .playerNameDivider {
+        font-size: 0.8em;
+        vertical-align: middle;
+        color: #ccc;
+      }
     }
 
     td.absorbing-column {

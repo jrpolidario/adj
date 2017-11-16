@@ -79,6 +79,8 @@
     table {
       table-layout: auto;
       border-collapse: collapse;
+      display: block;
+      overflow: hidden;
     }
   }
 </style>

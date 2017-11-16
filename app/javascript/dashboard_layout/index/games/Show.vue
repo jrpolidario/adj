@@ -151,11 +151,12 @@
       font-size: 0.8em;
       color: #ddd;
       vertical-align: middle;
-      padding: 0.5rem;
+      padding: 0.6em;
     }
 
     td.game-players {
       vertical-align: middle;
+      padding: 0.4em;
 
       .playerNameDivider {
         font-size: 0.8em;

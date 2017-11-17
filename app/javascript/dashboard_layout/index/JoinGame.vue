@@ -1,23 +1,33 @@
 <template>
   <div id='join-game' class='full-height'>
-    <h2>Join Game</h2>
-    <JoinGameForm
-      :gamesPlayer='gamesPlayer'
-      :formAction='gamesPlayersPath'
-      :formMethod='"post"'
-      :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
-    />
+    <div v-if='preloaded'>
+      <h2>Join Game</h2>
+      <JoinGameForm
+        :gamesPlayer='gamesPlayer'
+        :formAction='gamesPlayersPath'
+        :formMethod='"post"'
+        :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
+      />
+    </div>
+    <Loader v-else/>
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import JoinGameForm from './join_game/Form'
+  import Loader from 'shared/Loader'
 
   export default {
-    components: { JoinGameForm },
+    components: { JoinGameForm, Loader },
     data() {
       return {
+        preloaded: false,
+        afterPreload() {
+          this.authorize()
+          this.$forceUpdate()
+        },
+        game: this.$store.getters.getRecord('Game', this.$route.params.game_id),
         gamesPlayer: new LiveRecord.Model.all.GamesPlayer({game_id: this.$route.params.game_id}),
         subscriptionsToBeDestroyed: [],
         onSubmitSuccessCallback(data, status, xhr) {
@@ -38,40 +48,46 @@
       },
       mapGetters(['getState'])
     ),
-    methods: {
-      authorize() {
-        if (!this.getState('currentPlayer'))
-          this.$router.replace({ name: 'forbiddenPath' })
-
-        const joinedGamesPlayerSubscription = LiveRecord.Model.all.GamesPlayer.all.autoload({
-          reload: true,
-          where: {
-            game_id_eq: this.$route.params.game_id,
-            player_id_eq: this.getState('currentPlayer')
-          },
-          callbacks: {
-            'after:reload': (recordIds) => {
-              debugger
+    methods: $.extend(
+      {
+        checkIfHasJoined() {
+          const self = this
+          const joinedGamesPlayerSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
+            reload: true,
+            where: {
+              game_id_eq: this.$route.params.game_id,
+              player_id_eq: this.getState('currentPlayer').id()
+            },
+            callbacks: {
+              'after:reload': (recordIds) => {
+                self.$set(self, 'preloaded', true)
+              }
             }
-          }
-        })
-        this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, joinedGamesPlayerSubscription])
+          })
+          this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, joinedGamesPlayerSubscription])
 
-        // // if already joined the game, redirect to game
-        // if (this.getState('currentGame') &&
-        //   this.getState('currentGame').id() == this.$route.params.game_id )
-        //   this.$router.replace({ name: 'gamePath', params: { id: this.$route.params.game_id } })
+          // if already joined the game, set this as currentGame and redirect to game
+          if (this.getState('currentPlayer').hasGame(this.game)) {
+            this.$store.commit('setState', { currentGame: this.game })
+            this.$router.replace({ name: 'gamePath', params: { id: this.game.id() } })
+          }
+        },
+        authorize() {
+          if (!this.getState('currentPlayer'))
+            this.$router.replace({ name: 'forbiddenPath' })
+        }
       },
-    },
+      mapActions(['preloadLiveRecords', 'cleanup'])
+    ),
     created() {
+      this.checkIfHasJoined()
       this.authorize()
     },
-    destroy() {
-      for (let subscriptionToBeDestroyed of this.subscriptionsToBeDestroyed) {
-        const model = subscriptionToBeDestroyed[0]
-        const subscription = subscriptionToBeDestroyed[1]
-        model.unsubscribe(subscription)
-      }
+    updated() {
+      this.authorize()
+    },
+    destroyed() {
+      this.cleanup({ vue: this })
     }
   }
 </script>

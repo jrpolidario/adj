@@ -57,6 +57,62 @@ const mutations = {
 }
 
 const actions = {
+  preloadLiveRecords(context, payload) {
+    const vue = payload.vue
+    const recordIds = payload.recordIds
+
+    let totalExpectedPreloadedRecords = 0
+    let preloadedRecordsCounter = 0
+
+    Object.keys(recordIds).forEach((key, index) => {
+      const modelName = key
+      const Model = LiveRecord.Model.all[modelName]
+      const modelRecordIds = recordIds[key]
+
+      modelRecordIds.forEach((recordId) => {
+        // if not yet in store, create
+        if (Model.all[recordId] == undefined) {
+          const record = new Model({id: recordId})
+          const callbackToBeDestroyed = record.addCallback('after:create', function() {
+            preloadedRecordsCounter++
+
+            // if this is the last record that has been preloaded
+            if (preloadedRecordsCounter == totalExpectedPreloadedRecords) {
+              vue.afterPreload.call(vue)
+            }
+          })
+          vue.callbacksToBeDestroyed.push(callbackToBeDestroyed)
+          record.create({reload: true})
+        }
+        else
+          preloadedRecordsCounter++
+
+        totalExpectedPreloadedRecords++
+      })
+
+      // if this is the last record that has been preloaded
+      if (preloadedRecordsCounter == totalExpectedPreloadedRecords) {
+        vue.afterPreload.call(vue)
+      }
+    })
+  },
+  cleanup(context, payload) {
+    const vue = payload.vue
+
+    vue.subscriptionsToBeDestroyed.forEach((subscriptionToBeDestroyed) => {
+      const model = subscriptionToBeDestroyed[0]
+      const subscription = subscriptionToBeDestroyed[1]
+      model.unsubscribe(subscription)
+    })
+    vue.subscriptionsToBeDestroyed = []
+
+    vue.callbacksToBeDestroyed.forEach((callbackToBeDestroyed) => {
+      const record = callbackToBeDestroyed[0]
+      const callback = callbackToBeDestroyed[1]
+      record.removeCallback('after:destroy', callback)
+    })
+    vue.callbacksToBeDestroyed = []
+  },
 }
 
 const getters = {
@@ -65,6 +121,11 @@ const getters = {
       return state[key]
   },
   getRecord: (state) => (modelName, recordId) => {
+    if (typeof modelName != 'string')
+      throw new Error('Expected `modelName` to be a string, but is ' + typeof modelName)
+    if (typeof recordId != 'string' && typeof recordId != 'number')
+      throw new Error('Expected `recordId` to be a string/number, but is ' + typeof recordId)
+
     return state.records[modelName][recordId]
   }
 }

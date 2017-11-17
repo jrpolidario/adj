@@ -2,7 +2,7 @@
   <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath()' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
-      <i v-if='getState("currentPlayer") && getState("currentPlayer").hasGame(game)' class='fa fa-gamepad' aria-hidden='true'></i>
+      <i v-if='getState("currentGame") == game' class='fa fa-gamepad' aria-hidden='true'></i>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
         {{ gamesPlayer.player().attributes.name }}
         <span v-if='index != game.gamesPlayers().length - 1' class='playerNameDivider'>+</span>
@@ -26,18 +26,14 @@
       return {
         callbacksToBeDestroyed: [],
         subscriptionsToBeDestroyed: [],
-        gameTimestamp: moment(this.game.created_at()).fromNow()
-      }
-    },
-    computed: $.extend(
-      {
+        gameTimestamp: moment(this.game.created_at()).fromNow(),
         onGameClick() {
           if (!this.getState('currentPlayer'))
             $('#new-player-name').focus()
-        }
-      },
-      mapGetters(['getRecord', 'getState'])
-    ),
+        },
+      }
+    },
+    computed: mapGetters(['getRecord', 'getState']),
     watch: {
       // reload if prop changed
     	game: function(newVal, oldVal) {
@@ -51,7 +47,7 @@
 
         if (!currentPlayer)
           path = '#'
-        else if (currentPlayer && currentPlayer.hasGame(this.game))
+        else if (this.getState('currentGame') == this.game)
           path = { name: 'gamePath', params: { id: this.game.id() } }
         else
           path = { name: 'joinGamePath', params: { game_id: this.game.id() } }

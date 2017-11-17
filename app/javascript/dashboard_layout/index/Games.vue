@@ -1,24 +1,32 @@
 <template>
-  <div id='games' class='full-height'>
+  <div id='games' class='full-height loader-anchor'>
     <h2>Ongoing Games</h2>
     <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath" }' class='button'>
       <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
     </router-link>
-    <table>
+    <table v-if='preloaded'>
       <ShowGame v-for='(game, id) in games' :game='game'/>
     </table>
+    <Loader v-else/>
   </div>
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex'
+  import { mapState, mapGetters, mapActions } from 'vuex'
   import ShowGame from './games/Show'
+  import Loader from 'shared/Loader'
   import moment from 'moment'
 
   export default {
-    components: { ShowGame },
+    components: { ShowGame, Loader },
     data() {
       return {
+        subscriptionsToBeDestroyed: [],
+        callbacksToBeDestroyed: [],
+        preloaded: false,
+        afterPreload() {
+          this.$set(this, 'preloaded', true)
+        },
         newGamePath: Routes.new_game_path()
       }
     },
@@ -29,19 +37,27 @@
       }),
       mapGetters(['getState'])
     ),
+    methods: mapActions(['preloadLiveRecords', 'cleanup']),
     created () {
       let self = this
 
       window.rr = self
 
       // load all Game records, and subscribe and auto-fetch new/updated Games
-      this.gamesSubscription = LiveRecord.Model.all.Game.autoload({
+      const gamesSubscription = LiveRecord.Model.all.Game.autoload({
         reload: true,
         // where: {
         //   updated_at_gt: moment().subtract(1, 'minutes'),
         //   is_finished_eq: false
         // }
+        callbacks: {
+          'after:reload': function() {
+            self.$set(self, 'preloaded', true)
+          }
+        }
       })
+
+      this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.Game, gamesSubscription])
 
       // // check if games are still ongoing every 5000ms, and remove it if not anymore
       // window.setInterval(() => {
@@ -63,9 +79,7 @@
       // }, 5000);
     },
     destroyed () {
-      LiveRecord.Model.all.Game.removeCallback('before:create', this.createGameCallback)
-      LiveRecord.Model.all.Game.removeCallback('before:destroy', this.destroyGameCallback)
-      LiveRecord.Model.all.Game.unsubscribe(this.gamesSubscription)
+      this.cleanup({ vue: this })
     }
   }
 </script>

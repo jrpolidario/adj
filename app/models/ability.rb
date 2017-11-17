@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(player)
+  def initialize(user, player)
     # root page
     can :index, Game
     can :create, Player
@@ -11,6 +11,11 @@ class Ability
       can :manage, Player, id: player.id
       can :create, Game
       can :create, GamesPlayer # a.k.a JoinGame
+    end
+
+    if user.present? && user.is_admin?
+      can :manage, Card
+      can :manage, Category
     end
   end
 end

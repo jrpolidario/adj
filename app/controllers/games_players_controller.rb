@@ -28,7 +28,7 @@ class GamesPlayersController < ApplicationController
   # POST /games_players.json
   def create
     @games_player = (@game || @player).games_players.new(games_player_params)
-    @games_player.player = current_user
+    @games_player.player = current_player
 
     puts @games_player.attributes
 

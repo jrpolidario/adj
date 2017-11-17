@@ -11,7 +11,7 @@ class Game < ApplicationRecord
 
   has_secure_password
 
-  def self.live_record_whitelisted_attributes(game, current_user)
+  def self.live_record_whitelisted_attributes(game, current_player)
     # only allow fetching of ongoing records
     # if ongoing.exists?(id: game.id)
       [:id, :is_finished, :is_started, :created_at, :updated_at]
@@ -20,7 +20,7 @@ class Game < ApplicationRecord
     # end
   end
 
-  def self.live_record_queryable_attributes(current_user)
+  def self.live_record_queryable_attributes(current_player)
     [:is_finished, :is_started, :updated_at]
   end
 end

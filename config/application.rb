@@ -21,5 +21,10 @@ module Adj
       g.stylesheets false
       g.test_framework nil
     end
+
+    # set devise to use "admin" layout
+    config.to_prepare do
+      Devise::SessionsController.layout 'admin'
+    end
   end
 end

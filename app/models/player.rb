@@ -7,11 +7,11 @@ class Player < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 12 }
 
-  def self.live_record_whitelisted_attributes(player, current_user)
+  def self.live_record_whitelisted_attributes(player, current_player)
     [:id, :name, :created_at, :updated_at]
   end
 
-  def self.live_record_queryable_attributes(current_user)
+  def self.live_record_queryable_attributes(current_player)
     [:id, :name, :created_at, :updated_at]
   end
 end

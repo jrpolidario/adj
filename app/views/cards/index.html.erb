@@ -9,9 +9,9 @@
 <table>
   <thead>
     <tr>
-      <th>Category</th>
       <th>Name</th>
       <th>Image</th>
+      <th>Category</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,9 +19,9 @@
   <tbody>
     <% @cards.each do |card| %>
       <tr data-live-record-destroy-from='Card-<%= card.id %>'>
-        <td data-live-record-update-from='Card-<%= card.id %>-category'><%= card.category %></td>
         <td data-live-record-update-from='Card-<%= card.id %>-name'><%= card.name %></td>
-        <td data-live-record-update-from='Card-<%= card.id %>-image'><%= card.image %></td>
+        <td data-live-record-update-from='Card-<%= card.id %>-image'><%= image_tag card.image.url %></td>
+        <td data-live-record-update-from='Card-<%= card.id %>-category'><%= card.category.name %></td>
         <td><%= link_to 'Show', card %></td>
         <td><%= link_to 'Edit', edit_card_path(card) %></td>
         <td><%= link_to 'Destroy', card, method: :delete, data: { confirm: 'Are you sure?' } %></td>

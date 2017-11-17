@@ -1,0 +1,67 @@
+@import 'util/util';
+
+#admin-layout {
+  $main-color: lighten(green, 60);
+  $bg-color: lighten(black, 10);
+
+  @mixin boxed {
+    border: 1px solid rgba($main-color, 0.4);
+    box-shadow: 0 0 8px rgba($main-color, 0.4);
+    border-radius: 2px;
+  }
+
+  &, * {
+    color: $main-color;
+    background: $bg-color;
+
+    input {
+      border: 1px solid $main-color;
+    }
+  }
+
+  a {
+    font-weight: bold;
+    // text-decoration: underline;
+    padding: 0.3em;
+    border: 1px solid rgba($main-color, 0.2);
+    border-radius: 5px;
+    color: white;
+
+    &:hover {
+      opacity: 0.3;
+    }
+  }
+
+  .error {
+    color: lighten(red, 30);
+  }
+
+  .flash {
+    padding: 1rem;
+    background: lighten($bg-color, 3);
+
+    &.notice {
+      color: lighten(blue, 30);
+    }
+
+    &.alert {
+      color: lighten(red, 30);
+    }
+  }
+
+  table td {
+    img {
+      max-height: 10rem;
+    }
+  }
+
+  #content-container {
+    padding: 1rem;
+
+    @include breakpoint(medium up) {
+      margin-top: 2rem;
+
+      @include boxed;
+    }
+  }
+}

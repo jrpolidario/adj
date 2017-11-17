@@ -4,13 +4,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Category:</strong>
-  <span data-live-record-update-from='Card-<%= @card.id %>-category'>
-  	<%= @card.category %>
-  </span>
-</p>
-
-<p>
   <strong>Name:</strong>
   <span data-live-record-update-from='Card-<%= @card.id %>-name'>
   	<%= @card.name %>
@@ -20,7 +13,14 @@
 <p>
   <strong>Image:</strong>
   <span data-live-record-update-from='Card-<%= @card.id %>-image'>
-  	<%= @card.image %>
+  	<%= image_tag @card.image.url %>
+  </span>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-category'>
+  	<%= @card.category.name %>
   </span>
 </p>
 

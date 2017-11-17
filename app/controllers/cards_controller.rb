@@ -1,5 +1,8 @@
 class CardsController < ApplicationController
   before_action :set_card, only: [:show, :edit, :update, :destroy]
+  authorize_resource
+
+  layout 'admin'
 
   # GET /cards
   # GET /cards.json
@@ -69,6 +72,6 @@ class CardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def card_params
-      params.require(:card).permit(:category_id, :name, :image)
+      params.require(:card).permit(:category_id, :name, :image, :image_cache)
     end
 end

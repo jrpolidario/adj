@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  scope path: 'admin' do
+    devise_for :users
+    resources :cards
+    resources :categories
+  end
 
   scope constraints: -> (request) { request.format == :json } do
     resources :sessions, only: [] do
@@ -12,9 +17,6 @@ Rails.application.routes.draw do
     resources :players do
       resources :games_players, shallow: true
     end
-
-    resources :cards
-    resources :categories
   end
 
   scope constraints: -> (request) { request.format == :html } do

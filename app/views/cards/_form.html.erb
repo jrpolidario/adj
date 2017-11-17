@@ -1,32 +1,15 @@
-<%= form_with(model: card, local: true) do |form| %>
-  <% if card.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(card.errors.count, "error") %> prohibited this card from being saved:</h2>
+<%= simple_form_for(@card) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% card.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :category_id %>
-    <%= form.text_field :category_id, id: :card_category_id %>
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :image %>
+    <%= image_tag f.object.image.url if f.object.image.present? %>
+    <%= f.hidden_field :image_cache %>
+    <%= f.association :category %>
   </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :card_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.text_field :image, id: :card_image %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= f.button :submit %>
   </div>
 <% end %>

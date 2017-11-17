@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   scope constraints: -> (request) { request.format == :json } do
     resources :sessions, only: [] do
       get :me, on: :collection

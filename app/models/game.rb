@@ -14,13 +14,13 @@ class Game < ApplicationRecord
   def self.live_record_whitelisted_attributes(game, current_user)
     # only allow fetching of ongoing records
     # if ongoing.exists?(id: game.id)
-      [:id, :is_finished, :created_at, :updated_at]
+      [:id, :is_finished, :is_started, :created_at, :updated_at]
     # else
     #   []
     # end
   end
 
   def self.live_record_queryable_attributes(current_user)
-    [:is_finished, :updated_at]
+    [:is_finished, :is_started, :updated_at]
   end
 end

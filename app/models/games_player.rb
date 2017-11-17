@@ -17,10 +17,10 @@ class GamesPlayer < ApplicationRecord
   end
 
   def self.live_record_whitelisted_attributes(games_player, current_user)
-    [:id, :game_id, :player_id, :score, :created_at, :updated_at]
+    [:id, :game_id, :player_id, :is_ready, :score, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_user)
-    [:id, :game_id, :player_id, :score, :created_at, :updated_at]
+    [:id, :game_id, :player_id, :is_ready, :score, :created_at, :updated_at]
   end
 end

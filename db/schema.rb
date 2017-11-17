@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114190729) do
+ActiveRecord::Schema.define(version: 20171117020926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,10 @@ ActiveRecord::Schema.define(version: 20171114190729) do
     t.datetime "updated_at", null: false
     t.boolean "is_finished", default: false, null: false
     t.string "password_digest"
+    t.boolean "is_started"
     t.index ["created_at"], name: "index_games_on_created_at"
     t.index ["is_finished"], name: "index_games_on_is_finished"
+    t.index ["is_started"], name: "index_games_on_is_started"
     t.index ["updated_at"], name: "index_games_on_updated_at"
   end
 
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 20171114190729) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "score"
+    t.boolean "is_ready"
     t.index ["game_id"], name: "index_games_players_on_game_id"
     t.index ["player_id"], name: "index_games_players_on_player_id"
     t.index ["selected_card_id"], name: "index_games_players_on_selected_card_id"

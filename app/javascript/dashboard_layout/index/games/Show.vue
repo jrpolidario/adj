@@ -2,7 +2,7 @@
   <router-link tag='tr' v-on:click.native='onGameClick' :to='gameClickPath()' class='show-game'>
     <td class='game-timestamp'>{{ gameTimestamp }}</td>
     <td class='game-players absorbing-column'>
-      <i v-if='getState("currentPlayer").hasGame(game)' class='fa fa-gamepad' aria-hidden='true'></i>
+      <i v-if='getState("currentPlayer") && getState("currentPlayer").hasGame(game)' class='fa fa-gamepad' aria-hidden='true'></i>
       <span v-for='(gamesPlayer, index) in game.gamesPlayers()'>
         {{ gamesPlayer.player().attributes.name }}
         <span v-if='index != game.gamesPlayers().length - 1' class='playerNameDivider'>+</span>

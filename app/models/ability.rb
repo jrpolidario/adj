@@ -10,7 +10,7 @@ class Ability
     if player.present?
       can :manage, Player, id: player.id
       can :create, Game
-      can :create, GamesPlayer # a.k.a JoinGame
+      can :manage, GamesPlayer, player_id: player.id # a.k.a JoinGame
     end
 
     if user.present? && user.is_admin?

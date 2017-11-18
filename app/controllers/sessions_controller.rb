@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
 
   def public_session_data(session_data)
     session_data.slice(
-      'player_id'
+      'player_id',
+      '_csrf_token'
     )
   end
 end

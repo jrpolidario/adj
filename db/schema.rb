@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117024145) do
+ActiveRecord::Schema.define(version: 20171117233356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20171117024145) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "deck_cards", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_deck_cards_on_card_id"
+    t.index ["game_id"], name: "index_deck_cards_on_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -50,6 +59,7 @@ ActiveRecord::Schema.define(version: 20171117024145) do
     t.datetime "updated_at", null: false
     t.integer "score"
     t.boolean "is_ready"
+    t.integer "team"
     t.index ["game_id"], name: "index_games_players_on_game_id"
     t.index ["player_id"], name: "index_games_players_on_player_id"
     t.index ["selected_card_id"], name: "index_games_players_on_selected_card_id"
@@ -70,6 +80,15 @@ ActiveRecord::Schema.define(version: 20171117024145) do
     t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_players_on_created_at"
     t.index ["updated_at"], name: "index_players_on_updated_at"
+  end
+
+  create_table "selectable_cards", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "card_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_selectable_cards_on_card_id"
+    t.index ["game_id"], name: "index_selectable_cards_on_game_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -101,6 +120,10 @@ ActiveRecord::Schema.define(version: 20171117024145) do
   end
 
   add_foreign_key "cards", "categories"
+  add_foreign_key "deck_cards", "cards"
+  add_foreign_key "deck_cards", "games"
   add_foreign_key "games_players", "games"
   add_foreign_key "games_players", "players"
+  add_foreign_key "selectable_cards", "cards"
+  add_foreign_key "selectable_cards", "games"
 end

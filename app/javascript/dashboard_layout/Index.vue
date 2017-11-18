@@ -1,5 +1,6 @@
 <template>
   <section id='games' class='row collapse full-height full-width'>
+    <h1 class='hide'>Adj Dashboard</h1>
     <div class='large-3 medium-4 columns full-height'>
       <Player/>
     </div>

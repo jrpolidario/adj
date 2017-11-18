@@ -5,8 +5,10 @@ import store2 from 'store2'
 Vue.use(Vuex)
 
 const state = {
+  csrfToken: null,
   currentPlayer: null,
   currentGame: null,
+  currentGamesPlayer: null,
   records: {
     // this is programatically set, see created() inside application.js
   }
@@ -61,6 +63,9 @@ const actions = {
     const vue = payload.vue
     const recordIds = payload.recordIds
 
+    if (vue == undefined) throw new Error(':vue should be defined!')
+    if (recordIds == undefined) throw new Error(':recordIds should be defined!')
+
     let totalExpectedPreloadedRecords = 0
     let preloadedRecordsCounter = 0
 
@@ -99,6 +104,8 @@ const actions = {
   cleanup(context, payload) {
     const vue = payload.vue
 
+    if (vue == undefined) throw new Error(':vue should be defined!')
+
     vue.subscriptionsToBeDestroyed.forEach((subscriptionToBeDestroyed) => {
       const model = subscriptionToBeDestroyed[0]
       const subscription = subscriptionToBeDestroyed[1]
@@ -113,6 +120,47 @@ const actions = {
     })
     vue.callbacksToBeDestroyed = []
   },
+  adjAjax(context, ajaxOptions = {}) {
+    const successCallback = ajaxOptions.success
+    const errorCallback = ajaxOptions.error
+
+    delete ajaxOptions.success
+    delete ajaxOptions.error
+
+    ajaxOptions = $.extend(
+      {
+        method: 'get',
+        dataType: 'json',
+        ajaxRetriesLeft: 10,
+        headers: { 'X-CSRF-Token': context.state.csrfToken },
+      },
+      ajaxOptions
+    )
+
+    ajaxOptions.success = function(data) {
+      if (successCallback)
+        successCallback.call(this, data)
+    }
+
+    ajaxOptions.error = function(xhr, status) {
+      if (status == 'timeout') {
+        if (this.ajaxRetriesLeft > 0) {
+          // retry ajax
+          this.ajaxRetriesLeft--;
+          $.ajax(this);
+          return;
+        }
+        return;
+      }
+
+      flash(xhr.status + ': ' + xhr.statusText, 'error')
+
+      if (errorCallback)
+        failCallback.call(this, xhr, status)
+    }
+
+    $.ajax(ajaxOptions)
+  }
 }
 
 const getters = {

@@ -30,12 +30,18 @@
         game: this.$store.getters.getRecord('Game', this.$route.params.game_id),
         gamesPlayer: new LiveRecord.Model.all.GamesPlayer({game_id: this.$route.params.game_id}),
         subscriptionsToBeDestroyed: [],
+        callbacksToBeDestroyed: [],
         onSubmitSuccessCallback(data, status, xhr) {
           const attributes = data
-          const createdGamesPlayer = new LiveRecord.Model.all.GamesPlayer(attributes)
-          createdGamesPlayer.create({reload: true})
+          let createdGamesPlayer = LiveRecord.Model.all.GamesPlayer.all[attributes.id]
+
+          if (!createdGamesPlayer) {
+            createdGamesPlayer = new LiveRecord.Model.all.GamesPlayer(attributes)
+            createdGamesPlayer.create()
+          }
 
           this.$store.commit('setState', { currentGame: createdGamesPlayer.game() })
+          this.$store.commit('setState', { currentGamesPlayer: createdGamesPlayer })
 
           // then redirect to game page
           this.$router.push({ name: 'gamePath', params: { id: createdGamesPlayer.game().id() } })

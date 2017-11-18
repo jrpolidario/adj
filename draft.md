@@ -12,6 +12,7 @@ GamesPlayer
 belongs_to :game
 belongs_to :player
 belongs_to :selected_card, class_name: 'Card'
+team
 score
 
 SelectableCard

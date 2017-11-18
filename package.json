@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "^3.0.2",
     "babel-polyfill": "^6.26.0",
+    "foundation-sites": "^6.4.4-rc1",
     "moment": "^2.19.2",
     "promise-polyfill": "6.0.2",
     "store2": "^2.5.9",

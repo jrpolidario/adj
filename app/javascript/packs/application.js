@@ -169,16 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
           maxRetries: 5,
         })
         .done((data) => {
-          const session = $.extend(
-            { csrf_token: $('meta[name="csrf-token"').attr('content') },
-            data
-          )
+          const session = data
 
           let currentPlayer
 
           // we set currentPlayer from the backend session, to make sure they're in-sync
           if (session.player_id) {
-            currentPlayer = LiveRecord.Model.all.Player[session.player_id]
+            currentPlayer = LiveRecord.Model.all.Player.all[session.player_id]
 
             // if not yet existing in LiveRecord store, we create
             if (!currentPlayer) {
@@ -190,9 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPlayer = null
 
           this.$store.commit('setState', { currentPlayer: currentPlayer })
+
+          // also store _csrf_token for later AJAX requests
+          if (session._csrf_token) {
+            this.$store.commit('setState', { 'csrfToken': session._csrf_token })
+          }
         })
         .fail((xhr, status) => {
-          if (this.tryCount < maxRetries) {
+          if (this.tryCount < this.maxRetries) {
             this.tryCount++
             $.ajax(this)
           }

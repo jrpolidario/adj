@@ -106,6 +106,7 @@
 
 <style lang='scss' scoped>
   @import './placeholders';
+  @import 'app/javascript/shared/mixins.scss';
 
   form#player-form {
     .error {
@@ -123,14 +124,7 @@
     }
 
     #new-player-name {
-      -webkit-transition: all 0.30s ease-in-out;
-      -moz-transition: all 0.30s ease-in-out;
-      -ms-transition: all 0.30s ease-in-out;
-      -o-transition: all 0.30s ease-in-out;
-
-      &:focus {
-        box-shadow: 0 0 1.5em rgba(#e8ffc6, 0.6);
-      }
+      @include box-glow('focus', rgba(#e8ffc6, 0.6));
     }
   }
 </style>

@@ -130,7 +130,7 @@
               player = new LiveRecord.Model.all.Player({id: gamesPlayer.player_id()})
               player.create({ reload: true })
 
-              const playerCreateCallback = player.addCallback('after:create', function() {
+              const playerCreateCallback = player.addCallback('after:update', function() {
                 self.$set(self, 'preloaded', true)
                 self.$forceUpdate()
               })

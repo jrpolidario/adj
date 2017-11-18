@@ -171,6 +171,7 @@
       position: relative;
       cursor: pointer;
       color: #555;
+      overflow-y: auto;
 
       @include box-glow('hover', rgba(grey, 0.4));
 

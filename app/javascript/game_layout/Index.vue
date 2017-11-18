@@ -83,7 +83,7 @@
       },
       mapActions(['preloadLiveRecords', 'cleanup'])
     ),
-    created() {
+    mounted() {
       this.preloadLiveRecords({
         vue: this,
         recordIds: { 'Game': [this.game.id()] }

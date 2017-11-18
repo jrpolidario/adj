@@ -85,7 +85,7 @@
       },
       mapActions(['preloadLiveRecords', 'cleanup'])
     ),
-    created() {
+    mounted() {
       this.checkIfHasJoined()
       this.authorize()
     },

@@ -64,7 +64,7 @@
       },
       mapActions(['cleanup'])
     ),
-    created() {
+    mounted() {
       this.authorize()
     },
     destroyed() {

@@ -28,10 +28,6 @@ Vue.use(VueRouter)
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  function routeWithoutFormat(route) {
-    return route.toString().replace('(.:format)', '')
-  }
-
   const router = new VueRouter({
     mode: 'history',
     base: __dirname,
@@ -161,42 +157,33 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       },
       loadSession() {
-        $.ajax({
+        const self = this
+        this.$store.dispatch('adjAjax', {
           url: Routes.me_sessions_path(),
           method: 'get',
-          dataType: 'json',
-          tryCount: 0,
-          maxRetries: 5,
-        })
-        .done((data) => {
-          const session = data
+          success: function(data) {
+            const session = data
+            let currentPlayer
 
-          let currentPlayer
+            // we set currentPlayer from the backend session, to make sure they're in-sync
+            if (session.player_id) {
+              currentPlayer = LiveRecord.Model.all.Player.all[session.player_id]
 
-          // we set currentPlayer from the backend session, to make sure they're in-sync
-          if (session.player_id) {
-            currentPlayer = LiveRecord.Model.all.Player.all[session.player_id]
-
-            // if not yet existing in LiveRecord store, we create
-            if (!currentPlayer) {
-              currentPlayer = new LiveRecord.Model.all.Player({id: session.player_id})
-              currentPlayer.create({reload: true})
+              // if not yet existing in LiveRecord store, we create
+              if (!currentPlayer) {
+                currentPlayer = new LiveRecord.Model.all.Player({id: session.player_id})
+                currentPlayer.create({reload: true})
+              }
             }
-          }
-          else
-            currentPlayer = null
+            else
+              currentPlayer = null
 
-          this.$store.commit('setState', { currentPlayer: currentPlayer })
+            self.$store.commit('setState', { currentPlayer: currentPlayer })
 
-          // also store _csrf_token for later AJAX requests
-          if (session._csrf_token) {
-            this.$store.commit('setState', { 'csrfToken': session._csrf_token })
-          }
-        })
-        .fail((xhr, status) => {
-          if (this.tryCount < this.maxRetries) {
-            this.tryCount++
-            $.ajax(this)
+            // also store _csrf_token for later AJAX requests
+            if (session._csrf_token) {
+              self.$store.commit('setState', { 'csrfToken': session._csrf_token })
+            }
           }
         })
       }

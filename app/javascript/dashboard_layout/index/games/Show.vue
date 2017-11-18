@@ -107,7 +107,7 @@
       },
       mapActions(['cleanup'])
     ),
-    created() {
+    mounted() {
       this.loadRecordsAndSubscribe()
     },
     destroyed() {

@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // now we make our LiveRecord records-store reactive & compatible with our vuex store.js
         const self = this
 
-        window.vw = self
+        window.v_ue = self
+        window.s_tore2 = store2
 
         Object.keys(LiveRecord.Model.all).forEach((key,index) => {
           const model = LiveRecord.Model.all[key]
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 store2.namespace('state').remove(key)
               })
 
-              record.create({reload: true})
+              record.create()
             }
 
             this.$store.state[key] = record
@@ -172,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
               // if not yet existing in LiveRecord store, we create
               if (!currentPlayer) {
                 currentPlayer = new LiveRecord.Model.all.Player({id: session.player_id})
-                currentPlayer.create({reload: true})
+                currentPlayer.create()
               }
             }
             else

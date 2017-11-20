@@ -4,7 +4,7 @@
     <div class='row full-height collapse'>
       <div class='small-12 medium-6 medium-centered columns full-height loader-anchor'>
         <div v-if='preloaded' class='row full-height collapse'>
-          <CardSelect v-if='game && game.attributes.is_started'/>
+          <CardSelect v-if='game && game.attributes.is_started' :game='game'/>
           <TeamSelect v-else/>
         </div>
         <Loader v-else/>
@@ -17,7 +17,7 @@
   import { mapActions, mapGetters } from 'vuex'
   import Loader from 'shared/Loader'
   import TeamSelect from './index/TeamSelect.vue'
-  import CardSelect from './index/TeamSelect.vue'
+  import CardSelect from './index/CardSelect.vue'
 
   export default {
   	components: { TeamSelect, CardSelect, Loader },
@@ -29,37 +29,7 @@
         afterPreload() {
           this.$set(this, 'preloaded', true)
           this.authorise()
-        },
-        // cards: [
-  			// 	{
-  			// 		name: 'Dog',
-        //     image_url: '/categories/animals/dog.jpg',
-        //     category: {
-        //       name: 'Animal'
-        //     }
-  			// 	},
-  			// 	{
-  			// 		name: 'Cat',
-        //     image_url: '/categories/animals/cat.jpg',
-        //     category: {
-        //       name: 'Animal'
-        //     }
-  			// 	},
-  			// 	{
-  			// 		name: 'Mouse',
-        //     image_url: '/categories/animals/mouse.jpg',
-        //     category: {
-        //       name: 'Animal'
-        //     }
-  			// 	},
-        //   {
-  			// 		name: 'Pig',
-        //     image_url: '/categories/animals/pig.jpg',
-        //     category: {
-        //       name: 'Animal'
-        //     }
-  			// 	}
-        // ]
+        }
       }
     },
     computed: $.extend(

@@ -31,3 +31,6 @@ image
 Category
 has_many :cards
 name
+
+Comment
+belongs_to :player

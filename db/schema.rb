@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117233356) do
+ActiveRecord::Schema.define(version: 20171120175551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20171117233356) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.bigint "player_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["created_at"], name: "index_comments_on_created_at"
+    t.index ["player_id"], name: "index_comments_on_player_id"
+    t.index ["updated_at"], name: "index_comments_on_updated_at"
   end
 
   create_table "deck_cards", force: :cascade do |t|
@@ -120,6 +130,7 @@ ActiveRecord::Schema.define(version: 20171117233356) do
   end
 
   add_foreign_key "cards", "categories"
+  add_foreign_key "comments", "players"
   add_foreign_key "deck_cards", "cards"
   add_foreign_key "deck_cards", "games"
   add_foreign_key "games_players", "games"

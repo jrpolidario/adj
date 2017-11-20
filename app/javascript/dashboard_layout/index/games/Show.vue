@@ -79,7 +79,7 @@
                 // if the player associated to the gamesPlayer is not yet in the store, we also retrieve it
                 if (!player) {
                   player = new LiveRecord.Model.all.Player({id: createdGamesPlayer.player_id()})
-                  player.create({reload: true})
+                  player.create()
                 }
 
                 const playerUpdateCallback = player.addCallback('after:update', function() {

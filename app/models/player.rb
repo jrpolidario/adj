@@ -4,6 +4,7 @@ class Player < ApplicationRecord
   has_many :live_record_updates, as: :recordable, dependent: :destroy
   has_many :games_players
   has_many :games, through: :games_players
+  has_many :comments
 
   validates :name, presence: true, length: { maximum: 12 }
 

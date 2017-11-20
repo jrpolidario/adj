@@ -128,7 +128,7 @@
 
             if (!player) {
               player = new LiveRecord.Model.all.Player({id: gamesPlayer.player_id()})
-              player.create({ reload: true })
+              player.create()
 
               const playerCreateCallback = player.addCallback('after:update', function() {
                 self.$set(self, 'preloaded', true)
@@ -183,14 +183,6 @@
         }
       }
 
-      @include breakpoint(medium up) {
-        height: 50%;
-      }
-
-      @include breakpoint(small only) {
-        height: 25%;
-      }
-
       .underlay-text {
         opacity: 0.1;
         font-weight: bold;
@@ -203,41 +195,58 @@
         padding: 1rem;
       }
 
-      &:nth-child(1) {
-        border-right: 2px dashed #bbb;
-        border-bottom: 2px dashed #bbb;
+      @include breakpoint(medium up) {
+        height: 50%;
+
+        &:nth-child(1) {
+          border-right: 2px dashed #bbb;
+          border-bottom: 2px dashed #bbb;
+
+          .underlay-text {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+          }
+        }
+
+        &:nth-child(2) {
+          border-bottom: 2px dashed #bbb;
+
+          .underlay-text {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+          }
+        }
+
+        &:nth-child(3) {
+          border-right: 2px dashed #bbb;
+
+          .underlay-text {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0.5rem;
+          }
+        }
+
+        &:nth-child(4) {
+          .underlay-text {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+          }
+        }
+      }
+
+      @include breakpoint(small only) {
+        height: 25%;
+
+        border-right: 1px dashed #bbb;
+        border-top: 1px dashed #bbb;
 
         .underlay-text {
           position: absolute;
           top: 0.5rem;
-          left: 0.5rem;
-        }
-      }
-
-      &:nth-child(2) {
-        border-bottom: 2px dashed #bbb;
-
-        .underlay-text {
-          position: absolute;
-          top: 0.5rem;
-          right: 0.5rem;
-        }
-      }
-
-      &:nth-child(3) {
-        border-right: 2px dashed #bbb;
-
-        .underlay-text {
-          position: absolute;
-          bottom: 0.5rem;
-          left: 0.5rem;
-        }
-      }
-
-      &:nth-child(4) {
-        .underlay-text {
-          position: absolute;
-          bottom: 0.5rem;
           right: 0.5rem;
         }
       }

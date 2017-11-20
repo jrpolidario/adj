@@ -11,6 +11,7 @@ class Ability
       can :manage, Player, id: player.id
       can :create, Game
       can :manage, GamesPlayer, player_id: player.id # a.k.a JoinGame
+      can :create, Comment
     end
 
     if user.present? && user.is_admin?

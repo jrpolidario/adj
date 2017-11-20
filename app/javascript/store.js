@@ -87,7 +87,7 @@ const actions = {
             }
           })
           vue.callbacksToBeDestroyed.push(callbackToBeDestroyed)
-          record.create({reload: true})
+          record.create()
         }
         else
           preloadedRecordsCounter++

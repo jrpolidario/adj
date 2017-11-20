@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     resources :players do
       resources :games_players, shallow: true
     end
+
+    resources :comments
   end
 
   scope constraints: -> (request) { request.format == :html } do

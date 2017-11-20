@@ -26,6 +26,12 @@ import store2 from 'store2' // this is a session/localstorage package
 
 Vue.use(VueRouter)
 
+// fixed: mobile virtual-keyboard messing up the height of the body, which pushes it upwards
+// every time the virtual-keyboard is closed
+$(window).on('resize', function () {
+  $('body').height(screen.height);
+}).resize();
+
 document.addEventListener('DOMContentLoaded', () => {
 
   const router = new VueRouter({

@@ -32,6 +32,10 @@ class Game < ApplicationRecord
     [:is_finished, :is_started, :updated_at]
   end
 
+  def start!
+    update!(is_started: true)
+  end
+
   private
 
   def populate_deck_cards

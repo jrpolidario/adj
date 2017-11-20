@@ -4,6 +4,8 @@ class Comment < ApplicationRecord
   include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
+  validates :content, presence: true
+
   def self.live_record_whitelisted_attributes(comment, current_user)
     [:id, :content, :player_id, :created_at, :updated_at]
   end

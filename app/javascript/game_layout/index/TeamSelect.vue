@@ -1,6 +1,7 @@
 <template>
   <section id='team-select' class='full-height loader-anchor'>
     <div v-if='preloaded' class='full-height'>
+      <small id='info'>* 2 players per team minimum</small>
       <div
         v-if='getState("currentGamesPlayer").team() != null'
         v-on:click='setIsReady(!getState("currentGamesPlayer").is_ready())'
@@ -175,6 +176,8 @@
               self.callbacksToBeDestroyed.push([player, playerCreateCallback])
               self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
             }
+            self.$set(self, 'preloaded', true)
+            self.$forceUpdate()
           },
           'after:reload': function(recordIds) {
             self.$set(self, 'preloaded', true)
@@ -196,8 +199,12 @@
   @import 'app/assets/stylesheets/imports/mixins';
 
   #team-select {
-    border-radius: 0.5rem;
-    overflow: hidden;
+    #info {
+      position: absolute;
+      top: -1.5rem;
+      left: 0.2rem;
+      color: #aaa;
+    }
 
     #ready-button {
       border-radius: 50%;
@@ -234,6 +241,9 @@
     }
 
     #teams-container {
+      border-radius: 0.5rem;
+      overflow: hidden;
+
       &.opaque {
         opacity: 0.2;
       }
@@ -312,7 +322,7 @@
         @include breakpoint(small only) {
           height: 25%;
 
-          border-right: 1px dashed #bbb;
+          border-bottom: 1px dashed #bbb;
           border-top: 1px dashed #bbb;
 
           .underlay-text {

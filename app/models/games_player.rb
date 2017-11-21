@@ -22,7 +22,7 @@ class GamesPlayer < ApplicationRecord
     errors.add(:team, error_message) if team_changed?
   end
 
-  after_update :check_all_players_are_ready_and_start_game!
+  after_update :check_all_players_are_ready_and_min_of_2_per_team_then_start_game!
 
   def self.live_record_whitelisted_attributes(games_player, current_player)
     [:id, :game_id, :player_id, :is_ready, :score, :team, :created_at, :updated_at]
@@ -34,10 +34,13 @@ class GamesPlayer < ApplicationRecord
 
   private
 
-  def check_all_players_are_ready_and_start_game!
+  def check_all_players_are_ready_and_min_of_2_per_team_then_start_game!
     if is_ready_changed? && is_ready
       unless game.games_players.where(is_ready: false).exists?
-        game.start!
+        teams_count = game.games_players.group(:team).count
+        if teams_count.all? { |k, v| v >= 2 }
+          game.start!
+        end
       end
     end
   end

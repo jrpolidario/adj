@@ -16,6 +16,7 @@ class GamesPlayer < ApplicationRecord
   end
 
   validate on: :update, if: -> { game.is_started? } do
+    byebug
     error_message = 'can no longer be updated after game has started'
     errors.add(:is_ready, error_message) if is_ready_changed?
     errors.add(:team, error_message) if team_changed?

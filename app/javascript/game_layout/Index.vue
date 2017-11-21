@@ -27,8 +27,25 @@
         callbacksToBeDestroyed: [],
         preloaded: false,
         afterPreload() {
-          this.$set(this, 'preloaded', true)
-          this.authorise()
+          const self = this
+          self.$store.commit('setState', { currentGame: self.game })
+
+          const gamesPlayerSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
+            reload: true,
+            where: {
+              player_id_eq: self.getState('currentPlayer').id(),
+              game_id_eq: this.game.id()
+            },
+            callbacks: {
+              'after:createOrUpdate': function(gamesPlayer) {
+                self.$store.commit('setState', { currentGamesPlayer: gamesPlayer })
+
+                self.$set(self, 'preloaded', true)
+                self.authorise()
+              }
+            }
+          })
+          self.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, gamesPlayerSubscription])
         }
       }
     },
@@ -54,6 +71,7 @@
       mapActions(['preloadLiveRecords', 'cleanup'])
     ),
     mounted() {
+      const self = this
       this.preloadLiveRecords({
         vue: this,
         recordIds: { 'Game': [this.game.id()] }

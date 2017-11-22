@@ -18,6 +18,13 @@
 </p>
 
 <p>
+  <strong>Score:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-score'>
+  	<%= @card.score %>
+  </span>
+</p>
+
+<p>
   <strong>Category:</strong>
   <span data-live-record-update-from='Card-<%= @card.id %>-category'>
   	<%= @card.category.name %>

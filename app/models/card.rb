@@ -11,10 +11,10 @@ class Card < ApplicationRecord
   validates :name, presence: true
 
   def self.live_record_whitelisted_attributes(card, current_player)
-    []
+    [:id, :name, :image, :category_id, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_player)
-    []
+    [:category_id, :created_at, :updated_at]
   end
 end

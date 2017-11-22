@@ -1,11 +1,15 @@
 <template>
   <div id='card-select' class='full-height'>
-    <Card v-if='game && game.attributes.is_started' v-for='card in cards' :card='card'/>
+    <Card
+      v-for='position in positions'
+      :game='game'
+      :position='position'
+    />
   </div>
 </template>
 
 <script>
-  import Card from './cards/Card'
+  import Card from './card_select/Card'
 
   export default {
     components: { Card },
@@ -17,36 +21,37 @@
     },
     data() {
       return {
-        cards: [
-  				{
-  					name: 'Dog',
-            image_url: '/categories/animals/dog.jpg',
-            category: {
-              name: 'Animal'
-            }
-  				},
-  				{
-  					name: 'Cat',
-            image_url: '/categories/animals/cat.jpg',
-            category: {
-              name: 'Animal'
-            }
-  				},
-  				{
-  					name: 'Mouse',
-            image_url: '/categories/animals/mouse.jpg',
-            category: {
-              name: 'Animal'
-            }
-  				},
-          {
-  					name: 'Pig',
-            image_url: '/categories/animals/pig.jpg',
-            category: {
-              name: 'Animal'
-            }
-  				}
-        ]
+        positions: [1, 2, 3, 4]
+        // cards: [
+  			// 	{
+  			// 		name: 'Dog',
+        //     image_url: '/categories/animals/dog.jpg',
+        //     category: {
+        //       name: 'Animal'
+        //     }
+  			// 	},
+  			// 	{
+  			// 		name: 'Cat',
+        //     image_url: '/categories/animals/cat.jpg',
+        //     category: {
+        //       name: 'Animal'
+        //     }
+  			// 	},
+  			// 	{
+  			// 		name: 'Mouse',
+        //     image_url: '/categories/animals/mouse.jpg',
+        //     category: {
+        //       name: 'Animal'
+        //     }
+  			// 	},
+        //   {
+  			// 		name: 'Pig',
+        //     image_url: '/categories/animals/pig.jpg',
+        //     category: {
+        //       name: 'Animal'
+        //     }
+  			// 	}
+        // ]
       }
     }
   }

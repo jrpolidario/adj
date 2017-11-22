@@ -29,14 +29,13 @@
 	left: 0;
 }
 
-/* front pane, placed above back */
+/* front, initially hidden pane */
 .front {
-	z-index: 2;
 	/* for firefox 31 */
-	transform: rotateY(0deg);
+	transform: rotateY(180deg);
 }
 
-/* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
+	z-index: 2;
+	transform: rotateY(0deg);
 }

@@ -17,7 +17,7 @@ class Game < ApplicationRecord
   has_secure_password
 
   after_create :populate_deck_cards
-  after_create :populate_selectable_cards
+  after_update :populate_selectable_cards, if: -> { is_started_changed? && is_started }
 
   def self.live_record_whitelisted_attributes(game, current_player)
     # only allow fetching of ongoing records
@@ -49,9 +49,11 @@ class Game < ApplicationRecord
   end
 
   def populate_selectable_cards
-    transaction do
+    Thread.new do
+      sleep(1)
       NUMBER_OF_SELECTABLE_CARDS.times do
         take_a_selectable_card_from_deck_cards
+        sleep(1)
       end
     end
   end
@@ -59,8 +61,16 @@ class Game < ApplicationRecord
   def take_a_selectable_card_from_deck_cards
     random_deck_card = deck_cards.order('RANDOM()').take
 
-    selectable_cards << SelectableCard.new(card: random_deck_card.card)
+    current_card_positions = selectable_cards.pluck(:position)
+    available_card_positions = (1..NUMBER_OF_SELECTABLE_CARDS).to_a - current_card_positions
+
+    selectable_card = SelectableCard.new(
+      card: random_deck_card.card,
+      position: available_card_positions.sample
+    )
+    selectable_cards << selectable_card
 
     random_deck_card.destroy
+    selectable_card
   end
 end

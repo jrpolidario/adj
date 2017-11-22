@@ -1,98 +1,86 @@
 <template>
   <section id='team-select' class='full-height loader-anchor'>
-    <div v-if='preloaded' class='full-height'>
-      <small id='info'>* 2 players per team minimum</small>
+    <small id='info'>* 2 players per team minimum</small>
+    <div
+      v-if='getState("currentGamesPlayer").team() != null'
+      v-on:click='setIsReady(!getState("currentGamesPlayer").is_ready())'
+      id='ready-button'
+    >
+      <span class='ready-text'>
+        <i v-if='getState("currentGamesPlayer").is_ready()' class='fa fa-check' aria-hidden='true'></i>
+        <span v-else class='noselect'>Ready</span>
+      </span>
+    </div>
+    <div
+      v-bind:class='{ opaque: getState("currentGamesPlayer").is_ready() }'
+      id='teams-container'
+      class='full-height'
+    >
       <div
-        v-if='getState("currentGamesPlayer").team() != null'
-        v-on:click='setIsReady(!getState("currentGamesPlayer").is_ready())'
-        id='ready-button'
+        v-bind:class='{ active: isCurrentTeam(1) }'
+        v-on:click='setCurrentTeam(1)'
+        class='small-12 medium-6 columns team-container'
       >
-        <span class='ready-text'>
-          <i v-if='getState("currentGamesPlayer").is_ready()' class='fa fa-check' aria-hidden='true'></i>
-          <span v-else class='noselect'>Ready</span>
-        </span>
+        <div class='team-players'>
+          <PlayerName v-for='(gamesPlayer, index) in teamAGamesPlayers()' :gamesPlayer='gamesPlayer'/>
+        </div>
+        <h2 class='underlay-text'>
+          TEAM A
+        </h2>
       </div>
       <div
-        v-bind:class='{ opaque: getState("currentGamesPlayer").is_ready() }'
-        id='teams-container'
-        class='full-height'
+        v-bind:class='{ active: isCurrentTeam(2) }'
+        v-on:click='setCurrentTeam(2)'
+        class='small-12 medium-6 columns team-container'
       >
-        <div
-          v-bind:class='{ active: isCurrentTeam(1) }'
-          v-on:click='setCurrentTeam(1)'
-          class='small-12 medium-6 columns team-container'
-        >
-          <div class='team-players'>
-            <PlayerName v-for='(gamesPlayer, index) in teamAGamesPlayers()' :gamesPlayer='gamesPlayer'/>
-          </div>
-          <h2 class='underlay-text'>
-            TEAM A
-          </h2>
+        <div class='team-players'>
+          <PlayerName v-for='(gamesPlayer, index) in teamBGamesPlayers()' :gamesPlayer='gamesPlayer'/>
         </div>
-        <div
-          v-bind:class='{ active: isCurrentTeam(2) }'
-          v-on:click='setCurrentTeam(2)'
-          class='small-12 medium-6 columns team-container'
-        >
-          <div class='team-players'>
-            <PlayerName v-for='(gamesPlayer, index) in teamBGamesPlayers()' :gamesPlayer='gamesPlayer'/>
-          </div>
-          <h2 class='underlay-text'>
-            TEAM B
-          </h2>
+        <h2 class='underlay-text'>
+          TEAM B
+        </h2>
+      </div>
+      <div
+        v-bind:class='{ active: isCurrentTeam(3) }'
+        v-on:click='setCurrentTeam(3)'
+        class='small-12 medium-6 columns team-container'
+      >
+        <div class='team-players'>
+          <PlayerName v-for='(gamesPlayer, index) in teamCGamesPlayers()' :gamesPlayer='gamesPlayer'/>
         </div>
-        <div
-          v-bind:class='{ active: isCurrentTeam(3) }'
-          v-on:click='setCurrentTeam(3)'
-          class='small-12 medium-6 columns team-container'
-        >
-          <div class='team-players'>
-            <PlayerName v-for='(gamesPlayer, index) in teamCGamesPlayers()' :gamesPlayer='gamesPlayer'/>
-          </div>
-          <h2 class='underlay-text'>
-            TEAM C
-          </h2>
+        <h2 class='underlay-text'>
+          TEAM C
+        </h2>
+      </div>
+      <div
+        v-bind:class='{ active: isCurrentTeam(4) }'
+        v-on:click='setCurrentTeam(4)'
+        class='small-12 medium-6 columns team-container'
+      >
+        <div class='team-players'>
+          <PlayerName v-for='(gamesPlayer, index) in teamDGamesPlayers()' :gamesPlayer='gamesPlayer'/>
         </div>
-        <div
-          v-bind:class='{ active: isCurrentTeam(4) }'
-          v-on:click='setCurrentTeam(4)'
-          class='small-12 medium-6 columns team-container'
-        >
-          <div class='team-players'>
-            <PlayerName v-for='(gamesPlayer, index) in teamDGamesPlayers()' :gamesPlayer='gamesPlayer'/>
-          </div>
-          <h2 class='underlay-text'>
-            TEAM D
-          </h2>
-        </div>
+        <h2 class='underlay-text'>
+          TEAM D
+        </h2>
       </div>
     </div>
-    <Loader v-else/>
   </section>
 </template>
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
   import PlayerName from './team_select/PlayerName'
-  import Loader from 'shared/Loader'
 
   export default {
-    components: { PlayerName, Loader },
-    data() {
-      return {
-        subscriptionsToBeDestroyed: [],
-        callbacksToBeDestroyed: [],
-        preloaded: false
+    components: { PlayerName },
+    props: {
+      game: {
+        type: Object,
+        required: true
       }
     },
-    computed: $.extend(
-      {
-        game() {
-          return this.$store.getters.getRecord('Game', this.$route.params.id)
-        }
-      },
-      mapGetters(['getState'])
-    ),
+    computed: mapGetters(['getState']),
     methods: $.extend(
       {
         teamAGamesPlayers() {
@@ -148,48 +136,7 @@
         }
       },
       mapActions(['cleanup', 'adjAjax'])
-    ),
-    mounted() {
-      const self = this
-      const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
-        reload: true,
-        where: { game_id_eq: this.game.id() },
-        callbacks: {
-          'after:createOrUpdate': function(gamesPlayer) {
-            // also load the associated Player if not yet in store
-            let player = LiveRecord.Model.all.Player.all[gamesPlayer.player_id()]
-
-            if (!player) {
-              player = new LiveRecord.Model.all.Player({id: gamesPlayer.player_id()})
-              player.create()
-
-              const playerCreateCallback = player.addCallback('after:update', function() {
-                self.$set(self, 'preloaded', true)
-                self.$forceUpdate()
-              })
-
-              const playerDestroyCallback = player.addCallback('after:destroy', function() {
-                self.$set(self, 'preloaded', true)
-                self.$forceUpdate()
-              })
-
-              self.callbacksToBeDestroyed.push([player, playerCreateCallback])
-              self.callbacksToBeDestroyed.push([player, playerDestroyCallback])
-            }
-            self.$set(self, 'preloaded', true)
-            self.$forceUpdate()
-          },
-          'after:reload': function(recordIds) {
-            self.$set(self, 'preloaded', true)
-            self.$forceUpdate()
-          }
-        }
-      })
-      this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.GamesPlayer, gamesPlayersSubscription])
-    },
-    destroyed() {
-      this.cleanup({ vue: this })
-    }
+    )
   }
 </script>
 

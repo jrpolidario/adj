@@ -4,16 +4,20 @@
     {{ card.name }}
   </div> -->
 
-  <div class='flip-container full-height noselect' v-on:click='flip'>
+  <div
+    v-if='card() && card().attributes.category_id != undefined'
+    v-on:click='flip'
+    class='flip-container full-height noselect'
+  >
   	<div class='flipper full-height'>
-  		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card.image_url + ")" }'>
+  		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
         <div class='name'>
-  			  {{ card.name }}
+  			  {{ card().name() }}
         </div>
   		</div>
   		<div class='back full-height card'>
         <div class='name'>
-  			  {{ card.category.name }}
+  			  {{ card().category().name() }}
         </div>
   		</div>
   	</div>
@@ -24,15 +28,33 @@
 <script>
 export default {
   props: {
-    card: {
+    game: {
       type: Object,
+      required: true
+    },
+    position: {
+      type: Number,
       required: true
     }
   },
   methods: {
     flip: function(event) {
       $(event.currentTarget).toggleClass('flipped');
+    },
+    selectableCard() {
+      const matchingSelectableCard = this.game.selectableCards().find((selectableCard) => {
+        return selectableCard.position() == this.position
+      })
+      if (matchingSelectableCard)
+        return matchingSelectableCard
+    },
+    card() {
+      if (this.selectableCard())
+        return this.selectableCard().card()
     }
+  },
+  mounted() {
+    window.asdf = this
   }
 }
 </script>

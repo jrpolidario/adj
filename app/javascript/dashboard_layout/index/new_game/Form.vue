@@ -11,18 +11,18 @@
     <input v-if='["patch", "put", "delete"].includes(formMethod)' name='_method' type='hidden' v-bind:value='formMethod'/>
     <input name='game[games_players_attributes][][player_id]' type='hidden' v-model='formValues.games_players_attributes.player_id'/>
     <input
-      type='password'
+      type='text'
       name='game[password]'
       ref='password'
       placeholder='Enter game password'
       v-model='formValues.password'
     ></input>
-    <input
+    <!-- <input
       type='password'
       name='game[password_confirmation]'
       placeholder='Re-enter password'
       v-model='formValues.password_confirmation'
-    ></input>
+    ></input> -->
     <input type='submit' class='button'></input>
   </form>
 </template>
@@ -82,7 +82,7 @@
         }
 
         this.$set(this.formValues, 'password', '')
-        this.$set(this.formValues, 'password_confirmation', '')
+        // this.$set(this.formValues, 'password_confirmation', '')
 
         this.onSubmitSuccessCallback(data, status, xhr)
       },

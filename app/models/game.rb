@@ -9,6 +9,7 @@ class Game < ApplicationRecord
   has_many :players, through: :games_players
   has_many :selectable_cards, dependent: :destroy # this refers to the 4 cards a player can choose
   has_many :deck_cards, dependent: :destroy # this refers to cards in the deck
+  belongs_to :current_turn_games_player, class_name: 'GamesPlayer', required: false # player who currently has the turn
 
   accepts_nested_attributes_for :games_players, reject_if: :all_blank
 
@@ -17,12 +18,12 @@ class Game < ApplicationRecord
   has_secure_password
 
   after_create :populate_deck_cards
-  after_update :populate_selectable_cards, if: -> { is_started_changed? && is_started }
+  # after_update_commit :populate_selectable_cards, if: -> { is_started_changed? && is_started }
 
   def self.live_record_whitelisted_attributes(game, current_player)
     # only allow fetching of ongoing records
     # if ongoing.exists?(id: game.id)
-      [:id, :is_finished, :is_started, :created_at, :updated_at]
+      [:id, :current_turn_games_player_id, :is_finished, :is_started, :created_at, :updated_at]
     # else
     #   []
     # end
@@ -33,7 +34,11 @@ class Game < ApplicationRecord
   end
 
   def start!
-    update!(is_started: true)
+    populate_selectable_cards
+    
+    # designate_the_first_player_to_take_the_turn
+    games_player = games_players.order(id: :asc).take
+    update!(is_started: true, current_turn_games_player_id: games_player.id)
   end
 
   private

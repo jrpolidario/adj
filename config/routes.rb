@@ -12,8 +12,7 @@ Rails.application.routes.draw do
 
     resources :games do
       resources :games_players, shallow: true
-
-      resources :selectable_cards, only: [] do
+      resources :selectable_cards, shallow: true do
         post 'take_from_deck', on: :collection
       end
     end

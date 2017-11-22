@@ -10,7 +10,7 @@
   >
     <input v-if='["patch", "put", "delete"].includes(formMethod)' name='_method' type='hidden' v-bind:value='formMethod'/>
     <input
-      type='password'
+      type='text'
       name='games_player[game_password]'
       ref='game_password'
       placeholder='Enter the game password'

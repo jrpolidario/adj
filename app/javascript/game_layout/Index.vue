@@ -1,16 +1,16 @@
 <template>
-  <section id='show-game' class='full-height'>
+  <section v-if='loadCounter == loadTotal' id='show-game' class='full-height'>
     <h1 class='hide'>Game #{{ game.id() }}</h1>
     <div class='row full-height collapse'>
       <div class='small-12 medium-6 medium-centered columns full-height loader-anchor'>
-        <div v-if='loadCounter == loadTotal' class='row full-height collapse'>
+        <div class='row full-height collapse'>
           <CardSelect v-if='game && game.attributes.is_started' :game='game'/>
           <TeamSelect v-else :game='game'/>
         </div>
-        <Loader v-else/>
       </div>
     </div>
   </section>
+  <Loader v-else/>
 </template>
 
 <script>
@@ -29,6 +29,7 @@
         loadTotal: 0,
         afterPreload() {
           const self = this
+          // self.authorise()
           self.$store.commit('setState', { currentGame: self.game })
 
           const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({
@@ -150,7 +151,7 @@
       const self = this
       this.preloadLiveRecords({
         vue: this,
-        recordIds: { 'Game': [this.game.id()] }
+        recordIds: { 'Game': [self.$route.params.id] }
       })
       window.ghj = self
     },

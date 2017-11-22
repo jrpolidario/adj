@@ -40,6 +40,6 @@ class SelectableCardsController < ApplicationController
   end
 
   def selectable_card_params
-    params.fetch(:selectable_card, {}).permit(:is_front_side_up)
+    params.fetch(:selectable_card, {}).permit(:is_selected)
   end
 end

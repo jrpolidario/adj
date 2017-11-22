@@ -4,17 +4,22 @@
       v-if='card() && card().attributes.category_id != undefined'
       v-on:click='flip'
       class='flip-container full-height noselect'
-      v-bind:class='{ flipped: selectableCard().is_front_side_up(), clickable: isClickable }'
+      v-bind:class='{ flipped: isFlipped, clickable: isClickable, highlighted: isHighlighted }'
     >
     	<div class='flipper full-height'>
     		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
-          <div class='name'>
+          <div class='card-name'>
     			  {{ card().name() }}
           </div>
     		</div>
     		<div class='back full-height card'>
-          <div class='name'>
-    			  {{ card().category().name() }}
+          <div class='category-name-and-score'>
+            <div class='category-name'>
+    			    {{ card().category().name() }}
+            </div>
+            <div class='score'>
+              <i v-for='score in card().score()' class='fa fa-star' aria-hidden='true'></i>
+            </div>
           </div>
     		</div>
     	</div>
@@ -39,10 +44,20 @@
     computed: Object.assign(
       {
         isClickable() {
-          return this.isCurrentTurn
+          // clickable if current turn and not yet selected any card
+          const selectedSelectableCard = this.getState('currentGame').selectableCards().find((selectableCard) => {
+            return selectableCard.is_selected()
+          })
+          return this.isCurrentTurn && !selectedSelectableCard
         },
         isCurrentTurn() {
           return this.game.attributes.current_turn_games_player_id == this.getState('currentGamesPlayer').id()
+        },
+        isFlipped() {
+          return this.isCurrentTurn && this.selectableCard().is_selected()
+        },
+        isHighlighted() {
+          return this.selectableCard().is_selected()
         }
       },
       mapGetters(['getRecord', 'getState'])
@@ -58,7 +73,7 @@
               data: {
                 _method: 'patch',
                 selectable_card: {
-                  is_front_side_up: !this.selectableCard().is_front_side_up()
+                  is_selected: true
                 }
               }
             })
@@ -85,7 +100,8 @@
 </script>
 
 <style lang='scss' scoped>
-  // @import 'stylesheets/imports/variables';
+  @import 'app/assets/stylesheets/imports/variables';
+  @import 'app/javascript/shared/mixins.scss';
 
   .card-container {
     height: 50%;
@@ -97,6 +113,10 @@
         cursor: pointer;
       }
 
+      &.highlighted {
+        @include box-glow(null, $page-base-background-color);
+      }
+
       .card {
         background: #fafafa;
         border-radius: 5px;
@@ -104,23 +124,30 @@
         background-size: cover;
         box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 
-        .name {
+        .card-name, .category-name-and-score {
           font-size: 2em;
           left: 50%;
           position: absolute;
           transform: translateX(-50%);
+          text-align: center;
         }
 
-        &.front .name {
+        &.front .card-name {
           bottom: 0;
           color: rgba(255,255,255,0.8);
           text-shadow: 0 0 2px rgba(0,0,0,0.6);
         }
 
-        &.back .name {
+        &.back .category-name-and-score {
           color: #555;
           top: 50%;
           transform: translate(-50%, -50%);
+
+          .score {
+            font-size: 0.6em;
+            text-shadow: 0 0 2px rgba(darken(gold, 10), 0.4);
+            color: gold;
+          }
         }
       }
     }

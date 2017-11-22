@@ -6,7 +6,7 @@ class SelectableCard < ApplicationRecord
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
   def self.live_record_whitelisted_attributes(selectable_card, current_user)
-    [:id, :card_id, :game_id, :position, :is_front_side_up, :created_at, :updated_at]
+    [:id, :card_id, :game_id, :position, :is_selected, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_user)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122054446) do
+ActiveRecord::Schema.define(version: 20171122061100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20171122054446) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position", null: false
-    t.boolean "is_front_side_up", default: false, null: false
+    t.boolean "is_selected", default: false, null: false
     t.index ["card_id"], name: "index_selectable_cards_on_card_id"
     t.index ["game_id"], name: "index_selectable_cards_on_game_id"
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122061100) do
+ActiveRecord::Schema.define(version: 20171125070538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20171122061100) do
     t.string "password_digest"
     t.boolean "is_started", default: false, null: false
     t.integer "current_turn_games_player_id"
+    t.integer "games_players_turn_sequence", default: [], array: true
     t.index ["created_at"], name: "index_games_on_created_at"
     t.index ["is_finished"], name: "index_games_on_is_finished"
     t.index ["is_started"], name: "index_games_on_is_started"
@@ -69,7 +70,7 @@ ActiveRecord::Schema.define(version: 20171122061100) do
     t.integer "selected_card_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "score"
+    t.integer "score", default: 0, null: false
     t.boolean "is_ready", default: false, null: false
     t.integer "team"
     t.index ["game_id"], name: "index_games_players_on_game_id"
@@ -101,6 +102,13 @@ ActiveRecord::Schema.define(version: 20171122061100) do
     t.datetime "updated_at", null: false
     t.integer "position", null: false
     t.boolean "is_selected", default: false, null: false
+    t.integer "seconds_left", null: false
+    t.boolean "is_bomb", default: false, null: false
+    t.boolean "is_question", default: false, null: false
+    t.integer "score", null: false
+    t.boolean "is_time_is_up", default: false, null: false
+    t.integer "team_winner"
+    t.boolean "is_done", default: false, null: false
     t.index ["card_id"], name: "index_selectable_cards_on_card_id"
     t.index ["game_id"], name: "index_selectable_cards_on_game_id"
   end

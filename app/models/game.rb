@@ -23,7 +23,7 @@ class Game < ApplicationRecord
   def self.live_record_whitelisted_attributes(game, current_player)
     # only allow fetching of ongoing records
     # if ongoing.exists?(id: game.id)
-      [:id, :current_turn_games_player_id, :is_finished, :is_started, :created_at, :updated_at]
+      [:id, :current_turn_games_player_id, :is_finished, :is_started, :games_players_turn_sequence, :created_at, :updated_at]
     # else
     #   []
     # end
@@ -35,10 +35,24 @@ class Game < ApplicationRecord
 
   def start!
     populate_selectable_cards
-    
-    # designate_the_first_player_to_take_the_turn
-    games_player = games_players.order(id: :asc).take
-    update!(is_started: true, current_turn_games_player_id: games_player.id)
+
+    self.is_started = true
+
+    # designate the order of the players
+    self.games_players_turn_sequence = games_players.order(id: :asc).pluck(:id)
+
+    set_next_turn_games_player
+
+    save!
+  end
+
+  def set_next_turn_games_player
+    if current_turn_games_player_id.nil? || current_turn_games_player_id == games_players_turn_sequence.last
+      self.current_turn_games_player_id = games_players_turn_sequence.first
+    else
+      next_index = games_players_turn_sequence.index(current_turn_games_player_id) + 1
+      self.current_turn_games_player_id = games_players_turn_sequence[next_index]
+    end
   end
 
   private
@@ -71,7 +85,7 @@ class Game < ApplicationRecord
 
     selectable_card = SelectableCard.new(
       card: random_deck_card.card,
-      position: available_card_positions.sample
+      position: available_card_positions.sample,
     )
     selectable_cards << selectable_card
 

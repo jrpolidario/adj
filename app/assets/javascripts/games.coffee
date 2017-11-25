@@ -7,6 +7,12 @@ LiveRecord.Model.create(
     hasMany: {
       gamesPlayers: { foreignKey: 'game_id', modelName: 'GamesPlayer' }
       selectableCards: { foreignKey: 'game_id', modelName: 'SelectableCard' }
+    },
+    instanceMethods: {
+      currentSelectableCard: ->
+        this.selectableCards().find((selectableCard) ->
+          selectableCard.attributes.is_selected
+        )
     }
   }
 )

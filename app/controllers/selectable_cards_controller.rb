@@ -40,6 +40,6 @@ class SelectableCardsController < ApplicationController
   end
 
   def selectable_card_params
-    params.fetch(:selectable_card, {}).permit(:is_selected)
+    params.fetch(:selectable_card, {}).permit(:is_selected, :is_time_is_up, :team_winner)
   end
 end

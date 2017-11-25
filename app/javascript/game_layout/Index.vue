@@ -1,10 +1,10 @@
 <template>
-  <section v-if='loadCounter == loadTotal' id='show-game' class='full-height'>
+  <section v-if='loadCounter == loadTotal' id='game-layout' class='full-height'>
     <h1 class='hide'>Game #{{ game.id() }}</h1>
     <div class='row full-height collapse'>
       <div class='small-12 medium-6 medium-centered columns full-height loader-anchor'>
         <div class='row full-height collapse'>
-          <CardSelect v-if='game && game.attributes.is_started' :game='game'/>
+          <StartGame v-if='game && game.attributes.is_started' :game='game'/>
           <TeamSelect v-else :game='game'/>
         </div>
       </div>
@@ -17,10 +17,10 @@
   import { mapActions, mapGetters } from 'vuex'
   import Loader from 'shared/Loader'
   import TeamSelect from './index/TeamSelect.vue'
-  import CardSelect from './index/CardSelect.vue'
+  import StartGame from './index/StartGame.vue'
 
   export default {
-  	components: { TeamSelect, CardSelect, Loader },
+  	components: { TeamSelect, StartGame, Loader },
     data () {
       return {
         subscriptionsToBeDestroyed: [],
@@ -162,7 +162,7 @@
 </script>
 
 <style lang='scss' scoped>
-  #show-game {
+  #game-layout {
     padding-top: 10%;
     padding-bottom: 10%;
   }

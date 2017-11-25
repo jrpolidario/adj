@@ -1,5 +1,5 @@
 <template>
-  <section id='games' class='row collapse full-height full-width'>
+  <section id='dashboard-layout' class='row collapse full-height full-width'>
     <h1 class='hide'>Adj Dashboard</h1>
     <div class='large-3 medium-4 columns full-height'>
       <Player/>
@@ -24,7 +24,7 @@
 
 <!-- GLOBAL STYLES FOR DASHBOARD LAYOUT -->
 <style lang='scss'>
-  #games {
+  #dashboard-layout {
     color: white;
 
     > div.columns > * {

@@ -1,0 +1,108 @@
+<template>
+  <div id='card-select' class='full-height'>
+    <div v-if='isCurrentTurn' id='info'>
+      Your turn! :)
+    </div>
+    <Card
+      v-for='position in [1, 2, 3, 4]'
+      :game='game'
+      :position='position'
+    />
+    <div
+      v-if='isCurrentTurn && game.currentSelectableCard() && !game.currentSelectableCard().is_time_is_up()'
+      v-on:click='setIsTimeIsUp(true)'
+      id='done-button'
+    >
+      <span class='done-text'>
+        <span class='noselect'>Done</span>
+      </span>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { mapActions, mapGetters } from 'vuex'
+  import Card from './card_select/Card'
+
+  export default {
+    components: { Card },
+    props: {
+      game: {
+        type: Object,
+        required: true
+      }
+    },
+    computed: $.extend(
+      {
+        isCurrentTurn() {
+          return this.game.attributes.current_turn_games_player_id == this.getState('currentGamesPlayer').id()
+        }
+      },
+      mapGetters(['getRecord', 'getState'])
+    ),
+    methods: Object.assign(
+      {
+        setIsTimeIsUp(value) {
+          this.adjAjax({
+            url: Routes.selectable_card_path({ id: this.game.currentSelectableCard().id() }),
+            method: 'post',
+            data: {
+              _method: 'patch',
+              selectable_card: {
+                is_time_is_up: value
+              }
+            }
+          })
+        }
+      },
+      mapActions(['cleanup', 'adjAjax'])
+    )
+  }
+</script>
+
+<style lang='scss' scoped>
+  @import 'app/assets/stylesheets/imports/variables';
+
+  #card-select {
+    #info {
+      position: absolute;
+      top: -1.5rem;
+      left: 0.2rem;
+      color: #aaa;
+    }
+
+    #done-button {
+      border-radius: 50%;
+      height: 5rem;
+      width: 5rem;
+      z-index: 1;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      background: $page-base-background-color;
+      box-shadow: 0 0 0.2rem rgba(darken($page-base-background-color,30),0.6);
+
+      cursor: pointer;
+
+      &:hover {
+        background: darken($page-base-background-color, 10);
+      }
+
+      .done-text {
+        color: white;
+        font-family: $default-font-header-sans;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        .fa-check {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+</style>

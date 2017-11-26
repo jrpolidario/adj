@@ -30,7 +30,8 @@
         </a>
       </p>
       <p>
-        <small>Built with <3 | c/o Jules Roman B. Polidario - 2017 | <a href='https://twitter.com/JRPolidario' rel='nofollow' target='_blank'>@jrpolidario</a></small>
+        <small>Built with <3 | c/o Jules Roman B. Polidario - 2017 | <a href='https://twitter.com/JRPolidario' rel='nofollow' target='_blank'>@jrpolidario</a></small><br>
+        <small>All card-images have CC0 license, and taken from <a href='https://pixabay.com' rel='nofollow' target='_blank'>pixabay.com</a></small>
       </p>
     </section>
   </transition>

@@ -5,7 +5,7 @@
   >
     <section id='about' class='full-height'>
       <h2>About</h2>
-      <p>Don't have any card games to play with your friends? Need an icebreaker over a phone conversation? Try and play Adj! :)</p>
+      <p>Don't have any card games to play with your friends? Need an icebreaker over a phone conversation? Try and play Adj! No registration required! :)</p>
       <p>Try to guess cards, but only using adjectives, and AND and OR! No other words allowed! Say... "big AND dark", "sour OR sweet, AND round, AND green"!</p>
 
       <h3>Motivations</h3>

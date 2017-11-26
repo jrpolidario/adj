@@ -4,7 +4,7 @@
     enter-active-class='animated fadeIn'
   >
     <section id='games' class='full-height loader-anchor'>
-      <h2>Ongoing Games</h2>
+      <h2>Lobby</h2>
       <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath" }' class='button'>
         <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
       </router-link>

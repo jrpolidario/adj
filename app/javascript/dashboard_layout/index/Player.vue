@@ -2,7 +2,7 @@
   <div id='player' class='full-height'>
     <Logo/>
     <CurrentPlayer/>
-    <Menu/>
+    <PageMenu/>
     <Links/>
   </div>
 </template>
@@ -10,11 +10,11 @@
 <script>
   import Logo from './player/Logo'
   import CurrentPlayer from './player/CurrentPlayer'
-  import Menu from './player/Menu'
+  import PageMenu from './player/PageMenu'
   import Links from './player/Links'
 
   export default {
-    components: { Logo, CurrentPlayer, Menu, Links }
+    components: { Logo, CurrentPlayer, PageMenu, Links }
   }
 </script>
 

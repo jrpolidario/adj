@@ -19,7 +19,7 @@
       		</div>
       		<div class='back full-height card'>
             <div class='bomb' v-if='selectableCard().is_bomb()'>
-              <img alt='bomb' src='/assets/bomb.svg'>
+              <img alt='bomb' src='/non_digest_assets/bomb.svg'>
             </div>
             <div class='category-name-and-score'>
               <div class='category-name'>

@@ -107,10 +107,7 @@
         }
       },
       mapActions(['adjAjax'])
-    ),
-    mounted() {
-      window.asdf = this
-    }
+    )
   }
 </script>
 

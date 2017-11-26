@@ -71,9 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // now we make our LiveRecord records-store reactive & compatible with our vuex store.js
         const self = this
 
-        window.v_ue = self
-        window.s_tore2 = store2
-
         Object.keys(LiveRecord.Model.all).forEach((key,index) => {
           const model = LiveRecord.Model.all[key]
 

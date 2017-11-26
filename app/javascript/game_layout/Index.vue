@@ -194,7 +194,6 @@
         vue: this,
         recordIds: { 'Game': [self.$route.params.id] }
       })
-      window.ghj = self
     },
     destroyed() {
       this.cleanup({ vue: this })

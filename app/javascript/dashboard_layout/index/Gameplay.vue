@@ -17,14 +17,14 @@
           Choose your Team in the Team Selection screen, and click 'Ready' afterwards. If everyone has clicked 'Ready' already, the game will then start immediately afterwards.
         </li>
         <li>
-          On the "Cards Selection" screen, a deck of 15 random cards will be available to play. Turn order will be automatically assigned to each of you. You'll know if it's your turn already if you see the "Your turn" message at the very top, just right above the cards. If you do not see it, then it is currently someone else's turn.
+          On the "Cards Selection" screen, a deck of 20 random cards will be available to play. Turn order will be automatically assigned to each of you. You'll know if it's your turn already if you see the "Your turn" message at the very top, just right above the cards. If you do not see it, then it is currently someone else's turn.
         </li>
         <li>
           If it's your turn, decide wisely and click any of the four back-facing cards. By clicking so, the timer immediately starts to tick.
           <ul>
             <li>The <strong>"Bomb"</strong> icon means that the time-limit is 15 seconds, half of the normal 30 seconds.</li>
             <li>The <strong>"Question"</strong> icon means that the card can be ANY category. This card therefore is a lot harder to guess, but is why it has +2 extra stars count than its normal supposed value</li>
-            <li>The <strong>"Stars"</strong> represent the 'unpopularity' of the card (as evaluated by Google Trends: 0-33 = 1 star; 34-66 = 2 stars; 67-100 = 3 stars). Each star gives +1 point to your score. Therefore, if you managed to guess a 3-star card, then your team will get +3 points.</li>
+            <li>The <strong>"Stars"</strong> represent the 'unpopularity' of the card (as evaluated by Google Trends: 0-33 = 3 stars; 34-66 = 2 stars; 67-100 = 1 star). Each star gives +1 point to your score. Therefore, if you managed to guess a 3-star card, then your team will get +3 points.</li>
           </ul>
         </li>
         <li>

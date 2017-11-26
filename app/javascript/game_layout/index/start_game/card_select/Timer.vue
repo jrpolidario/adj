@@ -31,9 +31,6 @@
       barWidth() {
         return this.game.currentSelectableCard().percentageTimeLeft() + '%'
       }
-    },
-    mounted() {
-      window.rt = this
     }
   }
 </script>

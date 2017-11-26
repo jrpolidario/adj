@@ -1,5 +1,6 @@
 <template>
   <div id='show-player'>
+    <span class='welcome-text'>Welcome!</span>
     <PlayerForm
       v-if='isEditingName'
       :player='getState("currentPlayer")'
@@ -44,10 +45,17 @@
 </script>
 
 <style lang='scss' scoped>
+  @import 'app/assets/stylesheets/imports/variables';
   @import './shared/placeholders';
 
   #show-player {
     @extend %current-player-container;
+
+    .welcome-text {
+      padding: 0.5rem;
+      font-size: 1.2em;
+      font-family: $default-font-header-sans;
+    }
 
     .editable {
       @extend %form-styles;

@@ -1,13 +1,18 @@
 <template>
-  <div id='new-game' class='full-height'>
-    <h2>New Game</h2>
-    <GameForm
-      :game='game'
-      :formAction='gamesPath'
-      :formMethod='"post"'
-      :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
-    />
-  </div>
+  <transition
+    name='custom-classes-transition'
+    enter-active-class='animated fadeIn'
+  >
+    <div id='new-game' class='full-height'>
+      <h2>New Game</h2>
+      <GameForm
+        :game='game'
+        :formAction='gamesPath'
+        :formMethod='"post"'
+        :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
+      />
+    </div>
+  </transition>
 </template>
 
 <script>

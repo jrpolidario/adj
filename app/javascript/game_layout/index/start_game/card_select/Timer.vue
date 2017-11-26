@@ -1,7 +1,7 @@
 <template>
   <div id='timer-container'>
     <div id='timer'>
-      <div v-bind:style='{ width: game.currentSelectableCard().percentageTimeLeft() }' class='bar'></div>
+      <div v-bind:style='{ width: barWidth, "background-color": barColor }' class='bar'></div>
     </div>
   </div>
 </template>
@@ -20,6 +20,20 @@
       return {
         startingSecondsLeft: null
       }
+    },
+    computed: {
+      barColor() {
+        // ref: https://stackoverflow.com/questions/7128675/from-green-to-red-color-depend-on-percentage
+        const value = this.game.currentSelectableCard().percentageTimeLeft() / 100.0
+        const hue = (value * 120).toString(10)
+        return ['hsl(', hue, ',50%,70%)'].join('')
+      },
+      barWidth() {
+        return this.game.currentSelectableCard().percentageTimeLeft() + '%'
+      }
+    },
+    mounted() {
+      window.rt = this
     }
   }
 </script>
@@ -37,14 +51,13 @@
     #timer {
       width: 100%;
       height: 0.4em;
-      border: 1px solid lighten($page-base-background-color, 25);
+      border: 1px solid lighten(#aaa, 25);
       border-radius: 0.2em;
-      background-color: lighten($page-base-background-color, 35);
+      background-color: lighten(#aaa, 25);
       overflow: hidden;
 
       .bar {
         height: 100%;
-        background-color: $page-base-background-color;
         transition: width 1s;
       }
     }

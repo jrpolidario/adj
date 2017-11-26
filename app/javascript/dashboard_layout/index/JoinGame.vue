@@ -1,16 +1,21 @@
 <template>
-  <div id='join-game' class='full-height'>
-    <div v-if='preloaded'>
-      <h2>Join Game</h2>
-      <JoinGameForm
-        :gamesPlayer='gamesPlayer'
-        :formAction='gamesPlayersPath'
-        :formMethod='"post"'
-        :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
-      />
+  <transition
+    name='custom-classes-transition'
+    enter-active-class='animated fadeIn'
+  >
+    <div id='join-game' class='full-height'>
+      <div v-if='preloaded'>
+        <h2>Join Game</h2>
+        <JoinGameForm
+          :gamesPlayer='gamesPlayer'
+          :formAction='gamesPlayersPath'
+          :formMethod='"post"'
+          :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
+        />
+      </div>
+      <Loader v-else/>
     </div>
-    <Loader v-else/>
-  </div>
+  </transition>
 </template>
 
 <script>

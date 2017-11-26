@@ -7,7 +7,7 @@ LiveRecord.Model.create(
     },
     instanceMethods: {
       percentageTimeLeft: ->
-        (100.0 * this.seconds_left() / this.seconds_duration()) + '%'
+        (100.0 * this.seconds_left() / this.seconds_duration())
     }
   }
 )

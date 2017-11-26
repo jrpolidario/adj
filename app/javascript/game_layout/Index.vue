@@ -202,7 +202,8 @@
   }
 </script>
 
-<style lang='scss' scoped>
+<!-- GLOBAL STYLES FOR GAME LAYOUT -->
+<style lang='scss'>
   #game-layout {
     padding-top: 10%;
     padding-bottom: 10%;

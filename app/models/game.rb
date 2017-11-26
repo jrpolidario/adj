@@ -1,6 +1,6 @@
 class Game < ApplicationRecord
   INACTIVE_TIME = 10.minute
-  NUMBER_OF_DECK_CARDS = 10
+  NUMBER_OF_DECK_CARDS = 20
   NUMBER_OF_SELECTABLE_CARDS = 4
 
   has_many :live_record_updates, as: :recordable, dependent: :destroy

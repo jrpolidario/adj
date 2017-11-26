@@ -5,7 +5,12 @@
       <Player/>
     </div>
     <div class='large-6 medium-4 columns full-height'>
-      <router-view></router-view>
+      <transition
+        name='custom-classes-transition'
+        enter-active-class='animated fadeIn'
+      >
+        <router-view></router-view>
+      </transition>
     </div>
     <div class='large-3 medium-4 columns full-height'>
       <Comments/>
@@ -24,6 +29,8 @@
 
 <!-- GLOBAL STYLES FOR DASHBOARD LAYOUT -->
 <style lang='scss'>
+  @import 'animate.css/animate.min.css';
+
   #dashboard-layout {
     color: white;
 

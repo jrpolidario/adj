@@ -1,37 +1,43 @@
 <template>
   <div class='small-6 columns card-container'>
-    <div
-      v-if='card() && card().attributes.category_id != undefined'
-      v-on:click='flip'
-      class='flip-container full-height noselect'
-      v-bind:class='{ flipped: isFlipped, clickable: isClickable(), highlighted: isHighlighted }'
+    <transition
+      name='custom-classes-transition'
+      enter-active-class='animated rollIn'
+      leave-active-class='animated rollOut'
     >
-    	<div class='flipper full-height'>
-    		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
-          <div class='card-name'>
-    			  {{ card().name() }}
-          </div>
-    		</div>
-    		<div class='back full-height card'>
-          <div class='bomb' v-if='selectableCard().is_bomb()'>
-            <img alt='bomb' src='/assets/bomb.svg'>
-          </div>
-          <div class='category-name-and-score'>
-            <div class='category-name'>
-              <span class='question' v-if='selectableCard().is_question()'>
-                ?
-              </span>
-              <span v-else>
-                {{ card().category().name() }}
-              </span>
+      <div
+        v-if='card() && card().attributes.category_id != undefined'
+        v-on:click='flip'
+        class='flip-container full-height noselect'
+        v-bind:class='{ flipped: isFlipped, clickable: isClickable(), highlighted: isHighlighted }'
+      >
+      	<div class='flipper full-height'>
+      		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
+            <div class='card-name'>
+      			  {{ card().name() }}
             </div>
-            <div class='score'>
-              <i v-for='score in selectableCard().score()' class='fa fa-star' aria-hidden='true'></i>
+      		</div>
+      		<div class='back full-height card'>
+            <div class='bomb' v-if='selectableCard().is_bomb()'>
+              <img alt='bomb' src='/assets/bomb.svg'>
             </div>
-          </div>
-    		</div>
-    	</div>
-    </div>
+            <div class='category-name-and-score'>
+              <div class='category-name'>
+                <span class='question' v-if='selectableCard().is_question()'>
+                  ?
+                </span>
+                <span v-else>
+                  {{ card().category().name() }}
+                </span>
+              </div>
+              <div class='score'>
+                <i v-for='score in selectableCard().score()' class='fa fa-star' aria-hidden='true'></i>
+              </div>
+            </div>
+      		</div>
+      	</div>
+      </div>
+    </transition>
   </div>
 </template>
 

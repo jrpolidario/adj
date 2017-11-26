@@ -4,6 +4,8 @@ Don't have any card games to play with your friends?
 
 Try and play Adj! :)
 
+http://playadj.io
+
 1. Choose a card from four
 2. Your friend flips and sees that card without showing it to you
 3. Your friend speaks out whatever that describes the card, but...

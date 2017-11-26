@@ -27,6 +27,7 @@
     pointer-events: none;
     animation-delay: 2s;
     animation: fadein 1s;
+    z-index: 99999;
 
     .loading-container {
       position: absolute;

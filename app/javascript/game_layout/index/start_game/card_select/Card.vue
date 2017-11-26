@@ -9,7 +9,7 @@
         v-if='card() && card().attributes.category_id != undefined'
         v-on:click='flip'
         class='flip-container full-height noselect'
-        v-bind:class='{ flipped: isFlipped, clickable: isClickable(), highlighted: isHighlighted }'
+        v-bind:class='{ flipped: isFlipped(), clickable: isClickable(), greyed: isGreyed() }'
       >
       	<div class='flipper full-height'>
       		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
@@ -59,13 +59,6 @@
       {
         isCurrentTurn() {
           return this.game.attributes.current_turn_games_player_id == this.getState('currentGamesPlayer').id()
-        },
-        isFlipped() {
-          return (this.isCurrentTurn && this.selectableCard().is_selected()) ||
-            (!this.isCurrentTurn && this.selectableCard().is_time_is_up())
-        },
-        isHighlighted() {
-          return !this.isCurrentTurn && this.selectableCard().is_selected()
         }
       },
       mapGetters(['getRecord', 'getState'])
@@ -105,6 +98,13 @@
           })
           return this.isCurrentTurn && !selectedSelectableCard
         },
+        isFlipped() {
+          return (this.isCurrentTurn && this.selectableCard().is_selected()) ||
+            (!this.isCurrentTurn && this.selectableCard().is_time_is_up())
+        },
+        isGreyed() {
+          return this.game.currentSelectableCard() && !this.selectableCard().is_selected()
+        }
       },
       mapActions(['adjAjax'])
     ),
@@ -128,12 +128,13 @@
         cursor: pointer;
       }
 
-      &.highlighted {
-        @include box-glow(null, $page-base-background-color);
+      &.greyed {
+        opacity: 0.2;
       }
 
       .card {
-        background: #fafafa;
+        // background: #fafafa;
+        background: darken($page-base-background-color, 10);
         border-radius: 5px;
         background-position: center center;
         background-size: cover;
@@ -165,12 +166,13 @@
         }
 
         &.back .category-name-and-score {
-          color: #555;
+          color: #fff;
           top: 50%;
           transform: translate(-50%, -50%);
+          text-shadow: 0.06em 0.06em 0 rgba(black, 0.2);
 
           .question {
-            color: purple;
+            color: lighten(purple, 62);
             font-weight: bold;
           }
 

@@ -1,8 +1,13 @@
 <template>
   <div id='card-select' class='full-height'>
-    <div v-if='isCurrentTurn' id='info'>
-      * Your turn! :)
-    </div>
+    <transition
+      name='custom-classes-transition'
+      enter-active-class='animated bounceInUp'
+    >
+      <div v-if='isCurrentTurn' id='info'>
+        * Your turn! :)
+      </div>
+    </transition>
     <div id='game-status'>
       <span class='status-text'>Cards Left: {{ game.deckCards().length }}</span>
     </div>

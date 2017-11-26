@@ -23,16 +23,13 @@ const mutations = {
       // if this particular "state" is a LiveRecord object, we need to only pass the `attributes`
       // because JSON.stringify won't work for this type of object
       let storageValue
-      if (value && value.constructor.name == 'Model' && value.modelName() != undefined) {
+      if (value && value.modelName != undefined) {
         storageValue = value.attributes
         storageValue._isLiveRecordObject = true
         storageValue._modelName = value.modelName()
       }
       else
         storageValue = value
-
-      console.log(storageValue)
-      debugger
       store2.namespace('state').set(key, storageValue)
     })
   },

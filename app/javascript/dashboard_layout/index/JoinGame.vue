@@ -81,6 +81,11 @@
         authorize() {
           if (!this.getState('currentPlayer'))
             this.$router.replace({ name: 'forbiddenPath' })
+
+          if (this.game.is_started()) {
+            this.$router.replace({ name: 'rootPath' })
+            flash('Can no longer join as Game has already started.', 'error')
+          }
         }
       },
       mapActions(['preloadLiveRecords', 'cleanup'])

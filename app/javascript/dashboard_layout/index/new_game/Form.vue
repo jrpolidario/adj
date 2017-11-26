@@ -23,7 +23,7 @@
       placeholder='Re-enter password'
       v-model='formValues.password_confirmation'
     ></input> -->
-    <input type='submit' class='button'></input>
+    <input type='submit' class='button' value='Create'></input>
   </form>
 </template>
 

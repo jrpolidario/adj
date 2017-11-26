@@ -13,7 +13,7 @@ class DeckCard < ApplicationRecord
     # Empty array means unauthorized
     # Example:
     # [:id, :email, :name, :is_admin, :group_id, :created_at, :updated_at]
-    []
+    [:id, :game_id, :card_id]
   end
 
   def self.live_record_queryable_attributes(current_user)

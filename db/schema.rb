@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171125070538) do
+ActiveRecord::Schema.define(version: 20171125210507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20171125070538) do
     t.boolean "is_time_is_up", default: false, null: false
     t.integer "team_winner"
     t.boolean "is_done", default: false, null: false
+    t.integer "seconds_duration"
     t.index ["card_id"], name: "index_selectable_cards_on_card_id"
     t.index ["game_id"], name: "index_selectable_cards_on_game_id"
   end

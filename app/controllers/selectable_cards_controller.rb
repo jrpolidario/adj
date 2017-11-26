@@ -18,15 +18,15 @@ class SelectableCardsController < ApplicationController
   def update
     respond_to do |format|
       if @selectable_card.update(selectable_card_params)
-        format.json { render :show, status: :ok, location: @selectable_card }
+        if @selectable_card.persisted?
+          format.json { render :show, status: :ok, location: @selectable_card }
+        else
+          format.json { render :show, status: :ok }
+        end
       else
         format.json { render json: @selectable_card.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def take_from_deck
-    # TODO
   end
 
   private

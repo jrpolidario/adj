@@ -16,7 +16,7 @@
       placeholder='Enter the game password'
       v-model='formValues.game_password'
     ></input>
-    <input type='submit' class='button'></input>
+    <input type='submit' class='button' value='Join'></input>
   </form>
 </template>
 

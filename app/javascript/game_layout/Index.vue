@@ -107,6 +107,42 @@
           self.loadTotal++
           self.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.SelectableCard, selectableCardsSubscription])
 
+          const deckCardsSubscription = LiveRecord.Model.all.DeckCard.autoload({
+            reload: true,
+            where: { game_id_eq: self.game.id() },
+            callbacks: {
+              'after:createOrUpdate': function(deckCard) {
+                // also load the associated Card if not yet in store
+                let card = LiveRecord.Model.all.Card.all[deckCard.card_id()]
+
+                if (!card) {
+                  card = new LiveRecord.Model.all.Card({ id: deckCard.card_id() })
+
+                  const createCardCallback = card.addCallback('after:create', function(card) {
+                    self.loadCounter++
+                    self.nestedForceUpdate(self)
+                  })
+                  self.callbacksToBeDestroyed.push([card, createCardCallback])
+                  self.loadTotal++
+
+                  const destroyCardCallback = card.addCallback('after:destroy', function(card) {
+                    self.nestedForceUpdate(self)
+                  })
+                  self.callbacksToBeDestroyed.push([card, destroyCardCallback])
+
+                  card.create()
+                }
+                self.nestedForceUpdate(self)
+              },
+              'after:reload': function(recordIds) {
+                self.loadCounter++
+                self.nestedForceUpdate(self)
+              }
+            }
+          })
+          self.loadTotal++
+          self.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.DeckCard, deckCardsSubscription])
+
           const categoriesSubscription = LiveRecord.Model.all.Category.autoload({
             reload: true,
             callbacks: {

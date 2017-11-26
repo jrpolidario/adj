@@ -41,15 +41,14 @@
     created () {
       let self = this
 
-      window.rr = self
-
       // load all Game records, and subscribe and auto-fetch new/updated Games
       const gamesSubscription = LiveRecord.Model.all.Game.autoload({
         reload: true,
-        // where: {
-        //   updated_at_gt: moment().subtract(1, 'minutes'),
-        //   is_finished_eq: false
-        // }
+        where: {
+          updated_at_gt: LiveRecord.Model.all.Game.inactiveTimeFromNow(moment()),
+          is_finished_eq: false,
+          is_started_eq: false
+        },
         callbacks: {
           'after:reload': function() {
             self.$set(self, 'preloaded', true)
@@ -59,24 +58,24 @@
 
       this.subscriptionsToBeDestroyed.push([LiveRecord.Model.all.Game, gamesSubscription])
 
-      // // check if games are still ongoing every 5000ms, and remove it if not anymore
-      // window.setInterval(() => {
-      //   Object.keys(self.games).forEach((key, index) => {
-      //     let game = self.games[key]
-      //
-      //     // if game has already finished or that there is no longer any activity in the last minute
-      //     if (
-      //       game.is_finished() ||
-      //       moment(game.updated_at()) <= moment().subtract(5, 'seconds')
-      //     ) {
-      //       // we then cleanup and free memory
-      //       game.destroy()
-      //       for (let gamesPlayer of game.gamesPlayers()) {
-      //         gamesPlayer.destroy()
-      //       }
-      //     }
-      //   })
-      // }, 5000);
+      // check if games are still ongoing every 5000ms, and remove it if not anymore
+      window.setInterval(() => {
+        Object.keys(self.games).forEach((key, index) => {
+          let game = self.games[key]
+
+          // if game has already finished or that there is no longer any activity in the last minute
+          if (
+            game.is_finished() ||
+            moment(game.updated_at()) <= LiveRecord.Model.all.Game.inactiveTimeFromNow(moment())
+          ) {
+            // we then cleanup and free memory
+            game.destroy()
+            for (let gamesPlayer of game.gamesPlayers()) {
+              gamesPlayer.destroy()
+            }
+          }
+        })
+      }, 5000);
     },
     destroyed () {
       this.cleanup({ vue: this })

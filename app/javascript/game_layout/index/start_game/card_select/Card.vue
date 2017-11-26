@@ -6,13 +6,6 @@
       class='flip-container full-height noselect'
       v-bind:class='{ flipped: isFlipped, clickable: isClickable(), highlighted: isHighlighted }'
     >
-      <div
-        v-if='selectableCard().is_selected()'
-        vbind:style='/{ opacity: 2.0 / ((selectableCard().seconds_left() * selectableCard().seconds_left()) + 2) }'
-        class='timer'
-      >
-        {{ selectableCard().seconds_left() }}
-      </div>
     	<div class='flipper full-height'>
     		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
           <div class='card-name'>
@@ -62,7 +55,8 @@
           return this.game.attributes.current_turn_games_player_id == this.getState('currentGamesPlayer').id()
         },
         isFlipped() {
-          return this.isCurrentTurn && this.selectableCard().is_selected()
+          return (this.isCurrentTurn && this.selectableCard().is_selected()) ||
+            (!this.isCurrentTurn && this.selectableCard().is_time_is_up())
         },
         isHighlighted() {
           return !this.isCurrentTurn && this.selectableCard().is_selected()
@@ -130,17 +124,6 @@
 
       &.highlighted {
         @include box-glow(null, $page-base-background-color);
-      }
-
-      .timer {
-        $font-color: #fee;
-        z-index: 9;
-        position: absolute;
-        top: 0; right: 0.2em;
-        color: $font-color;
-        text-shadow: 0 0 0.02em rgba(darken($font-color, 80), 0.8);
-        font-size: 2em;
-        font-weight: bold;
       }
 
       .card {

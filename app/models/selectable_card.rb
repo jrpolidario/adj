@@ -1,23 +1,25 @@
 class SelectableCard < ApplicationRecord
-  DEFAULT_SECONDS_LEFT = 30
+  DEFAULT_SECONDS_DURATION = 30
   CHANCE_TO_BECOME_A_BOMB = 20
   CHANCE_TO_BECOME_A_QUESTION = 10
 
   belongs_to :game, touch: true
   belongs_to :card
 
-  include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
   before_create :chance_to_become_special
-  before_create :set_seconds_left
+  before_create :set_seconds_duration_and_left
   before_create :set_score
 
   before_update :start_countdown!, if: -> { is_selected_changed? && is_selected }
   before_update :add_score_and_done!, if: -> { team_winner_changed? && team_winner.present? }
+  after_update :remove_this_from_game_and_draw_new_card, if: :is_done
+
+  include LiveRecord::Model::Callbacks
 
   def self.live_record_whitelisted_attributes(selectable_card, current_user)
-    [:id, :card_id, :game_id, :position, :is_selected, :is_time_is_up, :seconds_left, :is_bomb, :is_question, :score, :team_winner, :is_done, :created_at, :updated_at]
+    [:id, :card_id, :game_id, :position, :is_selected, :is_time_is_up, :seconds_left, :seconds_duration, :is_bomb, :is_question, :score, :team_winner, :is_done, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_user)
@@ -29,9 +31,10 @@ class SelectableCard < ApplicationRecord
     self.is_question = rand(100) < CHANCE_TO_BECOME_A_QUESTION
   end
 
-  def set_seconds_left
-    self.seconds_left = DEFAULT_SECONDS_LEFT
+  def set_seconds_duration_and_left
+    self.seconds_left = DEFAULT_SECONDS_DURATION
     self.seconds_left /= 2 if is_bomb
+    self.seconds_duration = seconds_left
   end
 
   def set_score
@@ -76,9 +79,17 @@ class SelectableCard < ApplicationRecord
     game.set_next_turn_games_player
     game.save!
 
-    # TODO: fix LiveRecord: possible reason is @_changed_attributes something
-    update!(is_selected: false, is_done: true)
-    # self.is_selected = false
-    # self.is_done = true
+    self.is_selected = false
+    self.is_done = true
+  end
+
+  def remove_this_from_game_and_draw_new_card
+    self.destroy
+    game.take_a_selectable_card_from_deck_cards
+
+    # check if no more cards to play, then declare winner
+    if game.selectable_cards.count == 0
+      game.update!(is_finished: true)
+    end
   end
 end

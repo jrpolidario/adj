@@ -14,6 +14,8 @@ import Application from './Application.vue'
 import DashboardLayout from 'dashboard_layout/Index'
 import GameLayout from 'game_layout/Index'
 
+import Gameplay from 'dashboard_layout/index/Gameplay'
+import About from 'dashboard_layout/index/About'
 import Games from 'dashboard_layout/index/Games'
 import NewGame from 'dashboard_layout/index/NewGame'
 import JoinGame from 'dashboard_layout/index/JoinGame'
@@ -41,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
       { path: '/', component: DashboardLayout,
         children: [
           { path: '', component: Games, name: 'rootPath' },
+          { path: 'gameplay', component: Gameplay, name: 'gameplayPath' },
+          { path: 'about', component: About, name: 'aboutPath' },
           { path: 'games/new', component: NewGame, name: 'newGamePath' },
           { path: 'games/:game_id/games_players/new', component: JoinGame, name: 'joinGamePath' },
         ]

@@ -54,7 +54,7 @@ group :development do
   gem 'capistrano', '~> 3.9'
   gem 'capistrano-rails', '~> 1.3'
   gem 'capistrano-rbenv', '~> 2.1'
-  gem 'capistrano-bundler', '~> 1.3'
+  # gem 'capistrano-bundler', '~> 1.3'
   # gem 'capistrano3-puma'
 end
 

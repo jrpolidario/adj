@@ -30,6 +30,9 @@ const mutations = {
       }
       else
         storageValue = value
+
+      console.log(storageValue)
+      debugger
       store2.namespace('state').set(key, storageValue)
     })
   },

@@ -1,24 +1,29 @@
-# README
+# About
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Don't have any card games to play with your friends?
 
-Things you may want to cover:
+Try and play Adj! :)
 
-* Ruby version
+1. Choose a card from four
+2. Your friend flips and sees that card without showing it to you
+3. Your friend speaks out whatever that describes the card, but...
 
-* System dependencies
+  only through ADJectives!
+  and AND...
+  and OR!
 
-* Configuration
+  Say... "big AND dark", "sour OR sweet, AND round, AND green"!
 
-* Database creation
+4. Win by guessing the card within the time limit!
 
-* Database initialization
+* Seemingly limitless cards to randomly choose from! Have fun!!! :)
+* A modern open-source web game built with Ruby-on-Rails + VueJS + LiveRecord, with <3
 
-* How to run the test suite
+# Motivations
 
-* Services (job queues, cache servers, search engines, etc.)
+* Demonstrate the capabilities of my [LiveRecord gem](https://github.com/jrpolidario/live_record)
+* Learn Vue JS
+* Contribute to Human Happiness! :)
 
-* Deployment instructions
-
-* ...
+*If you like it, maybe consider buying me a coffee? :)*
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q5MGDZNU4T2YU)

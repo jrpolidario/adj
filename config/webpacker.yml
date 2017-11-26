@@ -49,9 +49,6 @@ test:
 production:
   <<: *default
 
-  # bug? 404 for anything http://playadj.io/packs/*, so use `assets`
-  public_output_path: assets
-
   # Production depends on precompilation of packs prior to booting for performance.
   compile: false
 

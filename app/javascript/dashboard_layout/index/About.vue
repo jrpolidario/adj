@@ -5,11 +5,8 @@
   >
     <section id='about' class='full-height'>
       <h2>About</h2>
-      <p>Don't have any card games to play with your friends?</p>
-      <p>Need an icebreaker over a phone conversation?</p>
-      <p>Try and play Adj! :)</p>
-      <p>Try to guess cards, but only using adjectives, and AND and OR! No other words allowed!
-      <p>Say... "big AND dark", "sour OR sweet, AND round, AND green"!</p>
+      <p>Don't have any card games to play with your friends? Need an icebreaker over a phone conversation? Try and play Adj! :)</p>
+      <p>Try to guess cards, but only using adjectives, and AND and OR! No other words allowed! Say... "big AND dark", "sour OR sweet, AND round, AND green"!</p>
 
       <h3>Motivations</h3>
       <p>
@@ -27,9 +24,14 @@
       <p>
         <em>If you like this game, would you consider sponsoring a cup of coffee? :)</em>
       </p>
-      <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=Q5MGDZNU4T2YU" rel="nofollow">
-        <img src="https://camo.githubusercontent.com/f896f7d176663a1559376bb56aac4bdbbbe85ed1/68747470733a2f2f7777772e70617970616c6f626a656374732e636f6d2f656e5f55532f692f62746e2f62746e5f646f6e61746543435f4c472e676966" alt="paypal" data-canonical-src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" style="max-width:100%;">
-      </a>
+      <p>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=Q5MGDZNU4T2YU" rel="nofollow">
+          <img src="https://camo.githubusercontent.com/f896f7d176663a1559376bb56aac4bdbbbe85ed1/68747470733a2f2f7777772e70617970616c6f626a656374732e636f6d2f656e5f55532f692f62746e2f62746e5f646f6e61746543435f4c472e676966" alt="paypal" data-canonical-src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" style="max-width:100%;">
+        </a>
+      </p>
+      <p>
+        <small>Built with <3 | c/o Jules Roman B. Polidario - 2017 | <a href='https://twitter.com/JRPolidario' rel='nofollow' target='_blank'>@jrpolidario</a></small>
+      </p>
     </section>
   </transition>
 </template>

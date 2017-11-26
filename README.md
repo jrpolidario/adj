@@ -7,16 +7,16 @@ Try and play Adj! :)
 http://playadj.io
 
 1. Choose a card from four
-2. Your friend flips and sees that card without showing it to you
-3. Your friend speaks out whatever that describes the card, but...
-
+2. Flip it without the cards to others
+3. A timer then starts to count down, and your teammates should try to guess chosen card, while you are talking to them but...
   only through ADJectives!
   and AND...
   and OR!
 
   Say... "big AND dark", "sour OR sweet, AND round, AND green"!
+4. Your teammates can try to guess as much as they want within the time limit. If they didn't succeed, then the other teams each have one chance to guess the card.
 
-4. Win by guessing the card within the time limit!
+5. Team wins by acquiring the highest score after all cards have been used up.
 
 * Seemingly limitless cards to randomly choose from! Have fun!!! :)
 * A modern open-source web game built with Ruby-on-Rails + VueJS + LiveRecord, with <3

@@ -65,6 +65,12 @@
         required: true
       }
     },
+    data() {
+      return {
+        subscriptionsToBeDestroyed: [],
+        callbacksToBeDestroyed: [],
+      }
+    },
     computed: $.extend(
       {
         isCurrentTurn() {
@@ -89,7 +95,19 @@
         }
       },
       mapActions(['cleanup', 'adjAjax'])
-    )
+    ),
+    mounted() {
+      const createDeckCardCallback = LiveRecord.Model.all.DeckCard.addCallback('after:create', () => {
+        this.$forceUpdate()
+      })
+
+      const destroyDeckCardCallback = LiveRecord.Model.all.DeckCard.addCallback('after:destroy', () => {
+        this.$forceUpdate()
+      })
+    },
+    destroyed() {
+      this.cleanup({ vue: this })
+    }
   }
 </script>
 

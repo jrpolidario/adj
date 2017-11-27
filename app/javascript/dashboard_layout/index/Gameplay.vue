@@ -16,6 +16,9 @@
         <li>
           Choose your Team in the Team Selection screen, and click 'Ready' afterwards. If everyone has clicked 'Ready' already, the game will then start immediately afterwards.
         </li>
+        <div class='medium-6 medium-centered'>
+          <img class='screenshot' src='http://playadj.io/non_digest_assets/screenshot_01.png' alt='Gameplay Screenshot'>
+        </div>
         <li>
           On the "Cards Selection" screen, a deck of 20 random cards will be available to play. Turn order will be automatically assigned to each of you. You'll know if it's your turn already if you see the "Your turn" message at the very top, just right above the cards. If you do not see it, then it is currently someone else's turn.
         </li>
@@ -52,5 +55,9 @@
   #game-play {
     background-color: $page-base-background-color;
     overflow-y: auto;
+
+    .screenshot {
+      width: 100%;
+    }
   }
 </style>

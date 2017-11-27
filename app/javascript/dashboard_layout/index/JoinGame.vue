@@ -96,7 +96,7 @@
       mapActions(['preloadLiveRecords', 'cleanup'])
     ),
     mounted() {
-      this.$el.focus()
+      this.$store.dispatch('scrollToComponent', this.$el)
       this.checkIfHasJoined()
       this.authorize()
     },

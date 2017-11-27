@@ -44,7 +44,7 @@
     ),
     methods: mapActions(['preloadLiveRecords', 'cleanup']),
     mounted () {
-      this.$el.focus()
+      this.$store.dispatch('scrollToComponent', this.$el)
       let self = this
 
       // load all Game records, and subscribe and auto-fetch new/updated Games

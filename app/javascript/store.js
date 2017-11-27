@@ -160,6 +160,11 @@ const actions = {
     }
 
     $.ajax(ajaxOptions)
+  },
+  scrollToComponent(context, element) {
+    $('html, body').animate({
+      scrollTop: $(element).offset().top
+    }, 500);
   }
 }
 

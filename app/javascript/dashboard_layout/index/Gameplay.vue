@@ -47,7 +47,7 @@
 <script>
   export default {
     mounted() {
-      this.$el.focus()
+      this.$store.dispatch('scrollToComponent', this.$el)
     }
   }
 </script>

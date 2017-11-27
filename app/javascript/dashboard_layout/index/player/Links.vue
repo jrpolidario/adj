@@ -2,12 +2,19 @@
   <ul id='links'>
     <a href='https://www.facebook.com/playadj.io/' target='_blank' rel='nofollow'><li><i class='fa fa-facebook' aria-hidden='true'></i></li></a>
     <a href='https://github.com/jrpolidario/adj' target='_blank' rel='nofollow'><li><i class='fa fa-github-alt' aria-hidden='true'></i></li></a>
+    <a data-open='share-modal' target='_blank' rel='nofollow'><li><i class='fa fa-share-alt' aria-hidden='true'></i></li></a>
+    <div id='share-modal' class='reveal' ref='shareModal' data-reveal>
+      <p>Share on...</p>
+      <div class="addthis_inline_share_toolbox"></div>
+    </div>
   </ul>
 </template>
 
 <script>
   export default {
-
+    mounted() {
+      $(this.$refs.shareModal).foundation()
+    }
   }
 </script>
 
@@ -20,22 +27,23 @@
     left: 0;
     list-style: none;
 
-    li {
+    a {
       display: inline-block;
-
       margin-right: 1rem;
 
-      border-radius: 50%;
-      border: 1px solid white;
-      background: white;
-      width: 2rem;
-      height: 2rem;
+      li {
+        border-radius: 50%;
+        border: 1px solid white;
+        background: white;
+        width: 2rem;
+        height: 2rem;
 
-      position: relative;
+        position: relative;
 
-      &:hover {
-        opacity: 0.8;
-        box-shadow: 0 0 0.4em rgba(yellow, 0.8);
+        &:hover {
+          opacity: 0.8;
+          box-shadow: 0 0 0.4em rgba(yellow, 0.8);
+        }
       }
     }
 

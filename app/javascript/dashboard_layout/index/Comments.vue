@@ -36,7 +36,7 @@
       const commentsSubscription = LiveRecord.Model.all.Comment.subscribe({
         reload: true,
         where: {
-          created_at_eq: moment().subtract(10, 'minute')
+          created_at_gteq: moment().subtract(10, 'minute')
         },
         callbacks: {
           'after:create': function(comment) {

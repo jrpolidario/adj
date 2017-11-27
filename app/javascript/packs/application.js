@@ -30,7 +30,7 @@ Vue.use(VueRouter)
 
 // fixed: mobile virtual-keyboard messing up the height of the body, which pushes it upwards
 // every time the virtual-keyboard is closed
-$(function () {
+$(window).load(function() {
   $('body').height($(document).height());
 });
 

@@ -39,9 +39,6 @@
 
 <script>
   export default {
-    mounted() {
-      this.$store.dispatch('scrollToComponent', this.$el)
-    }
   }
 </script>
 

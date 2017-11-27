@@ -1,12 +1,12 @@
 <template>
   <ul id='menu'>
-    <router-link :to='{ name: "rootPath" }' class='menu-link'>
+    <router-link :to='{ name: "rootPath", hash: "#middle-pane" }' class='menu-link'>
       <li>Lobby</li>
     </router-link>
-    <router-link :to='{ name: "gameplayPath" }' class='menu-link'>
+    <router-link :to='{ name: "gameplayPath", hash: "#middle-pane" }' class='menu-link'>
       <li>How to play?</li>
     </router-link>
-    <router-link :to='{ name: "aboutPath" }' class='menu-link'>
+    <router-link :to='{ name: "aboutPath", hash: "#middle-pane" }' class='menu-link'>
       <li>About</li>
     </router-link>
   </ul>
@@ -14,7 +14,6 @@
 
 <script>
   export default {
-
   }
 </script>
 

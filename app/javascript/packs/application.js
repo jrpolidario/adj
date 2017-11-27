@@ -55,6 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   })
 
+  router.afterEach((to, from) => {
+    if (to.hash) {
+      const $element = $(to.hash)
+
+      if ($element.length > 0) {
+        $('html, body').animate({
+          scrollTop: $(to.hash).offset().top
+        }, 500);
+      }
+    }
+  })
+
   document.body.appendChild(document.createElement('Application'))
 
   const VueApp = new Vue({

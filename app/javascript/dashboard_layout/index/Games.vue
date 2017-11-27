@@ -5,7 +5,7 @@
   >
     <section id='games' class='full-height loader-anchor'>
       <h2>Lobby</h2>
-      <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath" }' class='button'>
+      <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath", hash: "#middle-pane" }' class='button'>
         <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
       </router-link>
       <table v-if='preloaded'>
@@ -31,8 +31,7 @@
         preloaded: false,
         afterPreload() {
           this.$set(this, 'preloaded', true)
-        },
-        newGamePath: Routes.new_game_path()
+        }
       }
     },
     computed: Object.assign(
@@ -44,8 +43,7 @@
     ),
     methods: mapActions(['preloadLiveRecords', 'cleanup']),
     mounted () {
-      this.$store.dispatch('scrollToComponent', this.$el)
-      let self = this
+      const self = this
 
       // load all Game records, and subscribe and auto-fetch new/updated Games
       const gamesSubscription = LiveRecord.Model.all.Game.autoload({

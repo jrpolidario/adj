@@ -1,13 +1,13 @@
 <template>
   <section id='dashboard-layout' class='row collapse full-height full-width'>
     <h1 class='hide'>Adj Dashboard</h1>
-    <div class='large-3 medium-4 columns full-height'>
+    <div id='left-pane' class='large-3 medium-4 columns full-height'>
       <Player/>
     </div>
-    <div class='large-6 medium-4 columns full-height'>
+    <div id='middle-pane' class='large-6 medium-4 columns full-height'>
       <router-view></router-view>
     </div>
-    <div class='large-3 medium-4 columns full-height'>
+    <div id='right-pane' class='large-3 medium-4 columns full-height'>
       <Comments/>
     </div>
   </section>

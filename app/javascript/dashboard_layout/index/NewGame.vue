@@ -70,7 +70,6 @@
       mapActions(['cleanup'])
     ),
     mounted() {
-      this.$store.dispatch('scrollToComponent', this.$el)
       this.authorize()
     },
     destroyed() {

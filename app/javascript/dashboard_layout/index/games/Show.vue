@@ -56,7 +56,7 @@
           else if (this.getState('currentPlayer').hasGame(this.game) && this.getState('currentGame') == this.game)
             path = { name: 'gamePath', params: { id: this.game.id() } }
           else
-            path = { name: 'joinGamePath', params: { game_id: this.game.id() } }
+            path = { name: 'joinGamePath', params: { game_id: this.game.id() }, hash: "#middle-pane" }
 
           return path
         },

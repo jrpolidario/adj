@@ -3,7 +3,7 @@
     name='custom-classes-transition'
     enter-active-class='animated fadeIn'
   >
-    <section id='game-play' class='full-height'>
+    <section id='gameplay' class='full-height'>
       <h2>Gameplay</h2>
       <ol>
         <li>
@@ -46,16 +46,13 @@
 
 <script>
   export default {
-    mounted() {
-      this.$store.dispatch('scrollToComponent', this.$el)
-    }
   }
 </script>
 
 <style lang='scss' scoped>
   @import 'app/assets/stylesheets/imports/variables';
 
-  #game-play {
+  #gameplay {
     background-color: $page-base-background-color;
     overflow-y: auto;
 

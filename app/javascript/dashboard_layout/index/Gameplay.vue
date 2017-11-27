@@ -20,7 +20,7 @@
           <img class='screenshot' src='http://playadj.io/non_digest_assets/screenshot_01.png' alt='Gameplay Screenshot'>
         </div>
         <li>
-          On the "Cards Selection" screen, a deck of 20 random cards will be available to play. Turn order will be automatically assigned to each of you. You'll know if it's your turn already if you see the "Your turn" message at the very top, just right above the cards. If you do not see it, then it is currently someone else's turn.
+          On the "Cards Selection" screen, a deck of 24 random cards will be available to play. Turn order will be automatically assigned to each of you. You'll know if it's your turn already if you see the "Your turn" message at the very top, just right above the cards. If you do not see it, then it is currently someone else's turn.
         </li>
         <li>
           If it's your turn, decide wisely and click any of the four back-facing cards. By clicking so, the timer immediately starts to tick.

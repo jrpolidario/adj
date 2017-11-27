@@ -100,10 +100,12 @@
       const createDeckCardCallback = LiveRecord.Model.all.DeckCard.addCallback('after:create', () => {
         this.$forceUpdate()
       })
+      this.callbacksToBeDestroyed.push([LiveRecord.Model.all.DeckCard, createDeckCardCallback])
 
       const destroyDeckCardCallback = LiveRecord.Model.all.DeckCard.addCallback('after:destroy', () => {
         this.$forceUpdate()
       })
+      this.callbacksToBeDestroyed.push([LiveRecord.Model.all.DeckCard, destroyDeckCardCallback])
     },
     destroyed() {
       this.cleanup({ vue: this })

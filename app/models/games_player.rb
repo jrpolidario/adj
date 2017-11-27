@@ -38,7 +38,7 @@ class GamesPlayer < ApplicationRecord
       unless game.games_players.where(is_ready: false).exists?
         teams_count = game.games_players.group(:team).count
         if teams_count.all? { |k, v| v >= 2 }
-          game.start!
+          game.update!(is_started: true)
         end
       end
     end

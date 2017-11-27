@@ -17,7 +17,7 @@ class Game < ApplicationRecord
   has_secure_password
 
   after_create :populate_deck_cards
-  # after_update_commit :populate_selectable_cards, if: -> { is_started_changed? && is_started }
+  before_update :start!, if: -> { is_started_changed? && is_started }
 
   include LiveRecord::Model::Callbacks
 
@@ -37,8 +37,6 @@ class Game < ApplicationRecord
   def start!
     populate_selectable_cards
 
-    self.is_started = true
-
     # designate the order of the players
     grouped_games_players = games_players.group_by(&:team)
 
@@ -56,8 +54,6 @@ class Game < ApplicationRecord
     end
 
     set_next_turn_games_player
-
-    save!
   end
 
   def set_next_turn_games_player

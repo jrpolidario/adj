@@ -12,6 +12,7 @@
   import { mapState, mapGetters, mapActions } from 'vuex'
   import ShowComment from './comments/Show'
   import NewComment from './comments/New'
+  import moment from 'moment'
 
   export default {
     components: { ShowComment, NewComment },
@@ -33,6 +34,10 @@
       const self = this
 
       const commentsSubscription = LiveRecord.Model.all.Comment.subscribe({
+        reload: true,
+        where: {
+          created_at_eq: moment().subtract(10, 'minute')
+        },
         callbacks: {
           'after:create': function(comment) {
             let player = self.getRecord('Player', comment.player_id())

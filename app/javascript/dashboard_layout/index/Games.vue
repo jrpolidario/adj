@@ -40,7 +40,8 @@
     computed: Object.assign(
       {
         playersCountText() {
-          return this.playersCount + ' ' + (this.playersCount == 1 ? 'player' : 'players') + ' online'
+          return (this.playersCount == null ? '-' : this.playersCount) + ' ' +
+            (this.playersCount == 1 ? 'player' : 'players') + ' online'
         }
       },
       mapState({

@@ -5,7 +5,7 @@
   >
     <section id='games' class='full-height loader-anchor'>
       <h2>Lobby</h2>
-      <div class='players-count'><span class='online-icon'></span> <span class='online-count'>{{ playersCount }} players online</span></div>
+      <div class='players-count'><span class='online-icon'></span> <span class='online-count'>{{ playersCountText }}</span></div>
       <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath", hash: "#middle-pane" }' class='button'>
         <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
       </router-link>
@@ -38,7 +38,11 @@
       }
     },
     computed: Object.assign(
-      {},
+      {
+        playersCountText() {
+          return this.playersCount + ' ' + (this.playersCount == 1 ? 'player' : 'players') + ' online'
+        }
+      },
       mapState({
         games: (state) => { return state.records.Game }
       }),

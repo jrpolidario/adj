@@ -70,6 +70,7 @@
       mapActions(['cleanup'])
     ),
     mounted() {
+      this.$el.focus()
       this.authorize()
     },
     destroyed() {

@@ -96,6 +96,7 @@
       mapActions(['preloadLiveRecords', 'cleanup'])
     ),
     mounted() {
+      this.$el.focus()
       this.checkIfHasJoined()
       this.authorize()
     },

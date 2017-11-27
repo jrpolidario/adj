@@ -46,6 +46,9 @@
 
 <script>
   export default {
+    mounted() {
+      this.$el.focus()
+    }
   }
 </script>
 
@@ -58,6 +61,7 @@
 
     .screenshot {
       width: 100%;
+      margin: 1rem;
     }
   }
 </style>

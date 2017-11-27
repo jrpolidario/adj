@@ -39,6 +39,9 @@
 
 <script>
   export default {
+    mounted() {
+      this.$el.focus()
+    }
   }
 </script>
 

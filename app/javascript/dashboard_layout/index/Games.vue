@@ -43,7 +43,8 @@
       mapGetters(['getState'])
     ),
     methods: mapActions(['preloadLiveRecords', 'cleanup']),
-    created () {
+    mounted () {
+      this.$el.focus()
       let self = this
 
       // load all Game records, and subscribe and auto-fetch new/updated Games

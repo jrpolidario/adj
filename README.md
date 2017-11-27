@@ -1,13 +1,16 @@
 # About
 
+
 Don't have any card games to play with your friends?
 
 Try and play Adj! :)
 
 http://playadj.io
 
+![Adj Logo](http://playadj.io/assets/adj_favicon-4a8bae46e0c9731d470191a8c795e87c1e5ccd44d313d951d003a3dc2742cdf3.png)
+
 1. Choose a card from four
-2. Flip it without the cards to others
+2. Flip it without showing the cards to others
 3. A timer then starts to count down, and your teammates should try to guess chosen card, while you are talking to them but...
   only through ADJectives!
   and AND...

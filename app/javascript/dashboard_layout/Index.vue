@@ -24,6 +24,7 @@
 
 <!-- GLOBAL STYLES FOR DASHBOARD LAYOUT -->
 <style lang='scss'>
+  @import 'node_modules/foundation-sites/scss/util/util.scss';
   @import 'app/assets/stylesheets/imports/variables';
   @import 'animate.css/animate.min.css';
 
@@ -33,6 +34,14 @@
 
     > div.columns > * {
       padding: 2rem;
+    }
+
+
+    @include breakpoint(small only) {
+      #middle-pane, #middle-pane > * {
+        height: auto;
+        min-height: 100vh;
+      }
     }
   }
   .button {

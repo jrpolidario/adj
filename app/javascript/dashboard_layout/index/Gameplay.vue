@@ -11,7 +11,7 @@
           <em><small>You can set-up a mobile hotspot with your own phone if your playmates do not have internet</small></em>
         </li>
         <li>
-          While in the lobby, create a Player by entering a name, then click 'New Game', and enter a password. Then, share that password to your playmates. They themselves also need to create a Player, but then afterwards they would need to click the newly created game that will pop-up on the 'Ongoing Games' list, and enter the password to join the game.
+          While in the lobby, create a Player by entering a name, then click 'New Game', and enter a password. Then, share that password to your playmates. They themselves also need to create a Player, but then afterwards they would need to click the newly created game that will pop-up on the 'Lobby' page, and enter the password to join the game.
         </li>
         <li>
           Choose your Team in the Team Selection screen, and click 'Ready' afterwards. If everyone has clicked 'Ready' already, the game will then start immediately afterwards.

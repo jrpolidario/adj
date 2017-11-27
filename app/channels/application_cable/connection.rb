@@ -6,5 +6,10 @@ module ApplicationCable
     def current_user
       Player.find_by(id: request.session[:player_id])
     end
+
+    def disconnect
+      online_count = ActionCable.server.connections.size
+      ActionCable.server.broadcast 'online_counter', { 'count' => online_count }
+    end
   end
 end

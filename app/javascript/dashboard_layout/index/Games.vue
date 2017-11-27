@@ -5,6 +5,7 @@
   >
     <section id='games' class='full-height loader-anchor'>
       <h2>Lobby</h2>
+      <div class='players-count'><span class='online-icon'></span> <span class='online-count'>{{ playersCount }} players online</span></div>
       <router-link v-if='getState("currentPlayer")' :to='{ name: "newGamePath", hash: "#middle-pane" }' class='button'>
         <i class='fa fa-gamepad' aria-hidden='true'></i> New Game
       </router-link>
@@ -31,7 +32,9 @@
         preloaded: false,
         afterPreload() {
           this.$set(this, 'preloaded', true)
-        }
+        },
+        playersCount: null,
+        onlineCounterSubscription: null
       }
     },
     computed: Object.assign(
@@ -44,6 +47,16 @@
     methods: mapActions(['preloadLiveRecords', 'cleanup']),
     mounted () {
       const self = this
+
+      // subscribe to the changes to the number of online players
+      this.onlineCounterSubscription = App.cable.subscriptions.create('OnlineCounterChannel', {
+        connected() {
+          this.perform('broadcast_count')
+        },
+        received(data) {
+          self.$set(self, 'playersCount', data.count)
+        }
+      })
 
       // load all Game records, and subscribe and auto-fetch new/updated Games
       const gamesSubscription = LiveRecord.Model.all.Game.autoload({
@@ -83,6 +96,7 @@
     },
     destroyed () {
       this.cleanup({ vue: this })
+      this.onlineCounterSubscription.unsubscribe()
     }
   }
 </script>
@@ -98,6 +112,26 @@
       border-collapse: collapse;
       display: block;
       overflow: hidden;
+    }
+
+    .players-count {
+      .online-icon {
+        border-radius: 50%;
+        width: 0.5em;
+        height: 0.5em;
+        display: inline-block;
+        background: mix(green, lighten($page-base-background-color, 30), 66%);
+        border: 1px solid mix(green, darken($page-base-background-color, 10), 66%);
+        vertical-align: middle;
+        margin-right: 0.2em;
+      }
+      .online-count {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.8em;
+        color: lighten($page-base-background-color, 20);
+      }
+      margin-bottom: 0.8em;
     }
   }
 </style>

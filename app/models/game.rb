@@ -16,10 +16,10 @@ class Game < ApplicationRecord
 
   has_secure_password
 
-  include LiveRecord::Model::Callbacks
-
   after_create :populate_deck_cards
   # after_update_commit :populate_selectable_cards, if: -> { is_started_changed? && is_started }
+
+  include LiveRecord::Model::Callbacks
 
   def self.live_record_whitelisted_attributes(game, current_player)
     # only allow fetching of ongoing records
@@ -90,12 +90,10 @@ class Game < ApplicationRecord
   private
 
   def populate_deck_cards
-    transaction do
-      random_cards = Card.order('RANDOM()').limit(NUMBER_OF_DECK_CARDS)
+    random_cards = Card.order('RANDOM()').limit(NUMBER_OF_DECK_CARDS)
 
-      random_cards.each do |random_card|
-        deck_cards << DeckCard.new(card: random_card)
-      end
+    random_cards.each do |random_card|
+      deck_cards << DeckCard.new(card: random_card)
     end
   end
 

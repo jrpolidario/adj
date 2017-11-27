@@ -29,6 +29,6 @@ class DeckCard < ApplicationRecord
     # Empty array means unauthorized
     # Example:
     # [:id, :email, :name, :is_admin, :group_id, :created_at, :updated_at]
-    []
+    [:game_id, :card_id]
   end
 end

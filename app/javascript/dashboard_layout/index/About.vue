@@ -10,17 +10,10 @@
 
       <h3>Motivations</h3>
       <ul>
+        <li>With this game, I am planning to suprise a good friend of mine who is living far away and was my all-time college crush, and whom I've never talked to yet in real life -- just FB messages over the years! :D -- to have this as an icebreaker over our first voice conversation, should the need arise! haha
         <li>I am preparing for a bigger project, of which I will then be needing a dedicated front-end framework. <a href='https://vuejs.org/' target='_blank' rel='nofollow'>Vue JS</a> interested me a lot, and so I started learning it, and incrementally integrate it while making this game.</li>
-        <li>I also have been developing <a href='https://github.com/jrpolidario/live_record' target='_blank'>LiveRecord</a> (a Ruby gem) for a while now. This game meant to demonstrate its features and show some example code.</li>
+        <li>I have been developing <a href='https://github.com/jrpolidario/live_record' target='_blank'>LiveRecord</a> (a Ruby gem) for a while now. This game meant to demonstrate its features and show some example code.</li>
         <li>Finally, I have been inspired by a friend with his web game app hosted over just a wi-fi network which was awesome! The 6 of us played it alongside some pints; it was a blast :)</li>
-      </ul>
-
-      <h3>Technologies</h3>
-      <ul>
-        <li><a href='https://github.com/jrpolidario/live_record' target='_blank'>LiveRecord</a></li>
-        <li><a href='http://rubyonrails.org/' target='_blank' rel='nofollow'>Ruby on Rails</a></li>
-        <li><a href='https://vuejs.org/' target='_blank' rel='nofollow'>Vue JS</a></li>
-        <li><a href='https://foundation.zurb.com/' target='_blank' rel='nofollow'>Foundation Zurb</a></li>
       </ul>
 
       <p>
@@ -30,7 +23,14 @@
         </a>
       </p>
       <p>
-        <small>Built with <3 | c/o Jules Roman B. Polidario - 2017 | <a href='https://twitter.com/JRPolidario' rel='nofollow' target='_blank'>@jrpolidario</a></small><br>
+        <small>Nov 2017 | Built with <3 | <a href='https://twitter.com/JRPolidario' rel='nofollow' target='_blank'>@jrpolidario</a></small>
+        <br>
+        <small>Technologies: | <a href='https://github.com/jrpolidario/live_record' target='_blank'>LiveRecord</a> |
+          <a href='http://rubyonrails.org/' target='_blank' rel='nofollow'>Ruby on Rails</a> |
+          <a href='https://vuejs.org/' target='_blank' rel='nofollow'>Vue JS</a> |
+          <a href='https://foundation.zurb.com/' target='_blank' rel='nofollow'>Foundation Zurb</a> |
+        </small>
+        <br>
         <small>All card-images have CC0 license, and taken from <a href='https://pixabay.com' rel='nofollow' target='_blank'>pixabay.com</a></small>
       </p>
     </section>

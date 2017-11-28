@@ -5,9 +5,9 @@ Don't have any card games to play with your friends?
 
 Try and play Adj! :)
 
-http://playadj.io
+https://playadj.io
 
-![Adj Logo](http://playadj.io/assets/adj_favicon-4a8bae46e0c9731d470191a8c795e87c1e5ccd44d313d951d003a3dc2742cdf3.png)
+![Adj Logo](https://playadj.io/assets/adj_favicon-4a8bae46e0c9731d470191a8c795e87c1e5ccd44d313d951d003a3dc2742cdf3.png)
 
 1. Choose a card from four
 2. Flip it without showing the cards to others

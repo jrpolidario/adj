@@ -10,7 +10,7 @@
 
       <h3>Motivations</h3>
       <ul>
-        <li>With this game, I am planning to suprise a good friend of mine who is living far away and was my all-time college crush, and whom I've never talked to yet in real life -- just FB messages over the years! :D -- to have this as an icebreaker over our first voice conversation, should the need arise! haha
+        <li>With this game, I am planning to suprise a good friend of mine who is living far away and was my all-time college crush, and whom I've never talked to yet in real life -- just FB messages over the years! :D -- to have this as an icebreaker over our upcoming first-ever voice conversation, should the need arise! haha
         <li>I am preparing for a bigger project, of which I will then be needing a dedicated front-end framework. <a href='https://vuejs.org/' target='_blank' rel='nofollow'>Vue JS</a> interested me a lot, and so I started learning it, and incrementally integrate it while making this game.</li>
         <li>I have been developing <a href='https://github.com/jrpolidario/live_record' target='_blank'>LiveRecord</a> (a Ruby gem) for a while now. This game meant to demonstrate its features and show some example code.</li>
         <li>Finally, I have been inspired by a friend with his web game app hosted over just a wi-fi network which was awesome! The 6 of us played it alongside some pints; it was a blast :)</li>

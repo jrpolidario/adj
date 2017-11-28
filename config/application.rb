@@ -26,5 +26,7 @@ module Adj
     config.to_prepare do
       Devise::SessionsController.layout 'admin'
     end
+
+    config.middleware.use Rack::Deflater
   end
 end

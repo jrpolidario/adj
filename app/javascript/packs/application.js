@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.loadStorage()
       // fixed: mobile virtual-keyboard messing up the height of the body, which pushes it upwards
       // every time the virtual-keyboard is closed
-      document.addEventListener('focusout', function(e) { $('body').height(screen.height) });
+      document.addEventListener('focusout', function(e) { $('body').height($(document).height()) });
     },
     methods: {
       configureWithLiveRecordStore() {

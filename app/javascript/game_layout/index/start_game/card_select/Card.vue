@@ -135,8 +135,6 @@
       }
 
       .card {
-        // background: #fafafa;
-        background: darken($page-base-background-color, 10);
         border-radius: 5px;
         background-position: center center;
         background-size: cover;
@@ -176,27 +174,35 @@
           font-weight: bold;
         }
 
-        &.front .card-name {
-          bottom: 0;
-          color: rgba(255,255,255,0.8);
-          text-shadow: 0 0 0.2em rgba(0,0,0,0.8);
+        &.front {
+          background-color: #8bb;
+
+          .card-name {
+            bottom: 0;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 0 0.2em rgba(0,0,0,0.8);
+          }
         }
 
-        &.back .category-name-and-score {
-          color: #fff;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          text-shadow: 0.06em 0.06em 0 rgba(black, 0.2);
+        &.back {
+          background-color: darken($page-base-background-color, 10);
 
-          .question {
-            color: lighten(purple, 62);
-            font-weight: bold;
-          }
+          .category-name-and-score {
+            color: #fff;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow: 0.06em 0.06em 0 rgba(black, 0.2);
 
-          .score {
-            font-size: 0.6em;
-            text-shadow: 0 0 2px rgba(darken(gold, 10), 0.4);
-            color: gold;
+            .question {
+              color: lighten(purple, 62);
+              font-weight: bold;
+            }
+
+            .score {
+              font-size: 0.6em;
+              text-shadow: 0 0 2px rgba(darken(gold, 10), 0.4);
+              color: gold;
+            }
           }
         }
       }

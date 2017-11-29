@@ -12,7 +12,7 @@ class Card < ApplicationRecord
   validates :score, presence: true
 
   def self.live_record_whitelisted_attributes(card, current_player)
-    [:id, :name, :image, :score, :category_id, :created_at, :updated_at]
+    [:id, :name, :image, :score, :image_source_url, :category_id, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_player)

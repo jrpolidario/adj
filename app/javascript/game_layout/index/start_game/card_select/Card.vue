@@ -13,6 +13,11 @@
       >
       	<div class='flipper full-height'>
       		<div class='front full-height card' v-bind:style='{ backgroundImage: "url(" + card().imageUrl() + ")" }'>
+            <div v-if='card().image_source_url()' class='card-source-url'>
+              <a title='image source' v-bind:href='card().image_source_url()' target='_blank' rel='nofollow'>
+                <i class='fa fa-external-link' aria-hidden='true'></i>
+              </a>
+            </div>
             <div class='card-name'>
       			  {{ card().name() }}
             </div>
@@ -145,6 +150,21 @@
           height: auto;
           opacity: 0.7;
           transform: translateX(-40%);
+        }
+
+        .card-source-url {
+          position: absolute;
+          top: 0;
+          padding-left: 0.2rem;
+
+          a {
+            color: white;
+            text-shadow: 0 0 0.1em rgba(black, 0.6);
+
+            &:hover {
+              color: mix(white, blue, 80%)
+            }
+          }
         }
 
         .card-name, .category-name-and-score {

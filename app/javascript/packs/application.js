@@ -31,7 +31,7 @@ Vue.use(VueRouter)
 // fixed: mobile virtual-keyboard messing up the height of the body, which pushes it upwards
 // every time the virtual-keyboard is closed
 $(function() {
-  $('body').height($(document).height())
+  $('body').css('min-height', $(document).height())
 })
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.loadStorage()
       // fixed: mobile virtual-keyboard messing up the height of the body, which pushes it upwards
       // every time the virtual-keyboard is closed
-      document.addEventListener('focusout', function(e) { $('body').height($(document).height()) });
+      document.addEventListener('focusout', function(e) { $('body').css('min-height', $(window).height()) });
     },
     methods: {
       configureWithLiveRecordStore() {

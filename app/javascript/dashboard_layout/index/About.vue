@@ -31,7 +31,7 @@
           <a href='https://foundation.zurb.com/' target='_blank' rel='nofollow'>Foundation Zurb</a> |
         </small>
         <br>
-        <small>Most card-images have CC0 license, and taken from <a href='https://pixabay.com' rel='nofollow' target='_blank'>pixabay.com</a>. Some also have attribution links taken from deviantart.com and other sources</small>
+        <small>Most card-images have CC0 license, and taken from <a href='https://pixabay.com' rel='nofollow' target='_blank'>pixabay.com</a>. Some also have attribution links taken from deviantart.com and other sources with permission.</small>
       </p>
     </section>
   </transition>

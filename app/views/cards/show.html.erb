@@ -27,7 +27,7 @@
 <p>
   <strong>Subimage:</strong>
   <span data-live-record-update-from='Card-<%= @card.id %>-subimage'>
-  	<%= image_tag @card.subimage.url %>
+  	<%= image_tag @card.subimage.url if @card.subimage.present? %>
   </span>
 </p>
 

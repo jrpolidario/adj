@@ -98,7 +98,7 @@
           })
         },
         isTeamWinner(team) {
-          return team == this.game.winner()[0]
+          return this.game.winners().includes(team)
         },
         returnToDashboard() {
 

@@ -32,7 +32,7 @@ LiveRecord.Model.create(
         for teamAndScore in this.teamsAndScores()
           if teamAndScore[1] >= highestScore
             highestScore = teamAndScore[1]
-            winners.push(teamAndScore)
+            winners.push(teamAndScore[0])
           else
             break
         winners

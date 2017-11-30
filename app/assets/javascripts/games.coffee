@@ -35,7 +35,6 @@ LiveRecord.Model.create(
             winners.push(teamAndScore)
           else
             break
-        )
         winners
       teamScore: (team) ->
         matchingTeamAndScore = this.teamsAndScores().find((teamAndScore) ->

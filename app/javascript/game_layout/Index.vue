@@ -195,13 +195,11 @@
         recordIds: { 'Game': [self.$route.params.id] }
       })
 
-      $('body,html').css({
-        height: 'calc(100vh  - 5rem)',
-        'min-height': null
-      })
+      $('body,html').addClass('game-layout-fixed-height');
     },
     destroyed() {
       this.cleanup({ vue: this })
+      $('body,html').removeClass('game-layout-fixed-height');
     }
   }
 </script>
@@ -217,5 +215,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  .game-layout-fixed-height {
+    height: calc(100vh  - 5rem);
+    min-height: null;
   }
 </style>

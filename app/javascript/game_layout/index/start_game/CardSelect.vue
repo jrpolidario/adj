@@ -49,6 +49,9 @@
         class='team-score'
       >D: {{ game.teamScore(4) }}</span>
     </div>
+    <div id='lobby-link'>
+      <router-link :to="{ name: 'rootPath', hash: '#middle-pane' }">Lobby</router-link>
+    </div>
   </div>
 </template>
 
@@ -119,7 +122,7 @@
   #card-select {
     position: relative;
 
-    #info, #game-status, #scores {
+    #info, #game-status, #scores, #lobby-link {
       position: absolute;
       color: #aaa;
     }
@@ -130,7 +133,7 @@
 
     #scores {
       bottom: -1.5rem;
-      left: 0.2em;
+      left: 0.5em;
       font-weight: bold;
 
       .current {
@@ -138,12 +141,31 @@
       }
     }
 
+    #lobby-link {
+      $background-color: mix($page-base-background-color, blue, 70%);
+      bottom: -1.8rem;
+      right: 0.5rem;
+      font-weight: bold;
+      border: 1px solid darken($background-color, 10);
+      border-radius: 0.2rem;
+      background-color: $background-color;
+      padding: 0.2rem 0.4rem;
+
+      &:hover {
+        background-color: darken($background-color, 10);
+      }
+
+      a {
+        color: white;
+      }
+    }
+
     #info {
-      left: 0.2rem;
+      left: 0.5rem;
     }
 
     #game-status {
-      right: 0.2rem;
+      right: 0.5rem;
       font-weight: bold;
     }
 

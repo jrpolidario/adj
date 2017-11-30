@@ -23,11 +23,20 @@ LiveRecord.Model.create(
             teamsAccountedFor.push(gamesPlayer.team())
         )
         teamsAndScores.sort((teamAndScoreLeft, teamAndScoreRight) ->
-          teamAndScoreLeft[1] - teamAndScoreRight[1]
+          teamAndScoreRight[1] - teamAndScoreLeft[1]
         )
         teamsAndScores
-      winner: ->
-        this.teamsAndScores()[0]
+      winners: ->
+        winners = []
+        highestScore = 0
+        for teamAndScore in this.teamsAndScores()
+          if teamAndScore[1] >= highestScore
+            highestScore = teamAndScore[1]
+            winners.push(teamAndScore)
+          else
+            break
+        )
+        winners
       teamScore: (team) ->
         matchingTeamAndScore = this.teamsAndScores().find((teamAndScore) ->
           team == teamAndScore[0]

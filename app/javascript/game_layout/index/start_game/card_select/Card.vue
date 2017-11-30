@@ -223,6 +223,7 @@
               font-size: 0.6em;
               text-shadow: 0 0 2px rgba(darken(gold, 10), 0.4);
               color: gold;
+              white-space: nowrap;
             }
           }
         }

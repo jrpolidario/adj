@@ -18,6 +18,9 @@
                 <i class='fa fa-external-link' aria-hidden='true'></i>
               </a>
             </div>
+            <div v-if='card().subimageUrl()' class='card-subimage'>
+              <img v-bind:src='card().subimageUrl()' v-bind:alt='card().name() + " subimage"'>
+            </div>
             <div class='card-name'>
       			  {{ card().name() }}
             </div>
@@ -153,6 +156,7 @@
         .card-source-url {
           position: absolute;
           top: 0;
+          left: 0;
           padding-left: 0.2rem;
 
           a {
@@ -163,6 +167,16 @@
               color: mix(white, blue, 80%)
             }
           }
+        }
+
+        .card-subimage {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 100%;
+          width: 100%;
+          max-height: 2.4rem;
+          max-width: 4rem;
         }
 
         .card-name, .category-name-and-score {

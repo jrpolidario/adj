@@ -25,6 +25,13 @@
 </p>
 
 <p>
+  <strong>Subimage:</strong>
+  <span data-live-record-update-from='Card-<%= @card.id %>-subimage'>
+  	<%= image_tag @card.subimage.url %>
+  </span>
+</p>
+
+<p>
   <strong>Score:</strong>
   <span data-live-record-update-from='Card-<%= @card.id %>-score'>
   	<%= @card.score %>

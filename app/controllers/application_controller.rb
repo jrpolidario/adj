@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
       end
 
       format.html do
-        render 'games/index'
+        render 'games/index', layout: 'application'
       end
     end
   end

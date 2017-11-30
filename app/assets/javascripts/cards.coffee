@@ -11,6 +11,9 @@ LiveRecord.Model.create(
       imageUrl: ->
         if this.attributes.image
           '/uploads/card/image/' + this.id() + '/' + this.image()
+      subimageUrl: ->
+        if this.attributes.subimageUrl
+          '/uploads/card/subimage/' + this.id() + '/' + this.subimage()
     }
   }
 )

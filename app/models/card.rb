@@ -5,6 +5,7 @@ class Card < ApplicationRecord
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
   mount_uploader :image, CardImageUploader
+  mount_uploader :subimage, CardImageUploader
 
   validates :category, presence: true
   validates :image, presence: true
@@ -12,7 +13,7 @@ class Card < ApplicationRecord
   validates :score, presence: true
 
   def self.live_record_whitelisted_attributes(card, current_player)
-    [:id, :name, :image, :score, :image_source_url, :category_id, :created_at, :updated_at]
+    [:id, :name, :image, :subimage, :score, :image_source_url, :category_id, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_player)

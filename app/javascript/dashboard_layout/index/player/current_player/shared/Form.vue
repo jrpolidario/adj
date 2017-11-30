@@ -14,7 +14,7 @@
       type='text'
       name='player[name]'
       ref='name'
-      placeholder='Enter name :)'
+      placeholder='Player name :)'
       v-on:blur='onFormBlurCallback'
       v-on:keyup.esc='onFormBlurCallback'
       v-model='formValues.name'

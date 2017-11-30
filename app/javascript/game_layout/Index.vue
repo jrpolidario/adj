@@ -194,6 +194,11 @@
         vue: this,
         recordIds: { 'Game': [self.$route.params.id] }
       })
+
+      $('body,html').css({
+        height: 'calc(100vh  - 5rem)',
+        'min-height': null
+      })
     },
     destroyed() {
       this.cleanup({ vue: this })
@@ -203,8 +208,14 @@
 
 <!-- GLOBAL STYLES FOR GAME LAYOUT -->
 <style lang='scss'>
+  @import 'node_modules/foundation-sites/scss/util/util.scss';
+
   #game-layout {
     padding-top: 10%;
     padding-bottom: 10%;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
   }
 </style>

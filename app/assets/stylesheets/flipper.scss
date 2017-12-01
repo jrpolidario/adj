@@ -5,6 +5,14 @@
 	/* flip the pane when clicked */
 	.flip-container.flipped .flipper {
 		transform: rotateY(180deg);
+
+		.front {
+			z-index: 2;
+		}
+
+		.back {
+			z-index: 1;
+		}
 	}
 
 .flip-container, .front, .back {
@@ -33,6 +41,7 @@
 .front {
 	/* for firefox 31 */
 	transform: rotateY(180deg);
+	z-index: 1;
 }
 
 .back {

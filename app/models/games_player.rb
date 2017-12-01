@@ -24,7 +24,11 @@ class GamesPlayer < ApplicationRecord
   after_update :check_all_players_are_ready_and_min_of_2_per_team_then_start_game!
 
   def self.live_record_whitelisted_attributes(games_player, current_player)
-    [:id, :game_id, :player_id, :is_ready, :score, :team, :created_at, :updated_at]
+    if current_player && current_player.games.exists?(id: games_player.game.id)
+      [:id, :game_id, :player_id, :is_ready, :score, :team, :created_at, :updated_at]
+    else
+      []
+    end
   end
 
   def self.live_record_queryable_attributes(current_player)

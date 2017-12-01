@@ -22,12 +22,7 @@ class Game < ApplicationRecord
   include LiveRecord::Model::Callbacks
 
   def self.live_record_whitelisted_attributes(game, current_player)
-    # only allow fetching of ongoing records
-    # if ongoing.exists?(id: game.id)
-      [:id, :current_turn_games_player_id, :is_finished, :is_started, :games_players_turn_sequence, :created_at, :updated_at]
-    # else
-    #   []
-    # end
+    [:id, :current_turn_games_player_id, :is_finished, :is_started, :games_players_turn_sequence, :created_at, :updated_at]
   end
 
   def self.live_record_queryable_attributes(current_player)

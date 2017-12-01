@@ -34,7 +34,7 @@
         loadTotal: 0,
         afterPreload() {
           const self = this
-          // self.authorise()
+          self.authorise()
           self.$store.commit('setState', { currentGame: self.game })
 
           const gamesPlayersSubscription = LiveRecord.Model.all.GamesPlayer.autoload({

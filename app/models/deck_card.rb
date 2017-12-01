@@ -5,15 +5,12 @@ class DeckCard < ApplicationRecord
   include LiveRecord::Model::Callbacks
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
-  def self.live_record_whitelisted_attributes(deck_card, current_user)
-    # Add attributes to this array that you would like current_user client to be able to receive
-    # Defaults to empty array, thereby blocking everything by default, only unless explicitly stated here so.
-    # i.e. if this file is a User model, and that a User has been created/updated in the backend,
-    # then only these whitelisted attributes will be sent to this current_user client
-    # Empty array means unauthorized
-    # Example:
-    # [:id, :email, :name, :is_admin, :group_id, :created_at, :updated_at]
-    [:id, :game_id, :card_id]
+  def self.live_record_whitelisted_attributes(deck_card, current_player)
+    if current_player && current_player.games.exists?(id: deck_card.game.id)
+      [:id, :game_id, :card_id]
+    else
+      []
+    end
   end
 
   def self.live_record_queryable_attributes(current_user)

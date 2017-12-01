@@ -6,13 +6,13 @@
 	.flip-container.flipped .flipper {
 		transform: rotateY(180deg);
 
-		.front {
-			z-index: 2;
-		}
-
-		.back {
-			z-index: 1;
-		}
+		// .front {
+		// 	z-index: 2;
+		// }
+    //
+		// .back {
+		// 	z-index: 1;
+		// }
 	}
 
 .flip-container, .front, .back {
@@ -30,6 +30,7 @@
 
 /* hide back of pane during swap */
 .front, .back {
+	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 
 	position: absolute;

@@ -42,3 +42,12 @@ html, body {
 .loader-anchor {
   position: relative;
 }
+
+/*
+ * Fixed issue with Iphone where Foundation Zurb Modal pops-up but doesn't show anything
+ */
+.is-reveal-open {
+  position: static !important;
+  // Zurb set this as below (fixed by above)
+  // position: relative;
+}

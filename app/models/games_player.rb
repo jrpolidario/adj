@@ -27,7 +27,7 @@ class GamesPlayer < ApplicationRecord
     if current_player && current_player.games.exists?(id: games_player.game.id)
       [:id, :game_id, :player_id, :is_ready, :score, :team, :created_at, :updated_at]
     else
-      []
+      [:id, :game_id, :player_id, :created_at, :updated_at]
     end
   end
 

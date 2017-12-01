@@ -19,11 +19,11 @@ class SelectableCard < ApplicationRecord
   include LiveRecord::Model::Callbacks
 
   def self.live_record_whitelisted_attributes(selectable_card, current_player)
-    if current_player && current_player.games.exists?(id: selectable_card.game.id)
+    # if current_player && current_player.games.exists?(id: selectable_card.game.id)
       [:id, :card_id, :game_id, :position, :is_selected, :is_time_is_up, :seconds_left, :seconds_duration, :is_bomb, :is_question, :score, :team_winner, :is_done, :created_at, :updated_at]
-    else
-      []
-    end
+    # else
+    #   []
+    # end
   end
 
   def self.live_record_queryable_attributes(current_user)

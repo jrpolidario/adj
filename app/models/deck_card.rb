@@ -6,11 +6,11 @@ class DeckCard < ApplicationRecord
   has_many :live_record_updates, as: :recordable, dependent: :destroy
 
   def self.live_record_whitelisted_attributes(deck_card, current_player)
-    if current_player && current_player.games.exists?(id: deck_card.game.id)
+    # if current_player && current_player.games.exists?(id: deck_card.game.id)
       [:id, :game_id, :card_id]
-    else
-      []
-    end
+    # else
+    #   []
+    # end
   end
 
   def self.live_record_queryable_attributes(current_user)

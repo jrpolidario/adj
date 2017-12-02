@@ -1,5 +1,6 @@
 <template>
   <form
+    ref='form'
     id='player-form'
     v-bind:action='formAction'
     v-bind:method='["patch", "put", "delete"].includes(formMethod) ? "post" : formMethod'
@@ -9,20 +10,23 @@
     v-on:ajax:error='onSubmitError'
   >
     <input v-if='["patch", "put", "delete"].includes(formMethod)' name='_method' type='hidden' v-bind:value='formMethod'/>
+    <input type='hidden' name='authenticity_token' v-bind:value='getState("csrfToken")'>
     <input
       id='new-player-name'
       type='text'
       name='player[name]'
       ref='name'
       placeholder='Player name :)'
-      v-on:blur='onFormBlurCallback'
-      v-on:keyup.esc='onFormBlurCallback'
+      v-on:blur='onFormBlur'
+      v-on:keyup.esc='onFormBlur'
       v-model='formValues.name'
     ></input>
   </form>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
   export default {
     props: {
       player: {
@@ -51,6 +55,7 @@
         formValues: $.extend({}, this.player.attributes) // clone
       }
     },
+    computed: mapGetters(['getState', 'getRecord']),
     methods: {
       onSubmitSuccess(event) {
         const data = event.detail[0]
@@ -95,6 +100,10 @@
           else
             flash(attribute + ': ' + errorMessagesString, 'error')
         }
+      },
+      onFormBlur(event) {
+        Rails.fire(this.$refs.form, 'submit')
+        this.onFormBlurCallback()
       }
     },
     mounted() {

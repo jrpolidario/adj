@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery_ujs
 //= require foundation
 //= require live_record
 //= require js-routes

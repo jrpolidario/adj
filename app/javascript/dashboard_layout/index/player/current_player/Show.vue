@@ -7,7 +7,6 @@
       :formAction='editPlayerSubmitPath'
       :formMethod='"put"'
       :onSubmitSuccessCallback='onSubmitSuccessCallback.bind(this)'
-      :onFormBlurCallback='onFormBlurCallback.bind(this)'
     />
     <h2 class='editable' v-else v-on:click='isEditingName = true'>{{ getState('currentPlayer').attributes.name }}</h2>
   </div>
@@ -24,9 +23,6 @@
         isEditingName: false,
         onSubmitSuccessCallback(data, status, xhr) {
           // wont need to manually update player attributes, because LiveRecord already does that for us
-          this.isEditingName = false
-        },
-        onFormBlurCallback() {
           this.isEditingName = false
         }
       }

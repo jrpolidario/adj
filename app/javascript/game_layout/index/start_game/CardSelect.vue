@@ -23,7 +23,7 @@
       id='done-button'
     >
       <span class='done-text'>
-        <span class='noselect'>Done</span>
+        <span class='noselect'>Skip</span>
       </span>
     </div>
     <div id='scores'>

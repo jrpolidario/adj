@@ -1,6 +1,6 @@
 <template>
   <section id='team-winner-select' class='full-height loader-anchor'>
-    <small id='info'>* If your team failed to guess the card, now allow other teams to guess once, then choose the team winner! :)</small>
+    <small id='info'>* Time is up! If your team failed to guess the card, now allow other teams to guess once, then choose the winner below! :)</small>
     <div v-on:click='openConfirmTeamWinnerModal(0)' id='no-winner-button'>
       <span class='no-winner-text'>
         <span class='noselect'>No Winner</span>
@@ -153,6 +153,9 @@
     mounted() {
       // vibrate because time has just up
       window.navigator.vibrate(200)
+      // play a chime sound
+      const audio = new Audio('/non_digest_assets/Electronic_Chime-KevanGC-495939803.mp3');
+      audio.play();
       $(this.$refs.confirmTeamWinnerModal).foundation()
     }
   }

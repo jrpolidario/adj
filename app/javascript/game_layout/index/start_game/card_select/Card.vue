@@ -100,15 +100,11 @@
             return this.selectableCard().card()
         },
         isClickable() {
-          // clickable if current turn and not yet selected any card
-          const selectedSelectableCard = this.getState('currentGame').selectableCards().find((selectableCard) => {
-            return selectableCard.is_selected()
-          })
-          return this.isCurrentTurn && !selectedSelectableCard
+          // clickable if current turn and not yet selected any card, and that it's still not done
+          return this.isCurrentTurn && !this.getState('currentGame').currentSelectableCard()
         },
         isFlipped() {
-          return (this.isCurrentTurn && this.selectableCard().is_selected()) ||
-            (!this.isCurrentTurn && this.selectableCard().is_time_is_up())
+          return (this.isCurrentTurn && this.selectableCard().is_selected()) || this.selectableCard().is_done()
         },
         isGreyed() {
           return this.game.currentSelectableCard() && !this.selectableCard().is_selected()

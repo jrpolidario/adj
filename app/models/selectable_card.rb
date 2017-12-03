@@ -14,7 +14,8 @@ class SelectableCard < ApplicationRecord
 
   before_update :start_countdown!, if: -> { is_selected_changed? && is_selected }
   before_update :add_score_and_done!, if: -> { team_winner_changed? && team_winner.present? }
-  after_update :remove_this_from_game_and_draw_new_card, if: :is_done
+  after_update :remove_this_from_game, if: :is_done
+  after_destroy :draw_new_card_and_set_next_turn_games_player
 
   include LiveRecord::Model::Callbacks
 
@@ -80,20 +81,27 @@ class SelectableCard < ApplicationRecord
       end
     end
 
-    game.set_next_turn_games_player
-    game.save!
-
-    self.is_selected = false
     self.is_done = true
   end
 
-  def remove_this_from_game_and_draw_new_card
-    self.destroy
-    game.take_a_selectable_card_from_deck_cards
+  def remove_this_from_game
+    Thread.new do
+      # lets wait 7 seconds before removing the card from the board, so they could have a glimpse of it
+      sleep(7)
+      self.destroy
+      sleep(1)
+    end
+  end
+
+  def draw_new_card_and_set_next_turn_games_player
+    game.take_a_selectable_card_from_deck_cards!
+    game.set_next_turn_games_player
 
     # check if no more cards to play, then declare winner
     if game.selectable_cards.count == 0
-      game.update!(is_finished: true)
+      game.is_finished = true
     end
+
+    game.save!
   end
 end

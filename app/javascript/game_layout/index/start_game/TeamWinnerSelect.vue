@@ -1,6 +1,6 @@
 <template>
   <section id='team-winner-select' class='full-height loader-anchor'>
-    <small id='info'>* Choose the team winner! :)</small>
+    <small id='info'>* If your team failed to guess the card, now allow other teams to guess once, then choose the team winner! :)</small>
     <div v-on:click='openConfirmTeamWinnerModal(0)' id='no-winner-button'>
       <span class='no-winner-text'>
         <span class='noselect'>No Winner</span>
@@ -176,9 +176,10 @@
   #team-winner-select {
     #info {
       position: absolute;
-      top: -1.5rem;
+      top: -2.0rem;
       left: 0.2rem;
       color: #aaa;
+      font-size: 0.7rem;
     }
 
     #no-winner-button {

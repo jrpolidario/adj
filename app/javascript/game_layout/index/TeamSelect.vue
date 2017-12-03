@@ -65,6 +65,9 @@
         </h2>
       </div>
     </div>
+    <div id='lobby-link'>
+      <router-link :to="{ name: 'rootPath', hash: '#middle-pane' }">Lobby</router-link>
+    </div>
   </section>
 </template>
 
@@ -184,6 +187,28 @@
         .fa-check {
           font-size: 2rem;
         }
+      }
+    }
+
+    #lobby-link {
+      position: absolute;
+      color: #aaa;
+
+      $background-color: mix($page-base-background-color, blue, 70%);
+      bottom: -2.0rem;
+      right: 0.5rem;
+      font-weight: bold;
+      border: 1px solid darken($background-color, 10);
+      border-radius: 0.2rem;
+      background-color: $background-color;
+      padding: 0.2rem 0.4rem;
+
+      &:hover {
+        background-color: darken($background-color, 10);
+      }
+
+      a {
+        color: white;
       }
     }
 

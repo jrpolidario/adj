@@ -143,7 +143,7 @@
 
     #lobby-link {
       $background-color: mix($page-base-background-color, blue, 70%);
-      bottom: -1.8rem;
+      bottom: -2.0rem;
       right: 0.5rem;
       font-weight: bold;
       border: 1px solid darken($background-color, 10);

@@ -60,7 +60,7 @@ class Game < ApplicationRecord
     end
   end
 
-  def take_a_selectable_card_from_deck_cards
+  def take_a_selectable_card_from_deck_cards!
     random_deck_card = deck_cards.order('RANDOM()').take
 
     if random_deck_card.present?
@@ -92,7 +92,7 @@ class Game < ApplicationRecord
     Thread.new do
       sleep(1)
       NUMBER_OF_SELECTABLE_CARDS.times do
-        take_a_selectable_card_from_deck_cards
+        take_a_selectable_card_from_deck_cards!
         sleep(1)
       end
     end

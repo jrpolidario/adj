@@ -5,7 +5,7 @@
       enter-active-class='animated fadeIn'
     >
       <EndGame v-if='game.is_finished()' :game='game'/>
-      <TeamWinnerSelect v-else-if='isCurrentTurn && game.currentSelectableCard() && game.currentSelectableCard().is_time_is_up() && game.currentSelectableCard().is_time_is_up()' :game='game'/>
+      <TeamWinnerSelect v-else-if='isCurrentTurn && game.currentSelectableCard() && game.currentSelectableCard().is_time_is_up() && !game.currentSelectableCard().is_done()' :game='game'/>
       <CardSelect v-else :game='game'/>
     </transition>
   </div>

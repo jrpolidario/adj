@@ -151,6 +151,8 @@
       mapActions(['cleanup', 'adjAjax'])
     ),
     mounted() {
+      // vibrate because time has just up
+      window.navigator.vibrate(200)
       $(this.$refs.confirmTeamWinnerModal).foundation()
     }
   }

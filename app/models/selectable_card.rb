@@ -87,7 +87,7 @@ class SelectableCard < ApplicationRecord
   def remove_this_from_game
     Thread.new do
       # lets wait 7 seconds before removing the card from the board, so they could have a glimpse of it
-      sleep(7)
+      sleep(5)
       self.destroy
       sleep(1)
     end

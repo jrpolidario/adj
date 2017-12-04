@@ -6,7 +6,7 @@
     <section v-if='loadCounter == loadTotal' id='game-layout' class='full-height'>
       <h1 class='hide'>Game #{{ game.id() }}</h1>
       <div class='row full-height collapse'>
-        <div class='small-12 medium-6 medium-centered columns full-height loader-anchor'>
+        <div class='medium-12 large-6 medium-centered columns full-height loader-anchor'>
           <div class='row full-height collapse'>
             <StartGame v-if='game && game.attributes.is_started' :game='game'/>
             <TeamSelect v-else :game='game'/>

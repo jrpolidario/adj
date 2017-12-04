@@ -151,12 +151,12 @@
       mapActions(['cleanup', 'adjAjax'])
     ),
     mounted() {
+      $(this.$refs.confirmTeamWinnerModal).foundation()
       // vibrate because time has just up
       window.navigator.vibrate(200)
       // play a chime sound
       const audio = new Audio('/non_digest_assets/Electronic_Chime-KevanGC-495939803.mp3');
       audio.play();
-      $(this.$refs.confirmTeamWinnerModal).foundation()
     }
   }
 </script>

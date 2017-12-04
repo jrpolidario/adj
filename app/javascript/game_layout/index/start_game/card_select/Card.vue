@@ -136,6 +136,9 @@
       .card {
         border-radius: 5px;
         background-position: center center;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size:cover;
         background-size: cover;
         box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 

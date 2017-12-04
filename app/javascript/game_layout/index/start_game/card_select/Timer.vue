@@ -55,6 +55,7 @@
 
       .bar {
         height: 100%;
+        -webkit-transition: width 1s;
         transition: width 1s;
       }
     }

@@ -4,6 +4,7 @@
 }
 	/* flip the pane when clicked */
 	.flip-container.flipped .flipper {
+		-webkit-transform: rotateY(180deg);
 		transform: rotateY(180deg);
 
 		// .front {
@@ -22,7 +23,9 @@
 
 /* flip speed goes here */
 .flipper {
-	transition: 0.2s;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 
 	position: relative;

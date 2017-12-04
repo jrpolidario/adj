@@ -185,7 +185,7 @@
       border-radius: 50%;
       height: 5rem;
       width: 5rem;
-      z-index: 1;
+      z-index: 99;
 
       position: absolute;
       top: 50%;

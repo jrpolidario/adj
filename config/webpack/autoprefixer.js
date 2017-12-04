@@ -3,7 +3,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['postcss-loader']
+        use: ["style-loader", "css-loader", "postcss-loader"]
       }
     ]
   },

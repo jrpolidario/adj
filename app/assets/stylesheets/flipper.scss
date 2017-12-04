@@ -4,6 +4,8 @@
 }
 	/* flip the pane when clicked */
 	.flip-container.flipped .flipper {
+		-ms-transform: rotateY(180deg);
+		-webkit-transform: rotateY(180deg);
 		transform: rotateY(180deg);
 
 		// .front {
@@ -22,7 +24,9 @@
 
 /* flip speed goes here */
 .flipper {
+	-webkit-transition: 0.4s;
 	transition: 0.4s;
+	-webkit-transform-style: preserve-3d;
 	transform-style: preserve-3d;
 
 	position: relative;
@@ -30,6 +34,7 @@
 
 /* hide back of pane during swap */
 .front, .back {
+	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 
 	position: absolute;
@@ -40,11 +45,15 @@
 /* front, initially hidden pane */
 .front {
 	/* for firefox 31 */
+	-ms-transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
 	transform: rotateY(180deg);
 	z-index: 1;
 }
 
 .back {
 	z-index: 2;
+	-ms-transform: rotateY(0deg);
+	-webkit-transform: rotateY(0deg);
 	transform: rotateY(0deg);
 }
